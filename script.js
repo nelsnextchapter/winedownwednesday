@@ -7,7 +7,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const workInput = document.getElementById("workDuration");
   const shortBreakInput = document.getElementById("shortBreakDuration");
   const longBreakInput = document.getElementById("longBreakDuration");
-const backgroundSelector = document.getElementById("backgroundSelector");
+  const backgroundUpload = document.getElementById("backgroundUpload");
+  const backgroundURL = document.getElementById("backgroundURL");
   const fileUpload = document.getElementById("fileUpload");
   const soundSelector = document.getElementById("soundSelector");
   const saveSettings = document.getElementById("saveSettings");
