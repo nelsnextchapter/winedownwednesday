@@ -1,39 +1,73 @@
+/* Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 /* Global Styles */
 body {
   margin: 0;
-  font-family: 'DM Sans', sans-serif;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+font-family: 'DM Sans', sans-serif;
+  background-color: #FDFCF8;
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background-attachment: fixed;
   color: #333;
   background-color: #FDFCF8;
 }
 
+/* Navigation */
+nav {
+  width: 100%;
+  background-color: #FFF7B2;
 header {
-  display: flex;
-  justify-content: center;
+display: flex;
+justify-content: center;
+  padding: 0.5rem 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   background-color: rgba(255, 247, 178, 0.85);
   padding: 10px;
   font-family: 'Poppins', sans-serif;
 }
 
+.nav-button {
+  background-color: #FDEDDC;
+.top-nav {
+  width: 100%;
+  text-align: center;
+  background-color: rgba(255, 247, 178, 0.85);
+  padding: 10px 0;
+}
+
 .top-nav .nav-button {
   background-color: #FFF7B2;
-  border: none;
+border: none;
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-family: 'Poppins', sans-serif;
   padding: 10px 20px;
   margin: 0 10px;
   border-radius: 25px;
   font-weight: bold;
-  cursor: pointer;
+cursor: pointer;
   font-size: 1rem;
-  transition: background-color 0.3s ease;
+transition: background-color 0.3s ease;
 }
 
+.nav-button:hover {
 .top-nav .nav-button:hover {
-  background-color: #C9D6B5;
+background-color: #C9D6B5;
 }
 
+/* Block Styles */
 main {
   position: relative;
   height: 100vh;
@@ -41,26 +75,43 @@ main {
 }
 
 .block {
-  position: absolute;
-  top: 100px;
+position: absolute;
+top: 100px;
+  background-color: rgba(255, 255, 255, 0.95);
   left: 100px;
   background-color: rgba(253, 252, 248, 0.92);
-  border: 1px solid #CDA67F;
-  border-radius: 20px;
+border: 1px solid #CDA67F;
+border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  padding: 1rem;
+  width: 300px;
+  display: none;
+  font-family: 'DM Sans', sans-serif;
   padding: 20px;
   width: 320px;
   z-index: 10;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  cursor: move;
 }
 
+/* Keep block header draggable but visually empty */
 .block-header {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 10px;
-  cursor: move;
+cursor: move;
+  padding: 0.5rem;
+  font-weight: bold;
+  font-family: 'Playfair Display', serif;
+  color: transparent;
+height: 1rem;
+  color: transparent;
+user-select: none;
 }
 
+/* Timer Display */
+#timerDisplay {
+  font-size: 4rem;
+  font-family: 'Playfair Display', serif;
 .gear-icon {
   background: none;
   border: none;
@@ -75,11 +126,16 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+text-align: center;
+  color: #333;
 }
 
 #phaseLabel {
+  text-align: center;
   font-family: 'Playfair Display', serif;
-  font-size: 1.2rem;
+font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  font-family: 'Poppins', sans-serif;
   margin-bottom: 10px;
   text-align: center;
 }
@@ -92,18 +148,27 @@ main {
   text-align: center;
 }
 
+.timer-controls button {
+  margin: 0.25rem;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
 .controls button,
 .set-timer button {
   background-color: #CDA67F;
   color: white;
-  border: none;
+border: none;
+  background-color: #C9D6B5;
+  color: #333;
+  font-family: 'Poppins', sans-serif;
   border-radius: 8px;
   padding: 10px 15px;
   margin: 5px;
-  cursor: pointer;
+cursor: pointer;
   font-size: 0.9rem;
 }
 
+.timer-controls button:hover {
+  background-color: #CDA67F;
 .set-timer button {
   background-color: #FDEDDC;
   color: #333;
@@ -115,12 +180,20 @@ main {
 }
 
 .settings-content {
+  margin-top: 1rem;
+  font-family: 'DM Sans', sans-serif;
   margin-top: 10px;
   font-size: 0.9rem;
   display: flex;
   flex-direction: column;
 }
 
+/* Settings Gear Icon */
+.toggle-settings {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: none;
 .settings-content input,
 .settings-content select {
   padding: 5px;
@@ -140,12 +213,17 @@ main {
 #loadSpotify {
   background-color: #CDA67F;
   color: white;
-  border: none;
+border: none;
+  font-size: 1.2rem;
   padding: 8px 12px;
   border-radius: 8px;
-  cursor: pointer;
+cursor: pointer;
+  color: #333;
 }
 
+/* Music / Affirmation / Quote / Spinner Boxes */
+#musicBlock, #affirmationsBlock, #quotesBlock, #spinnerBlock {
+  font-family: 'DM Sans', sans-serif;
 #spotifyContainer iframe {
   width: 100%;
   height: 80px;
@@ -153,70 +231,25 @@ main {
   margin-top: 10px;
 }
 
+/* Hidden Class */
 .hidden {
-  display: none;
+display: none;
 }
 
+select, input[type="number"] {
+  width: 100%;
+  padding: 0.4rem;
+  margin: 0.25rem 0;
+  font-family: 'DM Sans', sans-serif;
+}
+
+label {
+  font-size: 0.9rem;
+  font-family: 'Poppins', sans-serif;
 .coming-soon {
   font-family: 'Italiana', sans-serif;
   font-size: 1.2rem;
   text-align: center;
   padding: 20px;
   color: #999;
-}
-
-/* Timer selection buttons */
-.timer-selection {
-  display: flex;
-  justify-content: center;
-  margin: 10px 0;
-  gap: 10px;
-}
-
-.timer-selection button {
-  background-color: #FDEDDC;
-  color: #333;
-  border: 1px solid #CDA67F;
-  border-radius: 25px;
-  padding: 8px 16px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.timer-selection button:hover {
-  background-color: #CDA67F;
-  color: white;
-}
-
-/* Upload background input */
-#backgroundInput, #uploadBackground, #backgroundFileInput {
-  margin-top: 10px;
-}
-
-#uploadBackground {
-  margin-bottom: 10px;
-  background-color: #CDA67F;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-#backgroundFileInput {
-  margin-top: 10px;
-  border: 1px solid #CDA67F;
-  padding: 5px;
-  border-radius: 6px;
-}
-
-/* Center nav bar */
-.top-nav {
-  display: flex;
-  justify-content: center;
-  background-color: rgba(255, 247, 178, 0.85);
-  padding: 10px;
-  font-family: 'Poppins', sans-serif;
-  width: 100%;
-  box-sizing: border-box;
 }
