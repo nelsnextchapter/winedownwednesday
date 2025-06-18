@@ -62,11 +62,9 @@ nav {
   padding: 0.5rem;
   font-weight: bold;
   font-family: 'Playfair Display', serif;
-  display: none;
-}
-
-.block-content {
-  margin-top: 0.5rem;
+  color: transparent;
+  height: 1rem;
+  user-select: none;
 }
 
 /* Timer Display */
@@ -136,9 +134,4 @@ select, input[type="number"] {
 label {
   font-size: 0.9rem;
   font-family: 'Poppins', sans-serif;
-}
-
-/* Header reset in blocks */
-.block-header {
-  display: none !important;
 }
