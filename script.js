@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
     settingsContent.classList.toggle("hidden");
   });
 
-  // Allow multiple blocks to open (fix)
+   // Allow multiple blocks to open (fix) & make all blocks draggable
 blocks.forEach((block) => {
   const header = block.querySelector(".block-header");
   if (header) {
@@ -154,37 +154,6 @@ navButtons.forEach((btn) => {
 });
 
 
- navButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const target = document.getElementById(btn.dataset.target);
-      target.classList.toggle("hidden");
-    });
-  });
-
-  // Allow multiple blocks to open (fix) & make all blocks draggable
-  blocks.forEach((block) => {
-    const header = block.querySelector(".block-header");
-    if (header) {
-      header.style.cursor = "move";
-      header.addEventListener("mousedown", function (e) {
-        let offsetX = e.clientX - block.getBoundingClientRect().left;
-        let offsetY = e.clientY - block.getBoundingClientRect().top;
-
-        function moveAt(mouseEvent) {
-          block.style.left = mouseEvent.clientX - offsetX + "px";
-          block.style.top = mouseEvent.clientY - offsetY + "px";
-        }
-
-        function stopDrag() {
-          document.removeEventListener("mousemove", moveAt);
-          document.removeEventListener("mouseup", stopDrag);
-        }
-
-        document.addEventListener("mousemove", moveAt);
-        document.addEventListener("mouseup", stopDrag);
-      });
-    }
-  });
 
   // Timer mode switch buttons
   document.getElementById("selectWork").addEventListener("click", () => {
