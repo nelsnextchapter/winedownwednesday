@@ -57,12 +57,15 @@ window.onload = () => {
 
   function switchPhase(phase, autoStart = false) {
     currentPhase = phase;
+
+    // Update visible label
     phaseLabel.textContent =
       phase === "work"
         ? "Reading/Productivity"
         : phase === "shortBreak"
-        ? "Short Break"
-        : "Long Break";
+        ? "Break/Chat"
+        : "Short Sprint";
+
     timeLeft = settings[phase] * 60;
     updateTimerDisplay();
     if (autoStart) startTimer();
@@ -103,23 +106,17 @@ window.onload = () => {
     }
   });
 
-  // Tabs
+  // Tabs: allow multiple open
   const navButtons = document.querySelectorAll(".nav-button");
-  const blocks = document.querySelectorAll(".block");
-
   navButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
       const target = document.getElementById(btn.dataset.target);
-      if (target.classList.contains("hidden")) {
-        blocks.forEach((b) => b.classList.add("hidden"));
-        target.classList.remove("hidden");
-      } else {
-        target.classList.add("hidden");
-      }
+      target.classList.toggle("hidden");
     });
   });
 
   // Draggable blocks
+  const blocks = document.querySelectorAll(".block");
   blocks.forEach((block) => {
     let isDragging = false;
     let offsetX, offsetY;
@@ -129,6 +126,7 @@ window.onload = () => {
       isDragging = true;
       offsetX = e.clientX - block.offsetLeft;
       offsetY = e.clientY - block.offsetTop;
+      block.style.position = "absolute";
       block.style.zIndex = 1000;
     });
 
