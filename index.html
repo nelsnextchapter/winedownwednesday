@@ -1,92 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Wine Down Wednesday</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans&family=Italiana&family=Playfair+Display&family=Poppins:wght@300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans&family=Italiana&family=Playfair+Display&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
 </head>
-
 <body>
   <header class="top-nav">
     <button class="nav-button" data-target="timerBlock">Timer</button>
     <button class="nav-button" data-target="musicBlock">Music</button>
-    <button class="nav-button" data-target="affirmationBlock">Affirmations</button>
-    <button class="nav-button" data-target="quoteBlock">Quotes</button>
-    <button class="nav-button" data-target="spinnerBlock">Spinner Wheel</button>
+    <button class="nav-button" data-target="affirmationsBlock">Affirmations</button>
+    <button class="nav-button" data-target="quotesBlock">Quotes</button>
+    <button class="nav-button" data-target="spinnerBlock">Spinner</button>
   </header>
 
   <main>
-    <section id="timerBlock" class="block hidden">
+    <!-- Timer Block -->
+    <div id="timerBlock" class="block hidden">
       <div class="block-header">
-        <button class="gear-icon toggle-settings" title="Settings">⚙</button>
+        <button class="gear-icon toggle-settings">⚙️</button>
       </div>
       <div class="timer">
-        <div id="phaseLabel">Reading/Productivity</div>
+        <h2 id="phaseLabel">Reading/Productivity</h2>
         <div id="timerDisplay">25:00</div>
         <div class="controls">
           <button id="start">Start</button>
           <button id="pause">Pause</button>
           <button id="reset">Reset</button>
         </div>
-        <div class="mode-buttons">
-          <button id="workMode">Reading/Productivity</button>
-          <button id="shortBreakMode">Break/Chat</button>
-          <button id="longBreakMode">Short Sprint</button>
+        <div class="timer-modes">
+          <button id="selectWork">Reading/Productivity</button>
+          <button id="selectShort">Break/Chat</button>
+          <button id="selectLong">Short Sprint</button>
         </div>
         <div class="settings-content hidden">
-          <label for="workDuration">Reading/Productivity (minutes):</label>
-          <input id="workDuration" type="number" value="25" />
-
-          <label for="shortBreakDuration">Break/Chat (minutes):</label>
-          <input id="shortBreakDuration" type="number" value="5" />
-
-          <label for="longBreakDuration">Short Sprint (minutes):</label>
-          <input id="longBreakDuration" type="number" value="15" />
-
+          <label>Reading/Productivity (min): <input type="number" id="workDuration" value="25" /></label>
+          <label>Break/Chat (min): <input type="number" id="shortBreakDuration" value="5" /></label>
+          <label>Short Sprint (min): <input type="number" id="longBreakDuration" value="15" /></label>
+          <label>Background Image:
+            <input type="file" id="backgroundUpload" accept="image/*" />
+            or URL: <input type="text" id="backgroundURL" placeholder="Paste image URL here" />
+          </label>
           <label for="soundSelector">Sound Theme:</label>
           <select id="soundSelector">
             <option value="whoosh.mp3">Whoosh</option>
             <option value="chime.mp3">Chime</option>
           </select>
-
-          <label for="backgroundInput">Background Image (URL):</label>
-          <input type="text" id="backgroundInput" placeholder="Paste image URL here" />
-
-          <label for="backgroundUpload">or Upload Background:</label>
-          <input type="file" id="backgroundUpload" accept="image/*" />
-
           <button id="saveSettings">Apply Settings</button>
         </div>
       </div>
-    </section>
+    </div>
 
-    <section id="musicBlock" class="block hidden">
+    <!-- Music Block -->
+    <div id="musicBlock" class="block hidden">
       <div class="block-header"></div>
-      <input type="text" id="spotifyInput" placeholder="Paste Spotify playlist link here" />
+      <label for="spotifyInput">Paste Spotify Playlist Link:</label>
+      <input type="text" id="spotifyInput" placeholder="https://open.spotify.com/..." />
       <button id="loadSpotify">Load Playlist</button>
       <div id="spotifyContainer"></div>
-    </section>
+    </div>
 
-    <section id="affirmationBlock" class="block hidden">
+    <!-- Affirmations Block -->
+    <div id="affirmationsBlock" class="block hidden">
       <div class="block-header"></div>
-      <div class="coming-soon">You are calm, capable, and creative.</div>
-    </section>
+      <p class="coming-soon">Affirmations coming soon!</p>
+    </div>
 
-    <section id="quoteBlock" class="block hidden">
+    <!-- Quotes Block -->
+    <div id="quotesBlock" class="block hidden">
       <div class="block-header"></div>
-      <div class="coming-soon">"Almost everything will work again if you unplug it for a few minutes, including you." — Anne Lamott</div>
-    </section>
+      <p class="coming-soon">Quotes coming soon!</p>
+    </div>
 
-    <section id="spinnerBlock" class="block hidden">
+    <!-- Spinner Block -->
+    <div id="spinnerBlock" class="block hidden">
       <div class="block-header"></div>
-      <div class="coming-soon">Spin the wheel of self-care... coming soon!</div>
-    </section>
+      <p class="coming-soon">Spinner wheel coming soon!</p>
+    </div>
   </main>
 
   <script src="script.js"></script>
 </body>
-
 </html>
