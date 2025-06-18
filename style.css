@@ -1,148 +1,199 @@
-/* Reset & Base Styles */
-* {
+/* Global Styles */
+body {
+  margin: 0;
+font-family: 'DM Sans', sans-serif;
+  background-color: #FDFCF8;
+background-size: cover;
+background-position: center;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+color: #333;
+  background-color: #FDFCF8;
 }
 
-body {
-  font-family: 'DM Sans', sans-serif;
-  background-color: #FDFCF8;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+header {
+  background-color: #FFF7B2;
+  padding: 10px;
+  text-align: center;
+}
+
+.top-nav {
+display: flex;
+justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  background-color: rgba(255, 247, 178, 0.85);
+  padding: 10px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.nav-button {
+  background-color: #CDA67F;
+  color: #fff;
+.top-nav .nav-button {
+  background-color: #FFF7B2;
+border: none;
+  padding: 10px 16px;
+  border-radius: 20px;
+  padding: 10px 20px;
+  margin: 0 10px;
+  border-radius: 25px;
+  font-weight: bold;
+cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.top-nav .nav-button:hover {
+  background-color: #C9D6B5;
+}
+
+main {
+  position: relative;
   height: 100vh;
   overflow: hidden;
+}
+
+.block {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  padding: 20px;
+  max-width: 400px;
+position: absolute;
+  top: 80px;
+  left: 20px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  top: 100px;
+  left: 100px;
+  background-color: rgba(253, 252, 248, 0.92);
+  border: 1px solid #CDA67F;
+  border-radius: 20px;
+  padding: 20px;
+  width: 320px;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.block-header {
+display: flex;
+  justify-content: space-between;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.gear-icon {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.timer {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Navigation */
-nav {
-  width: 100%;
-  background-color: #FFF7B2;
-  display: flex;
-  justify-content: center;
-  padding: 0.5rem 0;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+#phaseLabel {
+font-family: 'Playfair Display', serif;
+font-size: 1.2rem;
+  margin-bottom: 10px;
 }
 
-.nav-button {
-  background-color: #FDEDDC;
-  border: none;
-  margin: 0 0.5rem;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-family: 'Poppins', sans-serif;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.nav-button:hover {
-  background-color: #C9D6B5;
-}
-
-/* Block Styles */
-.block {
-  position: absolute;
-  top: 100px;
-  background-color: rgba(255, 255, 255, 0.95);
-  border: 1px solid #CDA67F;
-  border-radius: 20px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  padding: 1rem;
-  width: 300px;
-  display: none;
-  font-family: 'DM Sans', sans-serif;
-}
-
-.block-header {
-  cursor: move;
-  padding: 0.5rem;
-  font-weight: bold;
-  font-family: 'Playfair Display', serif;
-  color: transparent;
-  height: 1rem;
-  user-select: none;
-}
-
-/* Timer Display */
 #timerDisplay {
   font-size: 4rem;
-  font-family: 'Playfair Display', serif;
-  text-align: center;
-  color: #333;
+font-weight: bold;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+margin-bottom: 10px;
 }
 
-#phaseLabel {
-  text-align: center;
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-  font-family: 'Poppins', sans-serif;
-}
-
-.timer-controls button {
-  margin: 0.25rem;
-  padding: 0.5rem 1rem;
-  border-radius: 10px;
-  border: none;
-  background-color: #C9D6B5;
-  color: #333;
-  font-family: 'Poppins', sans-serif;
-  cursor: pointer;
-}
-
-.timer-controls button:hover {
+button.minimize {
+  background: none;
+.controls button,
+.set-timer button {
   background-color: #CDA67F;
+  color: white;
+border: none;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  padding: 10px 15px;
+  margin: 5px;
+cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.hidden {
+  display: none;
+.set-timer button {
+  background-color: #FDEDDC;
+  color: #333;
+}
+
+.controls button:hover,
+.set-timer button:hover {
+  opacity: 0.9;
 }
 
 .settings-content {
-  margin-top: 1rem;
-  font-family: 'DM Sans', sans-serif;
+margin-top: 10px;
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Settings Gear Icon */
-.toggle-settings {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: none;
+.settings-content input,
+.settings-content select {
+  padding: 5px;
+  margin: 5px 0 10px;
+  border-radius: 6px;
+  border: 1px solid #C9D6B5;
+}
+
+input, select {
+#spotifyInput {
+width: 100%;
+  padding: 8px;
+  border: 1px solid #C9D6B5;
+  border-radius: 8px;
+margin-bottom: 10px;
+  padding: 6px;
+  border: 1px solid #ccc;
+}
+
+#loadSpotify {
+  background-color: #CDA67F;
+  color: white;
   border: none;
-  font-size: 1.2rem;
+  padding: 8px 12px;
+border-radius: 8px;
   cursor: pointer;
-  color: #333;
 }
 
-/* Music / Affirmation / Quote / Spinner Boxes */
-#musicBlock, #affirmationsBlock, #quotesBlock, #spinnerBlock {
+#timerDisplay {
+  font-size: 3rem;
+  text-align: center;
+  font-family: 'Italiana', serif;
+  margin: 20px 0;
+#spotifyContainer iframe {
+  width: 100%;
+  height: 80px;
+  border-radius: 12px;
+  margin-top: 10px;
+}
+
+button {
   font-family: 'DM Sans', sans-serif;
-}
-
-/* Fixed Hidden Class */
 .hidden {
   display: none;
 }
 
-select, input[type="number"] {
-  width: 100%;
-  padding: 0.4rem;
-  margin: 0.25rem 0;
-  font-family: 'DM Sans', sans-serif;
-}
-
-label {
-  font-size: 0.9rem;
-  font-family: 'Poppins', sans-serif;
-}
-
-/* Keep block header draggable but visually empty */
-.block-header {
-  cursor: move;
-  padding: 0.5rem;
-  font-weight: bold;
-  font-family: 'Playfair Display', serif;
-  color: transparent;
-  height: 1rem;
-  user-select: none;
+.coming-soon {
+  font-family: 'Italiana', sans-serif;
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 20px;
+  color: #999;
 }
