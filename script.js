@@ -7,11 +7,11 @@ window.onload = () => {
     shortBreak: 5,
     longBreak: 15,
   };
-  let sounds = {
+  let selectedSound = "whoosh";
+  const sounds = {
     whoosh: new Audio("sounds/whoosh.mp3"),
     chime: new Audio("sounds/chime.mp3"),
   };
-  let selectedSound = "whoosh";
 
   const timerDisplay = document.getElementById("timerDisplay");
   const startBtn = document.getElementById("start");
@@ -21,12 +21,18 @@ window.onload = () => {
   const settingsButton = document.querySelector(".toggle-settings");
   const settingsContent = document.querySelector(".settings-content");
   const backgroundSelector = document.getElementById("backgroundSelector");
-  const soundSelector = document.getElementById("soundSelector");
 
   function updateTimerDisplay() {
     const minutes = Math.floor(timeLeft / 60).toString().padStart(2, "0");
     const seconds = (timeLeft % 60).toString().padStart(2, "0");
     timerDisplay.textContent = `${minutes}:${seconds}`;
+  }
+
+  function playSound() {
+    const sound = sounds[selectedSound].cloneNode(true);
+    sound.play().catch((e) => {
+      console.warn("Sound playback blocked or failed", e);
+    });
   }
 
   function startTimer() {
@@ -37,7 +43,7 @@ window.onload = () => {
         updateTimerDisplay();
       } else {
         clearInterval(timer);
-        sounds[selectedSound].play();
+        playSound();
         if (currentPhase === "work") {
           switchPhase("shortBreak", true);
         }
@@ -53,12 +59,11 @@ window.onload = () => {
     clearInterval(timer);
     timeLeft = settings[currentPhase] * 60;
     updateTimerDisplay();
+    // Do NOT play sound here
   }
 
   function switchPhase(phase, autoStart = false) {
     currentPhase = phase;
-
-    // Update visible label
     phaseLabel.textContent =
       phase === "work"
         ? "Reading/Productivity"
@@ -106,7 +111,7 @@ window.onload = () => {
     }
   });
 
-  // Tabs: allow multiple open
+  // Tabs – allow multiple open
   const navButtons = document.querySelectorAll(".nav-button");
   navButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -115,26 +120,29 @@ window.onload = () => {
     });
   });
 
-  // Draggable blocks
+  // Make all boxes draggable using .block-header
   const blocks = document.querySelectorAll(".block");
   blocks.forEach((block) => {
-    let isDragging = false;
-    let offsetX, offsetY;
+    const header = block.querySelector(".block-header");
+    if (!header) return;
 
-    block.addEventListener("mousedown", (e) => {
-      if (!e.target.closest(".block-header")) return;
+    let isDragging = false;
+    let offsetX = 0;
+    let offsetY = 0;
+
+    header.style.cursor = "move";
+    header.addEventListener("mousedown", (e) => {
       isDragging = true;
       offsetX = e.clientX - block.offsetLeft;
       offsetY = e.clientY - block.offsetTop;
       block.style.position = "absolute";
-      block.style.zIndex = 1000;
+      block.style.zIndex = 999;
     });
 
     document.addEventListener("mousemove", (e) => {
-      if (isDragging) {
-        block.style.left = `${e.clientX - offsetX}px`;
-        block.style.top = `${e.clientY - offsetY}px`;
-      }
+      if (!isDragging) return;
+      block.style.left = `${e.clientX - offsetX}px`;
+      block.style.top = `${e.clientY - offsetY}px`;
     });
 
     document.addEventListener("mouseup", () => {
@@ -142,6 +150,6 @@ window.onload = () => {
     });
   });
 
-  // Initialize
+  // Init
   switchPhase("work");
 };
