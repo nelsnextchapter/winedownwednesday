@@ -8,18 +8,20 @@ document.addEventListener("DOMContentLoaded", function () {
   const shortBreakInput = document.getElementById("shortBreakDuration");
   const longBreakInput = document.getElementById("longBreakDuration");
   const backgroundSelector = document.getElementById("backgroundSelector");
+  const fileUpload = document.getElementById("fileUpload");
   const soundSelector = document.getElementById("soundSelector");
   const saveSettings = document.getElementById("saveSettings");
-  const toggleSettings = document.querySelector(".toggle-settings");
   const settingsContent = document.querySelector(".settings-content");
+  const toggleSettings = document.querySelector(".toggle-settings");
   const navButtons = document.querySelectorAll(".nav-button");
   const blocks = document.querySelectorAll(".block");
-  const modeButtons = document.querySelectorAll(".mode-btn");
+  const timerButtons = document.querySelectorAll(".timer-type");
 
   let timer;
   let time = 1500;
   let isRunning = false;
-  let phase = "work";
+  let currentPhase = "work";
+  let skipNextAutoStart = false;
 
   function updateDisplay() {
     const minutes = Math.floor(time / 60);
@@ -27,6 +29,23 @@ document.addEventListener("DOMContentLoaded", function () {
     timerDisplay.textContent = `${minutes.toString().padStart(2, "0")}:${seconds
       .toString()
       .padStart(2, "0")}`;
+  }
+
+  function setTimerPhase(phase) {
+    currentPhase = phase;
+    let duration = 1500;
+    if (phase === "work") {
+      phaseLabel.textContent = "Reading/Productivity";
+      duration = parseInt(workInput.value) * 60;
+    } else if (phase === "short") {
+      phaseLabel.textContent = "Break/Chat";
+      duration = parseInt(shortBreakInput.value) * 60;
+    } else if (phase === "long") {
+      phaseLabel.textContent = "Short Sprint";
+      duration = parseInt(longBreakInput.value) * 60;
+    }
+    time = duration;
+    updateDisplay();
   }
 
   function playSound() {
@@ -37,23 +56,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  function switchPhase(newPhase) {
-    phase = newPhase;
-    phaseLabel.textContent =
-      newPhase === "work" ? "Reading/Productivity" : "Break/Chat";
-
-    const duration =
-      newPhase === "work"
-        ? parseInt(workInput.value)
-        : newPhase === "short"
-        ? parseInt(shortBreakInput.value)
-        : parseInt(longBreakInput.value);
-
-    time = duration * 60;
-    updateDisplay();
-    playSound();
-  }
-
   startBtn.addEventListener("click", () => {
     if (!isRunning) {
       timer = setInterval(() => {
@@ -62,8 +64,22 @@ document.addEventListener("DOMContentLoaded", function () {
         if (time <= 0) {
           clearInterval(timer);
           isRunning = false;
-          switchPhase(phase === "work" ? "short" : "work");
-          startBtn.click(); // auto-start next phase
+          playSound();
+
+          if (currentPhase === "work") {
+            setTimerPhase("short");
+            startBtn.click(); // Auto start short break
+          } else if (currentPhase === "short") {
+            if (!skipNextAutoStart) {
+              skipNextAutoStart = true;
+              // do not auto-start work phase
+            } else {
+              skipNextAutoStart = false;
+              setTimerPhase("work");
+            }
+          } else if (currentPhase === "long") {
+            setTimerPhase("work");
+          }
         }
       }, 1000);
       isRunning = true;
@@ -78,31 +94,25 @@ document.addEventListener("DOMContentLoaded", function () {
   resetBtn.addEventListener("click", () => {
     clearInterval(timer);
     isRunning = false;
-    switchPhase("work");
-  });
-
-  modeButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const mode = button.dataset.mode;
-      switchPhase(mode);
-    });
+    setTimerPhase(currentPhase); // no sound on reset
   });
 
   saveSettings.addEventListener("click", () => {
-    const bgValue = backgroundSelector.value;
-    if (bgValue.startsWith("http")) {
-      document.body.style.backgroundImage = `url('${bgValue}')`;
-    } else {
-      const file = backgroundSelector.files?.[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          document.body.style.backgroundImage = `url('${e.target.result}')`;
-        };
-        reader.readAsDataURL(file);
-      }
+    // Background image via URL
+    const imageUrl = backgroundSelector.value;
+    if (imageUrl && imageUrl.startsWith("http")) {
+      document.body.style.backgroundImage = `url('${imageUrl}')`;
     }
-    switchPhase("work");
+
+    // Background image via file upload
+    const file = fileUpload.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = function () {
+        document.body.style.backgroundImage = `url('${reader.result}')`;
+      };
+      reader.readAsDataURL(file);
+    }
   });
 
   toggleSettings.addEventListener("click", () => {
@@ -112,36 +122,41 @@ document.addEventListener("DOMContentLoaded", function () {
   navButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
       const target = document.getElementById(btn.dataset.target);
-      if (target) {
-        document.querySelectorAll("main > .block").forEach((b) => b.classList.add("hidden"));
-        target.classList.remove("hidden");
-      }
+      target.classList.toggle("hidden");
     });
   });
 
+  // Allow multiple blocks to open (fix)
   blocks.forEach((block) => {
     const header = block.querySelector(".block-header");
-    let offsetX, offsetY;
+    if (header) {
+      header.addEventListener("mousedown", function (e) {
+        let offsetX = e.clientX - block.getBoundingClientRect().left;
+        let offsetY = e.clientY - block.getBoundingClientRect().top;
 
-    header.addEventListener("mousedown", (e) => {
-      offsetX = e.clientX - block.getBoundingClientRect().left;
-      offsetY = e.clientY - block.getBoundingClientRect().top;
+        function moveAt(mouseEvent) {
+          block.style.left = mouseEvent.clientX - offsetX + "px";
+          block.style.top = mouseEvent.clientY - offsetY + "px";
+        }
 
-      function onMouseMove(e) {
-        block.style.left = e.clientX - offsetX + "px";
-        block.style.top = e.clientY - offsetY + "px";
-      }
+        function stopDrag() {
+          document.removeEventListener("mousemove", moveAt);
+          document.removeEventListener("mouseup", stopDrag);
+        }
 
-      function onMouseUp() {
-        document.removeEventListener("mousemove", onMouseMove);
-        document.removeEventListener("mouseup", onMouseUp);
-      }
+        document.addEventListener("mousemove", moveAt);
+        document.addEventListener("mouseup", stopDrag);
+      });
+    }
+  });
 
-      document.addEventListener("mousemove", onMouseMove);
-      document.addEventListener("mouseup", onMouseUp);
+  // Timer switch buttons
+  timerButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const type = btn.dataset.type;
+      setTimerPhase(type);
     });
   });
 
-  updateDisplay();
-  switchPhase("work");
+  setTimerPhase("work");
 });
