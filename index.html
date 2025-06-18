@@ -2,86 +2,92 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wine Down Wednesday</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans&family=Italiana&family=Playfair+Display&family=Poppins:wght@300&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Poppins:wght@300&family=DM+Sans&family=Italiana&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <header class="top-nav">
+  <div class="top-nav">
     <button class="nav-button" data-target="timerBlock">Timer</button>
     <button class="nav-button" data-target="musicBlock">Music</button>
     <button class="nav-button" data-target="affirmationBlock">Affirmations</button>
     <button class="nav-button" data-target="quotesBlock">Quotes</button>
     <button class="nav-button" data-target="spinnerBlock">Spinner Wheel</button>
-  </header>
+  </div>
 
-  <main>
-    <!-- Timer Block -->
-    <div class="block hidden" id="timerBlock">
-      <div class="block-header">
-        <button class="gear-icon toggle-settings">⚙️</button>
+  <!-- TIMER BLOCK -->
+  <div class="block hidden" id="timerBlock">
+    <div class="block-header">Timer</div>
+    <div class="timer-container">
+      <h2 id="phaseLabel">Reading/Productivity</h2>
+      <div id="timerDisplay" class="timer-display">25:00</div>
+      <div class="timer-controls">
+        <button id="start">Start</button>
+        <button id="pause">Pause</button>
+        <button id="reset">Reset</button>
       </div>
-      <div class="timer">
-        <div id="phaseLabel">Reading/Productivity</div>
-        <div id="timerDisplay">25:00</div>
-        <div class="controls">
-          <button id="start">Start</button>
-          <button id="pause">Pause</button>
-          <button id="reset">Reset</button>
-        </div>
-        <div class="set-timer">
-          <button data-timer="work">Reading/Productivity</button>
-          <button data-timer="shortBreak">Short Break</button>
-          <button data-timer="longBreak">Long Break</button>
-        </div>
+      <div class="set-timer">
+        <button data-timer="work">Reading/Productivity</button>
+        <button data-timer="shortBreak">Break/Chat</button>
+        <button data-timer="longBreak">Short Sprint</button>
+      </div>
+      <div class="settings-section">
+        <button class="toggle-settings"><span class="gear-icon">⚙️</span></button>
         <div class="settings-content hidden">
-          <label>Reading/Productivity (minutes): <input type="number" id="workDuration" value="25" /></label>
-          <label>Short Break (minutes): <input type="number" id="shortBreakDuration" value="5" /></label>
-          <label>Long Break (minutes): <input type="number" id="longBreakDuration" value="15" /></label>
-          <label>Background: 
-            <select id="backgroundSelector">
-              <option value="mysticgrill.jpg">Mystic Grill</option>
-              <option value="clocktower.jpg">Clock Tower</option>
-            </select>
-          </label>
-          <label>End Sound: 
-            <select id="soundSelector">
-              <option value="whoosh">Vamp Whoosh</option>
-              <option value="chime">Magical Chime</option>
-            </select>
-          </label>
+          <label for="workDuration">Reading/Productivity (min):</label>
+          <input type="number" id="workDuration" value="25" />
+
+          <label for="shortBreakDuration">Break/Chat (min):</label>
+          <input type="number" id="shortBreakDuration" value="5" />
+
+          <label for="longBreakDuration">Short Sprint (min):</label>
+          <input type="number" id="longBreakDuration" value="15" />
+
+          <label for="soundSelector">Sound Theme:</label>
+          <select id="soundSelector">
+            <option value="whoosh.mp3">Whoosh</option>
+            <option value="chime.mp3">Chime</option>
+          </select>
+
+          <label for="backgroundSelector">Background Image:</label>
+          <select id="backgroundSelector">
+            <option value="background1.jpg">Mystic Grill</option>
+            <option value="background2.jpg">Clock Tower</option>
+            <!-- Add more as needed -->
+          </select>
+
           <button id="saveSettings">Save Settings</button>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Music Block -->
-    <div class="block hidden" id="musicBlock">
-      <div class="block-header"></div>
-      <input type="text" id="spotifyInput" placeholder="Paste Spotify Playlist URL here"/>
-      <button id="loadSpotify">Load Playlist</button>
-      <div id="spotifyContainer"></div>
-    </div>
+  <!-- MUSIC BLOCK -->
+  <div class="block hidden" id="musicBlock">
+    <div class="block-header">Music</div>
+    <input type="text" id="spotifyInput" placeholder="Paste Spotify playlist URL" />
+    <button id="loadSpotify">Load Playlist</button>
+    <div id="spotifyContainer"></div>
+  </div>
 
-    <!-- Affirmations (Placeholder) -->
-    <div class="block hidden" id="affirmationBlock">
-      <div class="block-header"></div>
-      <div class="coming-soon">Affirmations coming soon ✨</div>
-    </div>
+  <!-- AFFIRMATIONS BLOCK -->
+  <div class="block hidden" id="affirmationBlock">
+    <div class="block-header">Affirmations</div>
+    <div class="placeholder">Affirmation content coming soon...</div>
+  </div>
 
-    <!-- Quotes (Placeholder) -->
-    <div class="block hidden" id="quotesBlock">
-      <div class="block-header"></div>
-      <div class="coming-soon">Quotes coming soon 📖</div>
-    </div>
+  <!-- QUOTES BLOCK -->
+  <div class="block hidden" id="quotesBlock">
+    <div class="block-header">Quotes</div>
+    <div class="placeholder">Quotes content coming soon...</div>
+  </div>
 
-    <!-- Spinner Wheel (Placeholder) -->
-    <div class="block hidden" id="spinnerBlock">
-      <div class="block-header"></div>
-      <div class="coming-soon">Spinner wheel coming soon 🎡</div>
-    </div>
-  </main>
+  <!-- SPINNER BLOCK -->
+  <div class="block hidden" id="spinnerBlock">
+    <div class="block-header">Spinner Wheel</div>
+    <div class="placeholder">Spinner content coming soon...</div>
+  </div>
 
   <script src="script.js"></script>
 </body>
