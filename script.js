@@ -1,23 +1,26 @@
-// DOMContentLoaded event ensures script runs after page loads
 document.addEventListener("DOMContentLoaded", function () {
   const timerDisplay = document.getElementById("timerDisplay");
   const phaseLabel = document.getElementById("phaseLabel");
   const startBtn = document.getElementById("start");
   const pauseBtn = document.getElementById("pause");
   const resetBtn = document.getElementById("reset");
+  const readingBtn = document.getElementById("readingBtn");
+  const breakBtn = document.getElementById("breakBtn");
+  const sprintBtn = document.getElementById("sprintBtn");
   const workInput = document.getElementById("workDuration");
   const shortBreakInput = document.getElementById("shortBreakDuration");
   const longBreakInput = document.getElementById("longBreakDuration");
-  const backgroundSelector = document.getElementById("backgroundSelector");
   const soundSelector = document.getElementById("soundSelector");
   const saveSettings = document.getElementById("saveSettings");
+  const backgroundUrlInput = document.getElementById("backgroundUrl");
+  const backgroundUpload = document.getElementById("backgroundUpload");
   const toggleSettings = document.querySelector(".toggle-settings");
   const settingsContent = document.querySelector(".settings-content");
   const navButtons = document.querySelectorAll(".nav-button");
   const blocks = document.querySelectorAll(".block");
-  const timerSelection = document.getElementById("timerSelection");
-  const uploadBackgroundBtn = document.getElementById("uploadBackground");
-  const backgroundInput = document.getElementById("backgroundInput");
+  const spotifyInput = document.getElementById("spotifyInput");
+  const loadSpotify = document.getElementById("loadSpotify");
+  const spotifyContainer = document.getElementById("spotifyContainer");
 
   let timer;
   let time = 1500;
@@ -33,11 +36,11 @@ document.addEventListener("DOMContentLoaded", function () {
   function switchPhase(newPhase) {
     phase = newPhase;
     phaseLabel.textContent =
-      newPhase === "work" ? "Reading/Productivity" : newPhase === "short" ? "Break/Chat" : "Short Sprint";
+      newPhase === "work" ? "Reading/Productivity" : newPhase === "break" ? "Break/Chat" : "Short Sprint";
     const duration =
       newPhase === "work"
         ? parseInt(workInput.value)
-        : newPhase === "short"
+        : newPhase === "break"
         ? parseInt(shortBreakInput.value)
         : parseInt(longBreakInput.value);
     time = duration * 60;
@@ -53,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  function startTimer() {
+  startBtn.addEventListener("click", () => {
     if (!isRunning) {
       timer = setInterval(() => {
         time--;
@@ -61,20 +64,13 @@ document.addEventListener("DOMContentLoaded", function () {
         if (time <= 0) {
           clearInterval(timer);
           isRunning = false;
-          if (phase === "work") {
-            switchPhase("short");
-            startTimer();
-          } else {
-            // Stop after short break ends
-            switchPhase("work");
-          }
+          switchPhase(phase === "work" ? "break" : phase === "break" ? "long" : "work");
+          startBtn.click(); // auto-start next phase
         }
       }, 1000);
       isRunning = true;
     }
-  }
-
-  startBtn.addEventListener("click", startTimer);
+  });
 
   pauseBtn.addEventListener("click", () => {
     clearInterval(timer);
@@ -84,10 +80,26 @@ document.addEventListener("DOMContentLoaded", function () {
   resetBtn.addEventListener("click", () => {
     clearInterval(timer);
     isRunning = false;
-    switchPhase(phase);
+    switchPhase("work");
   });
 
+  readingBtn.addEventListener("click", () => switchPhase("work"));
+  breakBtn.addEventListener("click", () => switchPhase("break"));
+  sprintBtn.addEventListener("click", () => switchPhase("long"));
+
   saveSettings.addEventListener("click", () => {
+    const backgroundUrl = backgroundUrlInput.value;
+    if (backgroundUrl) {
+      document.body.style.backgroundImage = `url('${backgroundUrl}')`;
+    }
+    const file = backgroundUpload.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        document.body.style.backgroundImage = `url('${e.target.result}')`;
+      };
+      reader.readAsDataURL(file);
+    }
     switchPhase("work");
   });
 
@@ -98,54 +110,41 @@ document.addEventListener("DOMContentLoaded", function () {
   navButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
       const target = document.getElementById(btn.dataset.target);
-      if (target.classList.contains("hidden")) {
-        target.classList.remove("hidden");
-        makeDraggable(target);
-      } else {
-        target.classList.add("hidden");
-      }
+      target.classList.toggle("hidden");
     });
   });
 
-  timerSelection.addEventListener("click", (e) => {
-    if (e.target.dataset.phase) {
-      switchPhase(e.target.dataset.phase);
-    }
-  });
-
-  uploadBackgroundBtn.addEventListener("click", () => {
-    const url = backgroundInput.value.trim();
-    if (url) {
-      document.body.style.backgroundImage = `url('${url}')`;
-    }
-  });
-
   function makeDraggable(el) {
-    const header = el.querySelector(".block-header");
-    if (!header) return;
+    let isDragging = false;
+    let offsetX, offsetY;
 
-    header.style.cursor = "move";
-    let offsetX = 0, offsetY = 0, isDragging = false;
-
-    header.onmousedown = function (e) {
-      offsetX = e.clientX - el.offsetLeft;
-      offsetY = e.clientY - el.offsetTop;
+    el.addEventListener("mousedown", function (e) {
+      if (e.target.closest(".settings-content") || e.target.tagName === "INPUT" || e.target.tagName === "BUTTON") return;
       isDragging = true;
-      document.onmousemove = function (e) {
-        if (isDragging) {
-          el.style.left = `${e.clientX - offsetX}px`;
-          el.style.top = `${e.clientY - offsetY}px`;
-        }
-      };
-      document.onmouseup = function () {
-        isDragging = false;
-        document.onmousemove = null;
-        document.onmouseup = null;
-      };
-    };
+      offsetX = e.clientX - el.getBoundingClientRect().left;
+      offsetY = e.clientY - el.getBoundingClientRect().top;
+    });
+
+    document.addEventListener("mousemove", function (e) {
+      if (isDragging) {
+        el.style.left = `${e.clientX - offsetX}px`;
+        el.style.top = `${e.clientY - offsetY}px`;
+      }
+    });
+
+    document.addEventListener("mouseup", function () {
+      isDragging = false;
+    });
   }
 
   blocks.forEach(makeDraggable);
+
+  loadSpotify.addEventListener("click", () => {
+    const url = spotifyInput.value;
+    if (url) {
+      spotifyContainer.innerHTML = `<iframe src="${url}" width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
+    }
+  });
 
   updateDisplay();
   switchPhase("work");
