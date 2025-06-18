@@ -48,7 +48,7 @@ main {
   border: 1px solid #CDA67F;
   border-radius: 20px;
   padding: 20px;
-  width: 320px;
+  width: 650px;
   z-index: 10;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
@@ -75,12 +75,12 @@ main {
 
 #phaseLabel {
   font-family: 'Playfair Display', serif;
-  font-size: 1.2rem;
+  font-size: 3rem;
   margin-bottom: 10px;
 }
 
 #timerDisplay {
-  font-size: 4rem;
+  font-size: 6rem;
   font-weight: bold;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   margin-bottom: 10px;
@@ -155,4 +155,17 @@ main {
   text-align: center;
   padding: 20px;
   color: #999;
+}
+
+.timer-modes {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap; /* allows wrapping on smaller screens */
+}
+
+.timer-modes button {
+  flex: 1;
+  min-width: 100px; /* ensures readable buttons */
+  white-space: nowrap;
 }
