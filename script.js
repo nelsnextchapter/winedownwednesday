@@ -98,14 +98,15 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   saveSettings.addEventListener("click", () => {
-    // Background image via URL
-    const imageUrl = backgroundSelector.value;
-    if (imageUrl && imageUrl.startsWith("http")) {
-      document.body.style.backgroundImage = `url('${imageUrl}')`;
+ // Background image via URL
+    const url = backgroundURL.value;
+    if (url && url.startsWith("http")) {
+      document.body.style.backgroundImage = `url('${url}')`;
     }
 
+
     // Background image via file upload
-    const file = fileUpload.files[0];
+    const file = backgroundUpload.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = function () {
@@ -119,17 +120,44 @@ document.addEventListener("DOMContentLoaded", function () {
     settingsContent.classList.toggle("hidden");
   });
 
-  navButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const target = document.getElementById(btn.dataset.target);
-      target.classList.toggle("hidden");
-    });
-  });
-
   // Allow multiple blocks to open (fix)
+blocks.forEach((block) => {
+  const header = block.querySelector(".block-header");
+  if (header) {
+    header.style.cursor = "move";
+    header.addEventListener("mousedown", function (e) {
+      let offsetX = e.clientX - block.getBoundingClientRect().left;
+      let offsetY = e.clientY - block.getBoundingClientRect().top;
+
+      function moveAt(mouseEvent) {
+        block.style.left = mouseEvent.clientX - offsetX + "px";
+        block.style.top = mouseEvent.clientY - offsetY + "px";
+      }
+
+      function stopDrag() {
+        document.removeEventListener("mousemove", moveAt);
+        document.removeEventListener("mouseup", stopDrag);
+      }
+
+      document.addEventListener("mousemove", moveAt);
+      document.addEventListener("mouseup", stopDrag);
+    });
+  }
+});
+
+navButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const target = document.getElementById(btn.dataset.target);
+    target.classList.toggle("hidden");
+  });
+});
+
+
+ // Make all blocks draggable
   blocks.forEach((block) => {
     const header = block.querySelector(".block-header");
     if (header) {
+      header.style.cursor = "move";
       header.addEventListener("mousedown", function (e) {
         let offsetX = e.clientX - block.getBoundingClientRect().left;
         let offsetY = e.clientY - block.getBoundingClientRect().top;
@@ -150,12 +178,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Timer switch buttons
-  timerButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const type = btn.dataset.type;
-      setTimerPhase(type);
-    });
+  // Timer mode switch buttons (fixed to use proper IDs)
+  document.getElementById("selectWork").addEventListener("click", () => {
+    setTimerPhase("work");
+  });
+  document.getElementById("selectShort").addEventListener("click", () => {
+    setTimerPhase("short");
+  });
+  document.getElementById("selectLong").addEventListener("click", () => {
+    setTimerPhase("long");
   });
 
   setTimerPhase("work");
