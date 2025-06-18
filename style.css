@@ -51,6 +51,7 @@ main {
   width: 320px;
   z-index: 10;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  cursor: move;
 }
 
 .block-header {
@@ -74,13 +75,13 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
 }
 
 #phaseLabel {
   font-family: 'Playfair Display', serif;
   font-size: 1.2rem;
   margin-bottom: 10px;
+  text-align: center;
 }
 
 #timerDisplay {
@@ -164,31 +165,58 @@ main {
   color: #999;
 }
 
-#bgUpload,
-#bgUrl,
-#setBgBtn {
+/* Timer selection buttons */
+.timer-selection {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+  gap: 10px;
+}
+
+.timer-selection button {
+  background-color: #FDEDDC;
+  color: #333;
+  border: 1px solid #CDA67F;
+  border-radius: 25px;
+  padding: 8px 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.timer-selection button:hover {
+  background-color: #CDA67F;
+  color: white;
+}
+
+/* Upload background input */
+#backgroundInput, #uploadBackground, #backgroundFileInput {
   margin-top: 10px;
-  font-size: 0.85rem;
 }
 
-#bgUrl {
-  padding: 5px;
-  border: 1px solid #C9D6B5;
-  border-radius: 6px;
-  margin-bottom: 5px;
-}
-
-#setBgBtn {
+#uploadBackground {
+  margin-bottom: 10px;
   background-color: #CDA67F;
   color: white;
   border: none;
-  padding: 6px 10px;
-  border-radius: 6px;
+  padding: 8px 12px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 0.9rem;
-  align-self: start;
 }
 
-#setBgBtn:hover {
-  opacity: 0.9;
+#backgroundFileInput {
+  margin-top: 10px;
+  border: 1px solid #CDA67F;
+  padding: 5px;
+  border-radius: 6px;
+}
+
+/* Center nav bar */
+.top-nav {
+  display: flex;
+  justify-content: center;
+  background-color: rgba(255, 247, 178, 0.85);
+  padding: 10px;
+  font-family: 'Poppins', sans-serif;
+  width: 100%;
+  box-sizing: border-box;
 }
