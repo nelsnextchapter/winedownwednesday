@@ -7,7 +7,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const workInput = document.getElementById("workDuration");
   const shortBreakInput = document.getElementById("shortBreakDuration");
   const longBreakInput = document.getElementById("longBreakDuration");
-  const backgroundSelector = document.getElementById("backgroundSelector");
+  const backgroundUpload = document.getElementById("backgroundUpload");
+  const backgroundURL = document.getElementById("backgroundURL");
   const fileUpload = document.getElementById("fileUpload");
   const soundSelector = document.getElementById("soundSelector");
   const saveSettings = document.getElementById("saveSettings");
@@ -153,7 +154,14 @@ navButtons.forEach((btn) => {
 });
 
 
- // Make all blocks draggable
+ navButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const target = document.getElementById(btn.dataset.target);
+      target.classList.toggle("hidden");
+    });
+  });
+
+  // Allow multiple blocks to open (fix) & make all blocks draggable
   blocks.forEach((block) => {
     const header = block.querySelector(".block-header");
     if (header) {
@@ -178,7 +186,7 @@ navButtons.forEach((btn) => {
     }
   });
 
-  // Timer mode switch buttons (fixed to use proper IDs)
+  // Timer mode switch buttons
   document.getElementById("selectWork").addEventListener("click", () => {
     setTimerPhase("work");
   });
@@ -187,6 +195,22 @@ navButtons.forEach((btn) => {
   });
   document.getElementById("selectLong").addEventListener("click", () => {
     setTimerPhase("long");
+  });
+
+  // Spotify playlist loader
+  const spotifyInput = document.getElementById("spotifyInput");
+  const loadSpotify = document.getElementById("loadSpotify");
+  const spotifyContainer = document.getElementById("spotifyContainer");
+
+  loadSpotify.addEventListener("click", () => {
+    const url = spotifyInput.value.trim();
+    if (url && url.includes("spotify.com")) {
+      const embedUrl = url.replace("open.spotify.com", "open.spotify.com/embed");
+      spotifyContainer.innerHTML = `
+        <iframe src="${embedUrl}"
+          width="100%" height="80" frameborder="0"
+          allowtransparency="true" allow="encrypted-media"></iframe>`;
+    }
   });
 
   setTimerPhase("work");
