@@ -87,7 +87,10 @@ main {
 }
 
 .controls button,
-.set-timer button {
+.set-timer button,
+.timer-modes button,
+#loadSpotify,
+#saveSettings {
   background-color: #CDA67F;
   color: white;
   border: none;
@@ -98,22 +101,18 @@ main {
   font-size: 0.9rem;
 }
 
-.set-timer button {
+.set-timer button,
+#saveSettings {
   background-color: #FDEDDC;
   color: #333;
 }
 
 .controls button:hover,
-.set-timer button:hover {
+.set-timer button:hover,
+#saveSettings:hover,
+#loadSpotify:hover,
+.timer-modes button:hover {
   opacity: 0.9;
-}
-
-.mode-buttons {
-  margin-top: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
 }
 
 .settings-content {
@@ -137,15 +136,6 @@ main {
   border: 1px solid #C9D6B5;
   border-radius: 8px;
   margin-bottom: 10px;
-}
-
-#loadSpotify {
-  background-color: #CDA67F;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 8px;
-  cursor: pointer;
 }
 
 #spotifyContainer iframe {
