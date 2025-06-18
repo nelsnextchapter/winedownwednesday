@@ -119,9 +119,9 @@ nav {
   font-family: 'DM Sans', sans-serif;
 }
 
-/* Hidden Class */
+/* Fixed Hidden Class */
 .hidden {
-  display: none !important;
+  display: none;
 }
 
 select, input[type="number"] {
@@ -134,4 +134,15 @@ select, input[type="number"] {
 label {
   font-size: 0.9rem;
   font-family: 'Poppins', sans-serif;
+}
+
+/* Keep block header draggable but visually empty */
+.block-header {
+  cursor: move;
+  padding: 0.5rem;
+  font-weight: bold;
+  font-family: 'Playfair Display', serif;
+  color: transparent;
+  height: 1rem;
+  user-select: none;
 }
