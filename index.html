@@ -65,8 +65,22 @@
     <!-- Affirmations Block -->
     <div id="affirmationsBlock" class="block hidden">
      <div class="block-header">〰️</div>
-      <p class="coming-soon">Affirmations coming soon!</p>
-    </div>
+      <div id="affirmationsBlock" class="block hidden">
+  <div class="block-header"></div>
+  <div class="affirmation-display" id="affirmationDisplay">Click 'Next' to begin</div>
+
+  <div class="affirmation-controls">
+    <button id="nextAffirmation">Next</button>
+    <label><input type="checkbox" id="shuffleAffirmations" /> Shuffle</label>
+    <label><input type="checkbox" id="loopAffirmations" checked /> Loop</label>
+  </div>
+
+  <div class="affirmation-upload">
+    <textarea id="affirmationInput" placeholder="Paste affirmations (one per line)"></textarea>
+    <input type="file" id="affirmationFile" accept=".txt" />
+    <button id="loadAffirmations">Load</button>
+  </div>
+</div>
 
     <!-- Quotes Block -->
     <div id="quotesBlock" class="block hidden">
