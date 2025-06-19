@@ -62,24 +62,30 @@
       <div id="spotifyContainer"></div>
     </div>
 
-    <!-- Affirmations Block -->
-    <div id="affirmationsBlock" class="block hidden">
-     <div class="block-header">〰️</div>
+   <!-- Affirmations Block -->
+<div id="affirmationsBlock" class="block hidden">
+  <div class="block-header">
+    <button class="gear-icon" id="toggleAffirmationSettings">⚙️</button>
+  </div>
 
-       <div class="affirmation-display" id="affirmationDisplay">Click 'Next' to begin</div>
+  <div class="affirmation-display" id="affirmationDisplay">
+    Click 'Next' to begin
+  </div>
 
   <div class="affirmation-controls">
     <button id="nextAffirmation">Next</button>
-    <label><input type="checkbox" id="shuffleAffirmations" /> Shuffle</label>
-    <label><input type="checkbox" id="loopAffirmations" checked /> Loop</label>
   </div>
 
-  <div class="affirmation-upload">
+  <div class="affirmation-settings hidden" id="affirmationSettings">
+    <label><input type="checkbox" id="shuffleAffirmations" /> Shuffle</label>
+    <label><input type="checkbox" id="loopAffirmations" checked /> Loop</label>
+
     <textarea id="affirmationInput" placeholder="Paste affirmations (one per line)"></textarea>
     <input type="file" id="affirmationFile" accept=".txt" />
     <button id="loadAffirmations">Load</button>
   </div>
 </div>
+
 
     <!-- Quotes Block -->
     <div id="quotesBlock" class="block hidden">
