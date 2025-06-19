@@ -309,3 +309,42 @@ main {
   border-radius: 8px;
   font-family: 'DM Sans', sans-serif;
 }
+
+.spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+#spinnerResult {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  font-family: 'Playfair Display', serif;
+  color: #333;
+}
+
+#spinButton {
+  background-color: #CDA67F;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+#spinButton:hover {
+  opacity: 0.9;
+}
+
+#spinnerInput,
+#spinnerItemList {
+  width: 100%;
+  margin-top: 10px;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #C9D6B5;
+  font-family: 'DM Sans', sans-serif;
+}
