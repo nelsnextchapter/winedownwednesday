@@ -88,11 +88,35 @@
 </div>
 
 
-    <!-- Quotes Block -->
-    <div id="quotesBlock" class="block hidden">
-   <div class="block-header">〰️</div>
-      <p class="coming-soon">Quotes coming soon!</p>
-    </div>
+   <!-- Quotes Block -->
+<div id="quotesBlock" class="block hidden">
+  <div class="block-header">
+    <button class="gear-icon" id="toggleQuoteSettings">⚙️</button>
+  </div>
+
+  <div class="quote-display">
+    <div id="quoteText">Click 'Next' to begin</div>
+    <div id="quoteSpeaker"></div>
+  </div>
+
+  <div class="quote-controls">
+    <button id="nextQuote">Next</button>
+  </div>
+
+  <div class="quote-settings hidden" id="quoteSettings">
+    <label><input type="checkbox" id="shuffleQuotes" /> Shuffle</label>
+    <label><input type="checkbox" id="loopQuotes" checked /> Loop</label>
+
+    <label>Select categories:</label>
+    <div id="categoryCheckboxes"></div>
+
+    <textarea id="quoteInput" placeholder="Paste quotes in format: quote --- speaker --- category (one per line)"></textarea>
+    <input type="file" id="quoteFile" accept=".txt" />
+    <button id="loadQuotes">Load</button>
+    <button id="clearQuotes">Clear Saved</button>
+  </div>
+</div>
+
 
     <!-- Spinner Block -->
     <div id="spinnerBlock" class="block hidden">
