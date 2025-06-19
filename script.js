@@ -184,3 +184,68 @@ navButtons.forEach((btn) => {
 
   setTimerPhase("work");
 });
+
+  // ✨ Affirmations logic
+  const affirmationDisplay = document.getElementById("affirmationDisplay");
+  const nextAffirmationBtn = document.getElementById("nextAffirmation");
+  const shuffleCheckbox = document.getElementById("shuffleAffirmations");
+  const loopCheckbox = document.getElementById("loopAffirmations");
+  const affirmationInput = document.getElementById("affirmationInput");
+  const affirmationFile = document.getElementById("affirmationFile");
+  const loadAffirmationsBtn = document.getElementById("loadAffirmations");
+
+  let affirmations = [];
+  let currentAffirmationIndex = 0;
+
+  function displayAffirmation() {
+    if (affirmations.length === 0) {
+      affirmationDisplay.textContent = "No affirmations loaded.";
+    } else {
+      affirmationDisplay.textContent = affirmations[currentAffirmationIndex];
+    }
+  }
+
+  nextAffirmationBtn.addEventListener("click", () => {
+    if (affirmations.length === 0) return;
+
+    if (shuffleCheckbox.checked) {
+      currentAffirmationIndex = Math.floor(Math.random() * affirmations.length);
+    } else {
+      currentAffirmationIndex++;
+      if (currentAffirmationIndex >= affirmations.length) {
+        if (loopCheckbox.checked) {
+          currentAffirmationIndex = 0;
+        } else {
+          currentAffirmationIndex = affirmations.length - 1;
+        }
+      }
+    }
+    displayAffirmation();
+  });
+
+  loadAffirmationsBtn.addEventListener("click", () => {
+    const pasted = affirmationInput.value
+      .split("\n")
+      .map(line => line.trim())
+      .filter(line => line);
+    affirmations = [...pasted];
+    currentAffirmationIndex = 0;
+    displayAffirmation();
+  });
+
+  affirmationFile.addEventListener("change", () => {
+    const file = affirmationFile.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const lines = e.target.result
+          .split("\n")
+          .map(line => line.trim())
+          .filter(line => line);
+        affirmations = [...lines];
+        currentAffirmationIndex = 0;
+        displayAffirmation();
+      };
+      reader.readAsText(file);
+    }
+  });
