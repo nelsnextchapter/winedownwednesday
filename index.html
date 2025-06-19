@@ -118,13 +118,51 @@
 </div>
 
 
-    <!-- Spinner Block -->
-    <div id="spinnerBlock" class="block hidden">
+   <div class="block hidden" id="spinnerBlock">
+  <div class="block-header">
+    <button class="gear-icon" id="toggleSpinnerSettings">⚙️</button>
+  </div>
+
+  <div class="spinner">
+    <canvas id="wheelCanvas" width="300" height="300"></canvas>
+    <button id="spinButton">Spin the Wheel</button>
+    <div id="spinnerResult"></div>
+  </div>
+
+  <div class="settings-content hidden" id="spinnerSettings">
+    <textarea id="spinnerInput" placeholder="Paste items, one per line — add ~Category if needed"></textarea>
+    <input type="file" id="spinnerFile" />
+    
+    <div id="spinnerCategories"></div>
+    <label><input type="checkbox" id="randomizeSpinner"> Randomize from selected categories</label>
+
+    <div id="spinnerItemList"></div>
+
+    <label>Click Sound URL/File: <input type="text" id="clickSoundUrl" /></label>
+    <input type="file" id="clickSoundFile">
+    <label>Volume: <input type="range" id="clickVolume" min="0" max="1" step="0.01" value="0.5"></label>
+
+    <label>Spin Sound URL/File: <input type="text" id="spinSoundUrl" /></label>
+    <input type="file" id="spinSoundFile">
+    <label>Volume: <input type="range" id="spinVolume" min="0" max="1" step="0.01" value="0.5"></label>
+
+    <label>Result Sound URL/File: <input type="text" id="resultSoundUrl" /></label>
+    <input type="file" id="resultSoundFile">
+    <label>Volume: <input type="range" id="resultVolume" min="0" max="1" step="0.01" value="0.5"></label>
+
+    <button id="loadSpinnerItems">Load Items</button>
+    <button id="clearSpinnerItems">Clear All Items</button>
+  </div>
+</div>
+
+
+ <!-- Mystery Block -->
+    <div id="mysteryBlock" class="block hidden">
     <div class="block-header">〰️</div>
-      <p class="coming-soon">Spinner wheel coming soon!</p>
+      <p class="coming-soon">Mystery coming soon!</p>
     </div>
   </main>
-
+  
   <script src="script.js" defer></script>
 </body>
 </html>
