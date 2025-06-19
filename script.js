@@ -196,6 +196,12 @@ navButtons.forEach((btn) => {
   let affirmations = [];
   let currentAffirmationIndex = 0;
 
+  const stored = localStorage.getItem("savedAffirmations");
+if (stored) {
+  affirmations = JSON.parse(stored);
+  displayAffirmation();
+}
+
   function displayAffirmation() {
     if (affirmations.length === 0) {
       affirmationDisplay.textContent = "No affirmations loaded.";
@@ -228,8 +234,8 @@ navButtons.forEach((btn) => {
       .map(line => line.trim())
       .filter(line => line);
     affirmations = [...pasted];
-    currentAffirmationIndex = 0;
-    displayAffirmation();
+    localStorage.setItem("savedAffirmations", JSON.stringify(affirmations)); 
+  displayAffirmation();
   });
 
   affirmationFile.addEventListener("change", () => {
@@ -243,11 +249,19 @@ navButtons.forEach((btn) => {
           .filter(line => line);
         affirmations = [...lines];
         currentAffirmationIndex = 0;
-        displayAffirmation();
+        localStorage.setItem("savedAffirmations", JSON.stringify(affirmations)); // ← NEW LINE
+      displayAffirmation();
       };
       reader.readAsText(file);
     }
   });
+
+  document.getElementById("clearAffirmations").addEventListener("click", () => {
+  localStorage.removeItem("savedAffirmations");
+  affirmations = [];
+  currentAffirmationIndex = 0;
+  displayAffirmation();
+});
 
   const toggleAffirmationSettings = document.getElementById("toggleAffirmationSettings");
   const affirmationSettings = document.getElementById("affirmationSettings");
