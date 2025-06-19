@@ -196,9 +196,11 @@ navButtons.forEach((btn) => {
   let affirmations = [];
   let currentAffirmationIndex = 0;
 
-  const stored = localStorage.getItem("savedAffirmations");
-if (stored) {
-  affirmations = JSON.parse(stored);
+  // Load from localStorage if available
+const saved = localStorage.getItem("savedAffirmations");
+if (saved) {
+  affirmations = JSON.parse(saved);
+  currentAffirmationIndex = 0;
   displayAffirmation();
 }
 
