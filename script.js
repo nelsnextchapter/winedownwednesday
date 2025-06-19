@@ -273,6 +273,135 @@ if (saved) {
      console.log("Toggled affirmation settings");
   });
 
+  // ✨ Quotes Logic
+const quoteText = document.getElementById("quoteText");
+const quoteSpeaker = document.getElementById("quoteSpeaker");
+const nextQuoteBtn = document.getElementById("nextQuote");
+const shuffleQuotes = document.getElementById("shuffleQuotes");
+const loopQuotes = document.getElementById("loopQuotes");
+const quoteInput = document.getElementById("quoteInput");
+const quoteFile = document.getElementById("quoteFile");
+const loadQuotesBtn = document.getElementById("loadQuotes");
+const clearQuotesBtn = document.getElementById("clearQuotes");
+const categoryCheckboxes = document.getElementById("categoryCheckboxes");
+const toggleQuoteSettings = document.getElementById("toggleQuoteSettings");
+const quoteSettings = document.getElementById("quoteSettings");
+
+let quotes = [];
+let filteredQuotes = [];
+let currentQuoteIndex = 0;
+let allCategories = new Set();
+
+// Load from localStorage
+const savedQuotes = JSON.parse(localStorage.getItem("savedQuotes") || "[]");
+quotes = savedQuotes;
+updateCategories();
+resetFilteredQuotes();
+displayQuote();
+
+function updateCategories() {
+  allCategories.clear();
+  quotes.forEach(q => allCategories.add(q.category));
+  categoryCheckboxes.innerHTML = "";
+
+  [...allCategories].forEach(cat => {
+    const label = document.createElement("label");
+    label.innerHTML = `<input type="checkbox" value="${cat}" checked> ${cat}`;
+    categoryCheckboxes.appendChild(label);
+  });
+
+  categoryCheckboxes.querySelectorAll("input").forEach(checkbox => {
+    checkbox.addEventListener("change", resetFilteredQuotes);
+  });
+}
+
+function resetFilteredQuotes() {
+  const selected = [...categoryCheckboxes.querySelectorAll("input:checked")].map(cb => cb.value);
+  filteredQuotes = quotes.filter(q => selected.includes(q.category));
+  currentQuoteIndex = 0;
+  displayQuote();
+}
+
+function displayQuote() {
+  if (filteredQuotes.length === 0) {
+    quoteText.textContent = "No quotes loaded.";
+    quoteSpeaker.textContent = "";
+    return;
+  }
+
+  const quote = filteredQuotes[currentQuoteIndex];
+  quoteText.textContent = quote.text;
+  quoteSpeaker.textContent = `— ${quote.speaker}`;
+}
+
+nextQuoteBtn.addEventListener("click", () => {
+  if (filteredQuotes.length === 0) return;
+
+  if (shuffleQuotes.checked) {
+    currentQuoteIndex = Math.floor(Math.random() * filteredQuotes.length);
+  } else {
+    currentQuoteIndex++;
+    if (currentQuoteIndex >= filteredQuotes.length) {
+      if (loopQuotes.checked) {
+        currentQuoteIndex = 0;
+      } else {
+        currentQuoteIndex = filteredQuotes.length - 1;
+      }
+    }
+  }
+  displayQuote();
+});
+
+loadQuotesBtn.addEventListener("click", () => {
+  const lines = quoteInput.value
+    .split("\n")
+    .map(line => line.trim())
+    .filter(line => line && line.includes("~"));
+
+  quotes = lines.map(line => {
+    const [text, speaker, category] = line.split("~").map(s => s.trim());
+    return { text, speaker, category };
+  });
+
+  localStorage.setItem("savedQuotes", JSON.stringify(quotes));
+  updateCategories();
+  resetFilteredQuotes();
+});
+
+quoteFile.addEventListener("change", () => {
+  const file = quoteFile.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    const lines = e.target.result
+      .split("\n")
+      .map(line => line.trim())
+      .filter(line => line && line.includes("~"));
+
+    quotes = lines.map(line => {
+      const [text, speaker, category] = line.split("~").map(s => s.trim());
+      return { text, speaker, category };
+    });
+
+    localStorage.setItem("savedQuotes", JSON.stringify(quotes));
+    updateCategories();
+    resetFilteredQuotes();
+  };
+  reader.readAsText(file);
+});
+
+clearQuotesBtn.addEventListener("click", () => {
+  localStorage.removeItem("savedQuotes");
+  quotes = [];
+  updateCategories();
+  resetFilteredQuotes();
+});
+
+toggleQuoteSettings.addEventListener("click", () => {
+  quoteSettings.classList.toggle("hidden");
+});
+
   
 });
 
