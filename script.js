@@ -183,9 +183,8 @@ navButtons.forEach((btn) => {
   });
 
   setTimerPhase("work");
-});
 
-  // ✨ Affirmations logic
+    // ✨ Affirmations logic
   const affirmationDisplay = document.getElementById("affirmationDisplay");
   const nextAffirmationBtn = document.getElementById("nextAffirmation");
   const shuffleCheckbox = document.getElementById("shuffleAffirmations");
@@ -256,3 +255,6 @@ navButtons.forEach((btn) => {
   toggleAffirmationSettings.addEventListener("click", () => {
     affirmationSettings.classList.toggle("hidden");
   });
+
+});
+
