@@ -169,3 +169,53 @@ main {
   min-width: 100px; /* ensures readable buttons */
   white-space: nowrap;
 }
+
+#affirmationDisplay {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  text-align: center;
+  margin-bottom: 15px;
+  padding: 10px;
+  color: #333;
+}
+
+.affirmation-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.affirmation-controls button {
+  background-color: #CDA67F;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.affirmation-controls label {
+  font-size: 0.9rem;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.affirmation-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+#affirmationInput {
+  width: 100%;
+  height: 80px;
+  border: 1px solid #C9D6B5;
+  border-radius: 8px;
+  padding: 8px;
+  font-family: 'DM Sans', sans-serif;
+}
+
+#affirmationFile {
+  font-family: 'DM Sans', sans-serif;
+}
