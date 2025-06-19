@@ -287,6 +287,29 @@ const categoryCheckboxes = document.getElementById("categoryCheckboxes");
 const toggleQuoteSettings = document.getElementById("toggleQuoteSettings");
 const quoteSettings = document.getElementById("quoteSettings");
 
+  function parseQuotes(text) {
+  const lines = text.split("\n");
+  const quotes = [];
+
+  let currentQuoteLines = [];
+
+  for (const line of lines) {
+    if (line.includes("~") && (line.match(/~/g) || []).length === 2) {
+      // This is the speaker/category line
+      const quoteText = currentQuoteLines.join("\n").trim();
+      const [speaker, category] = line.split("~").map(part => part.trim());
+      if (quoteText && speaker && category) {
+        quotes.push({ text: quoteText, speaker, category });
+      }
+      currentQuoteLines = []; // Reset for next quote
+    } else {
+      currentQuoteLines.push(line);
+    }
+  }
+
+  return quotes;
+}
+
 let quotes = [];
 let filteredQuotes = [];
 let currentQuoteIndex = 0;
@@ -353,15 +376,8 @@ nextQuoteBtn.addEventListener("click", () => {
 });
 
 loadQuotesBtn.addEventListener("click", () => {
-  const lines = quoteInput.value
-    .split("\n")
-    .map(line => line.trim())
-    .filter(line => line && line.includes("~"));
+  quotes = parseQuotes(quoteInput.value);
 
-  quotes = lines.map(line => {
-    const [text, speaker, category] = line.split("~").map(s => s.trim());
-    return { text, speaker, category };
-  });
 
   localStorage.setItem("savedQuotes", JSON.stringify(quotes));
   updateCategories();
@@ -374,15 +390,8 @@ quoteFile.addEventListener("change", () => {
 
   const reader = new FileReader();
   reader.onload = function (e) {
-    const lines = e.target.result
-      .split("\n")
-      .map(line => line.trim())
-      .filter(line => line && line.includes("~"));
+    quotes = parseQuotes(e.target.result);
 
-    quotes = lines.map(line => {
-      const [text, speaker, category] = line.split("~").map(s => s.trim());
-      return { text, speaker, category };
-    });
 
     localStorage.setItem("savedQuotes", JSON.stringify(quotes));
     updateCategories();
