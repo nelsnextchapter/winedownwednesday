@@ -254,17 +254,9 @@ navButtons.forEach((btn) => {
 
   toggleAffirmationSettings.addEventListener("click", () => {
     affirmationSettings.classList.toggle("hidden");
+     console.log("Toggled affirmation settings");
   });
 
-   document.getElementById("toggleAffirmationSettings")?.addEventListener("click", () => {
-    const settingsPanel = document.getElementById("affirmationSettings");
-    if (settingsPanel) {
-      settingsPanel.classList.toggle("hidden");
-      console.log("Toggled affirmation settings");
-    } else {
-      console.log("Settings panel not found");
-    }
-  });
   
 });
 
