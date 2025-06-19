@@ -220,6 +220,10 @@ main {
   font-family: 'DM Sans', sans-serif;
 }
 
+.hidden {
+  display: none;
+}
+
 .affirmation-settings {
   display: flex;
   flex-direction: column;
