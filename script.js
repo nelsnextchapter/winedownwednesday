@@ -249,3 +249,10 @@ navButtons.forEach((btn) => {
       reader.readAsText(file);
     }
   });
+
+  const toggleAffirmationSettings = document.getElementById("toggleAffirmationSettings");
+  const affirmationSettings = document.getElementById("affirmationSettings");
+
+  toggleAffirmationSettings.addEventListener("click", () => {
+    affirmationSettings.classList.toggle("hidden");
+  });
