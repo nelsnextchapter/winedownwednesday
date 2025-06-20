@@ -691,5 +691,5 @@ loadFromLocalStorage();
 updateManualSelect();
 drawWheel();
 
-
+});
 
