@@ -1,3 +1,4 @@
+console.log("Script is running");
 document.addEventListener("DOMContentLoaded", function () {
   const timerDisplay = document.getElementById("timerDisplay");
   const phaseLabel = document.getElementById("phaseLabel");
