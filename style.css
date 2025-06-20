@@ -318,10 +318,12 @@ main {
 }
 
 #spinnerResult {
-  margin-top: 10px;
-  font-size: 1.2rem;
+  margin-top: 15px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
   font-family: 'Playfair Display', serif;
-  color: #333;
+  color: #7C0A02; /* Optional: use your deep red accent */
 }
 
 #spinButton {
@@ -364,3 +366,25 @@ main {
   max-height: 90vw;
 }
 
+.confetti {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background: gold;
+  border-radius: 50%;
+  animation: confettiFall 1s ease-out forwards;
+  z-index: 1000;
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateX(0) translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-200px) translateY(500px) scale(0.5);
+    opacity: 0;
+  }
+}
