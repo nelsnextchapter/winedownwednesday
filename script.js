@@ -830,6 +830,6 @@ toggleSpinnerSettings.addEventListener("click", () => {
 loadFromLocalStorage();
 updateManualSelect();
 drawWheel();
-
+});
 });
 
