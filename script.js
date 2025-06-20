@@ -76,6 +76,7 @@ if (timerSoundUrl) {
         if (time <= 0) {
           clearInterval(timer);
           isRunning = false;
+          console.log("Timer ended, attempting to play sound.");
           playSound();
 
           if (currentPhase === "work") {
@@ -109,17 +110,7 @@ if (timerSoundUrl) {
     setTimerPhase(currentPhase); // no sound on reset
   });
 
-  saveSettings.addEventListener("click", () => {
-    // Handle and Saves pasted/typed sound URL
-  const pastedSound = timerSoundUrlInput.value.trim();
-  if (pastedSound && pastedSound.startsWith("http")) {
-    timerSoundUrl = pastedSound;
-    localStorage.setItem("timerEndSound", pastedSound);
-    console.log("Timer sound set via URL:", pastedSound);
-  }
-  
-
-// Handle uploaded sound file
+  // Handle uploaded sound file
 timerSoundFile.addEventListener("change", () => {
   const file = timerSoundFile.files[0];
   if (!file) return;
@@ -140,6 +131,15 @@ reader.readAsDataURL(file);
   timerSoundUrlInput.value = "";
   timerSoundFile.value = "";
 });
+
+  saveSettings.addEventListener("click", () => {
+    // Handle and Saves pasted/typed sound URL
+  const pastedSound = timerSoundUrlInput.value.trim();
+  if (pastedSound && pastedSound.startsWith("http")) {
+    timerSoundUrl = pastedSound;
+    localStorage.setItem("timerEndSound", pastedSound);
+    console.log("Timer sound set via URL:", pastedSound);
+  }
     
 
  // Background image via URL
