@@ -19,53 +19,57 @@ document.addEventListener("DOMContentLoaded", function () {
   const blocks = document.querySelectorAll(".block");
   const timerButtons = document.querySelectorAll(".timer-type");
   const timerSoundFile = document.getElementById("timerSoundFile");
+  const timerSoundUrlInput = document.getElementById("timerSoundUrlInput");
   let timerSoundObjectUrl = null;
 
   // Load saved timer sound URL from localStorage when page loads
-const savedTimerSound = localStorage.getItem("timerSoundURL");
-if (savedTimerSound) {
-  timerSoundObjectUrl = savedTimerSound;
-}
+  const savedTimerSound = localStorage.getItem("timerSoundURL");
+  if (savedTimerSound) {
+    timerSoundObjectUrl = savedTimerSound;
+  }
 
 // Listen for new sound file uploads on file input
-timerSoundFile.addEventListener("change", (e) => {
-  const file = e.target.files[0];
-  if (file) {
-    // Revoke old URL if there is one
-    if (timerSoundObjectUrl && timerSoundObjectUrl.startsWith("blob:")) {
-      URL.revokeObjectURL(timerSoundObjectUrl);
+ if (timerSoundFile) {
+    timerSoundFile.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        if (timerSoundObjectUrl && timerSoundObjectUrl.startsWith("blob:")) {
+          URL.revokeObjectURL(timerSoundObjectUrl);
+        }
+        timerSoundObjectUrl = URL.createObjectURL(file);
+        localStorage.setItem("timerSoundURL", timerSoundObjectUrl);
+      }
+    });
+  } else {
+    console.warn("⚠️ timerSoundFile input not found in DOM");
+  }
+
+ if (timerSoundUrlInput) {
+    if (savedTimerSound && !savedTimerSound.startsWith("blob:")) {
+      timerSoundUrlInput.value = savedTimerSound;
     }
-    // Create new object URL from uploaded file
-    timerSoundObjectUrl = URL.createObjectURL(file);
-    // Save it to localStorage
-    localStorage.setItem("timerSoundURL", timerSoundObjectUrl);
-  }
-});
-
-  const timerSoundUrlInput = document.getElementById("timerSoundUrlInput");
-
-if (timerSoundUrlInput) {
-  // If localStorage has saved URL, fill it into input on load
-  if (savedTimerSound && !savedTimerSound.startsWith("blob:")) {
-    timerSoundUrlInput.value = savedTimerSound;
-  }
 
   // When user changes URL input, update timerSoundObjectUrl and save
-  timerSoundUrlInput.addEventListener("change", () => {
-    const url = timerSoundUrlInput.value.trim();
-    if (url) {
-      // Revoke old blob URL if needed
-      if (timerSoundObjectUrl && timerSoundObjectUrl.startsWith("blob:")) {
-        URL.revokeObjectURL(timerSoundObjectUrl);
-      }
-      timerSoundObjectUrl = url;
-      localStorage.setItem("timerSoundURL", timerSoundObjectUrl);
+   timerSoundUrlInput.addEventListener("change", () => {
+      const url = timerSoundUrlInput.value.trim();
+      if (url) {
+       if (timerSoundObjectUrl && timerSoundObjectUrl.startsWith("blob:")) { // Revoke old blob URL if needed
+          URL.revokeObjectURL(timerSoundObjectUrl);
+        }
+        timerSoundObjectUrl = url;
+        localStorage.setItem("timerSoundURL", timerSoundObjectUrl);
 
-      // Clear file input since URL now used
-      timerSoundFile.value = "";
-    }
-  });
-}
+        if (timerSoundFile) {
+          timerSoundFile.value = "";
+        }
+      }
+    });
+  } else {
+    console.warn("⚠️ timerSoundUrlInput not found in DOM");
+  }
+
+  // You can safely call functions like updateDisplay() here if needed.
+});
 
   let timer;
   let time = 1500;
