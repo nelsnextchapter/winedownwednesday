@@ -424,9 +424,9 @@ const toggleSpinnerSettings = document.getElementById("toggleSpinnerSettings");
 const spinnerCategoryCheckboxes = document.getElementById("spinnerCategoryCheckboxes");
 const manualSelectContainer = document.getElementById("manualSelectContainer");
 const displayResult = document.getElementById("spinnerResult");
-const resultSoundInput = document.getElementById("resultSound");
-const clickSoundInput = document.getElementById("clickSound");
-const spinSoundInput = document.getElementById("spinSound");
+const resultSoundInput = document.getElementById("resultSoundUrl");
+const clickSoundInput = document.getElementById("clickSoundUrl");
+const spinSoundInput = document.getElementById("spinSoundUrl");
 const volumeControl = document.getElementById("volumeControl");
 
 let items = [];
