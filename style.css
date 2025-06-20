@@ -48,7 +48,7 @@ main {
   border: 1px solid #CDA67F;
   border-radius: 20px;
   padding: 20px;
-  width: 650px;
+  width: 475px;
   z-index: 10;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
