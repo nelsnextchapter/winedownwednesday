@@ -520,14 +520,12 @@ function spinWheel() {
   const spinAudio = new Audio(spinSoundInput.value);
   spinAudio.volume = parseFloat(document.getElementById("spinVolume").value);
 
-  // When the spin sound metadata is loaded
   spinAudio.addEventListener("loadedmetadata", () => {
-    const duration = spinAudio.duration * 1000 || 4000; // fallback to 4s if unknown
-    let start = null;
+    const duration = spinAudio.duration * 1000 || 4000;
     const spinAngle = Math.random() * 360 + 720;
+    let start = null;
 
-    // Start the spin sound immediately
-    spinAudio.play();
+    spinAudio.play(); // start the spin sound
 
     function animate(timestamp) {
       if (!start) start = timestamp;
@@ -541,8 +539,13 @@ function spinWheel() {
       } else {
         spinning = false;
         cancelAnimationFrame(spinTimeout);
-        const degrees = (angle * 180) / Math.PI % 360;
-        const index = Math.floor((selectedItems.length - (degrees / 360) * selectedItems.length)) % selectedItems.length;
+
+        const degrees = ((angle * 180) / Math.PI) % 360;
+        const adjustedDegrees = (degrees + 180) % 360;
+        const index = Math.floor(
+          (selectedItems.length - (adjustedDegrees / 360) * selectedItems.length)
+        ) % selectedItems.length;
+
         const selected = selectedItems[index];
 
         setTimeout(() => {
@@ -555,6 +558,8 @@ function spinWheel() {
 
     animate(performance.now());
   });
+}
+
 
   // If metadata fails to load (e.g. URL is invalid), fallback
   spinAudio.addEventListener("error", () => {
