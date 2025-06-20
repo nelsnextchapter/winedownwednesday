@@ -580,10 +580,12 @@ function spinWheel() {
         const selected = selectedItems[index];
 
         setTimeout(() => {
-          playSound(resultSoundInput.value, parseFloat(document.getElementById("resultVolume").value));
-          showConfetti();
-         
-
+  playSound(resultSoundInput.value, parseFloat(document.getElementById("resultVolume").value));
+  showConfetti();
+  displayResult.textContent = selected.text;
+}, 300);
+    }
+  }
 
   animate(performance.now());
 }
