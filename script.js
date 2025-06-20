@@ -421,7 +421,7 @@ const loadSpinnerItems = document.getElementById("loadSpinnerItems");
 const clearSpinnerItems = document.getElementById("clearSpinnerItems");
 const spinnerSettings = document.getElementById("spinnerSettings");
 const toggleSpinnerSettings = document.getElementById("toggleSpinnerSettings");
-const categoryCheckboxes = document.getElementById("spinnerCategoryCheckboxes");
+const spinnercategoryCheckboxes = document.getElementById("spinnerCategoryCheckboxes");
 const manualSelectContainer = document.getElementById("manualSelectContainer");
 const displayResult = document.getElementById("spinnerResultDisplay");
 const resultSoundInput = document.getElementById("resultSound");
@@ -535,17 +535,17 @@ function saveToLocalStorage() {
 
 function updateCategoryUI() {
   categories = new Set(items.map(i => i.category));
-  categoryCheckboxes.innerHTML = "";
+  spinnerCategoryCheckboxes.innerHTML = "";
   [...categories].forEach(cat => {
     const label = document.createElement("label");
     label.innerHTML = `<input type="checkbox" value="${cat}" checked> ${cat}`;
-    categoryCheckboxes.appendChild(label);
+    spinnerCategoryCheckboxes.appendChild(label);
   });
-  categoryCheckboxes.querySelectorAll("input").forEach(cb => cb.addEventListener("change", updateManualSelect));
+  spinnerCategoryCheckboxes.querySelectorAll("input").forEach(cb => cb.addEventListener("change", updateManualSelect));
 }
 
 function updateManualSelect() {
-  const selectedCategories = [...categoryCheckboxes.querySelectorAll("input:checked")].map(cb => cb.value);
+  const selectedCategories = [...spinnerCategoryCheckboxes.querySelectorAll("input:checked")].map(cb => cb.value);
   const filtered = items.filter(i => selectedCategories.includes(i.category));
   manualSelectContainer.innerHTML = "";
   filtered.sort((a, b) => a.text.localeCompare(b.text));
