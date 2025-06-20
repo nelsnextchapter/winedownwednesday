@@ -514,18 +514,17 @@ function playSound(url, volume = 0.5) {
 function spinWheel() {
   if (spinning || selectedItems.length === 0) return;
 
-  playSound(clickSoundInput.value, parseFloat(document.getElementById("clickVolume").value));
+  playSound(clickSoundInput.value, parseFloat(clickVolume.value));
   spinning = true;
 
   const spinAudio = new Audio(spinSoundInput.value);
-  spinAudio.volume = parseFloat(document.getElementById("spinVolume").value);
+  spinAudio.volume = parseFloat(spinVolume.value);
 
-  spinAudio.addEventListener("loadedmetadata", () => {
-    const duration = spinAudio.duration * 1000 || 4000;
+  const doSpin = (duration) => {
     const spinAngle = Math.random() * 360 + 720;
     let start = null;
 
-    spinAudio.play(); // start the spin sound
+    spinAudio.play();
 
     function animate(timestamp) {
       if (!start) start = timestamp;
@@ -541,15 +540,12 @@ function spinWheel() {
         cancelAnimationFrame(spinTimeout);
 
         const degrees = ((angle * 180) / Math.PI) % 360;
-        const adjustedDegrees = (degrees + 180) % 360;
-        const index = Math.floor(
-          (selectedItems.length - (adjustedDegrees / 360) * selectedItems.length)
-        ) % selectedItems.length;
-
+        const adjustedDegrees = (degrees + 180) % 360; // flip by 180 to align with top
+        const index = Math.floor((selectedItems.length - (adjustedDegrees / 360) * selectedItems.length)) % selectedItems.length;
         const selected = selectedItems[index];
 
         setTimeout(() => {
-          playSound(resultSoundInput.value, parseFloat(document.getElementById("resultVolume").value));
+          playSound(resultSoundInput.value, parseFloat(resultVolume.value));
           showConfetti();
           displayResult.textContent = selected.text;
         }, 300);
@@ -557,6 +553,16 @@ function spinWheel() {
     }
 
     animate(performance.now());
+  };
+
+  spinAudio.addEventListener("loadedmetadata", () => {
+    const duration = spinAudio.duration * 1000 || 4000;
+    doSpin(duration);
+  });
+
+  spinAudio.addEventListener("error", () => {
+    console.warn("Could not load spin sound. Falling back to default duration.");
+    doSpin(4000);
   });
 }
 
@@ -720,5 +726,5 @@ loadFromLocalStorage();
 updateManualSelect();
 drawWheel();
 
-
+});
 
