@@ -9,8 +9,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const shortBreakInput = document.getElementById("shortBreakDuration");
   const longBreakInput = document.getElementById("longBreakDuration");
   const backgroundUpload = document.getElementById("backgroundUpload");
-  const backgroundURL = document.getElementById("backgroundURL");
-  const fileUpload = document.getElementById("fileUpload");
+  const backgroundUrl = document.getElementById("backgroundUrl");
+  const backgroundFileInput = document.getElementById("backgroundFile");
   const saveSettings = document.getElementById("saveSettings");
   const settingsContent = document.querySelector(".settings-content");
   const toggleSettings = document.querySelector(".toggle-settings");
