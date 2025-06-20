@@ -579,15 +579,15 @@ function spinWheel() {
         const index = Math.floor((selectedItems.length - (degrees / 360) * selectedItems.length)) % selectedItems.length;
         const selected = selectedItems[index];
 
-        setTimeout(() => {
+setTimeout(() => {
   playSound(resultSoundInput.value, parseFloat(document.getElementById("resultVolume").value));
   showConfetti();
   displayResult.textContent = selected.text;
 }, 300);
+      }
     }
-  }
 
-  animate(performance.now());
+    animate(performance.now());
 }
 
 function showConfetti() {
