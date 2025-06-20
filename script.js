@@ -1,4 +1,3 @@
-console.log("Script is running");
 document.addEventListener("DOMContentLoaded", function () {
   const timerDisplay = document.getElementById("timerDisplay");
   const phaseLabel = document.getElementById("phaseLabel");
@@ -9,20 +8,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const shortBreakInput = document.getElementById("shortBreakDuration");
   const longBreakInput = document.getElementById("longBreakDuration");
   const backgroundUpload = document.getElementById("backgroundUpload");
-  const backgroundUrl = document.getElementById("backgroundUrl");
-  const backgroundFileInput = document.getElementById("backgroundFile");
+  const backgroundURL = document.getElementById("backgroundURL");
+  const fileUpload = document.getElementById("fileUpload");
+  const soundSelector = document.getElementById("soundSelector");
   const saveSettings = document.getElementById("saveSettings");
   const settingsContent = document.querySelector(".settings-content");
   const toggleSettings = document.querySelector(".toggle-settings");
   const navButtons = document.querySelectorAll(".nav-button");
   const blocks = document.querySelectorAll(".block");
   const timerButtons = document.querySelectorAll(".timer-type");
-  const timerVolume = document.getElementById("timerVolume");
-  const timerSoundFile = document.getElementById("timerSoundFile");
-  const timerSoundUrlInput = document.getElementById("timerSoundUrlInput");
-  let timerSoundObjectUrl = null;
-
-
 
   let timer;
   let time = 1500;
@@ -56,13 +50,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function playSound() {
-  const volume = parseFloat(document.getElementById("timerVolume").value || 0.5);
-  if (timerSoundObjectUrl) {
-    const audio = new Audio(timerSoundObjectUrl);
-    audio.volume = volume;
-    audio.play().catch((err) => console.error("Timer sound error:", err));
+    const selectedSound = soundSelector.value;
+    if (selectedSound) {
+      const audio = new Audio(selectedSound);
+      audio.play();
+    }
   }
-}
 
   startBtn.addEventListener("click", () => {
     if (!isRunning) {
@@ -106,69 +99,27 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   saveSettings.addEventListener("click", () => {
-    
- // Background uploader logic
-const backgroundUrlInput = document.getElementById("backgroundUrl");
-const backgroundFileInput = document.getElementById("backgroundFile");
-const mainContainer = document.body; // Or use a specific container instead of body
+ // Background image via URL
+    const url = backgroundURL.value;
+    if (url && url.startsWith("http")) {
+      document.body.style.backgroundImage = `url('${url}')`;
+    }
 
-function applyBackground(src, isVideo = false) {
-  // Remove any existing video
-  const existing = document.getElementById("backgroundVideo");
-  if (existing) existing.remove();
 
-  if (isVideo) {
-    const video = document.createElement("video");
-    video.id = "backgroundVideo";
-    video.src = src;
-    video.autoplay = true;
-    video.loop = true;
-    video.muted = true;
-    video.playsInline = true;
-    video.style.position = "fixed";
-    video.style.top = 0;
-    video.style.left = 0;
-    video.style.width = "100%";
-    video.style.height = "100%";
-    video.style.objectFit = "cover";
-    video.style.zIndex = "-1";
-    document.body.appendChild(video);
-    mainContainer.style.background = "none";
-  } else {
-    mainContainer.style.background = `url(${src}) no-repeat center center/cover`;
-  }
+    // Background image via file upload
+    const file = backgroundUpload.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = function () {
+        document.body.style.backgroundImage = `url('${reader.result}')`;
+      };
+      reader.readAsDataURL(file);
+    }
+  });
 
-  // Store in localStorage
-  localStorage.setItem("backgroundSrc", src);
-  localStorage.setItem("isVideoBackground", isVideo);
-}
-
-// Load saved background on refresh
-const savedBackground = localStorage.getItem("backgroundSrc");
-const isVideoBackground = localStorage.getItem("isVideoBackground") === "true";
-if (savedBackground) {
-  applyBackground(savedBackground, isVideoBackground);
-}
-
-// Handle file upload
-backgroundFileInput.addEventListener("change", () => {
-  const file = backgroundFileInput.files[0];
-  if (file) {
-    const url = URL.createObjectURL(file);
-    const isVideo = file.type.startsWith("video/");
-    applyBackground(url, isVideo);
-  }
-});
-
-// Handle pasted/typed URL
-backgroundUrlInput.addEventListener("change", () => {
-  const url = backgroundUrlInput.value.trim();
-  if (url) {
-    const isVideo = /\.(mp4|webm|mov|gif)$/i.test(url);
-    applyBackground(url, isVideo);
-  }
-});
-
+  toggleSettings.addEventListener("click", () => {
+    settingsContent.classList.toggle("hidden");
+  });
 
    // Allow multiple blocks to open (fix) & make all blocks draggable
 blocks.forEach((block) => {
@@ -596,7 +547,7 @@ function spinWheel() {
   spinAudio.volume = parseFloat(spinVolume.value);
 
   const doSpin = (duration) => {
-    const spinAngle = (Math.random() * 360 + 720) * 4; // 4x faster spin
+    const spinAngle = (Math.random() * 360 + 720) * 2; // 2x faster spin
     let start = null;
 
     spinAudio.play();
@@ -783,6 +734,5 @@ toggleSpinnerSettings.addEventListener("click", () => {
 loadFromLocalStorage();
 updateManualSelect();
 drawWheel();
+
 });
-
-
