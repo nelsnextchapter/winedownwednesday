@@ -40,14 +40,21 @@
           <label>Break/Chat (min): <input type="number" id="shortBreakDuration" value="5" /></label>
           <label>Short Sprint (min): <input type="number" id="longBreakDuration" value="15" /></label>
           <label>Background Image:
-            <input type="file" id="backgroundUpload" accept="image/*" />
-            or URL: <input type="text" id="backgroundURL" placeholder="Paste image URL here" />
+            <input type="file" id="backgroundFile" accept="image/*,video/*,.gif" />
+            or URL: <input type="text" id="backgroundUrl" placeholder="Paste image/video/GIF URL here" />
           </label>
-          <label for="soundSelector">Sound Theme:</label>
-          <select id="soundSelector">
-            <option value="whoosh.mp3">Whoosh</option>
-            <option value="chime.wav">Chime</option>
-          </select>
+          
+          <label>Upload Timer End Sound:
+          <input type="file" id="timerSoundFile" accept="audio/*" />
+          </label>
+          
+          <label>Timer Sound URL:
+          <input type="text" id="timerSoundUrlInput" placeholder="Paste sound URL here" />
+          </label>
+
+          <label for="timerVolume">Timer End Volume:</label>
+          <input type="range" id="timerVolume" min="0" max="1" step="0.01" value="0.5" />
+          
           <button id="saveSettings">Apply Settings</button>
         </div>
       </div>
@@ -58,7 +65,7 @@
      <div class="block-header">〰️</div>
       <label for="spotifyInput">Paste Spotify Playlist Link:</label>
       <input type="text" id="spotifyInput" placeholder="https://open.spotify.com/..." />
-      <button id="loadSpotify">Load Playlist</button>
+      <button id="loadSpotify">Load</button>
       <div id="spotifyContainer"></div>
     </div>
 
