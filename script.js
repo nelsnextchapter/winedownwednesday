@@ -112,6 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
 }
 
   startBtn.addEventListener("click", () => {
+    console.log("Start clicked");
     if (!isRunning) {
       timer = setInterval(() => {
         time--;
