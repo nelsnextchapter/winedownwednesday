@@ -431,7 +431,37 @@ const clickVolume = document.getElementById("clickVolume");
 const spinVolume = document.getElementById("spinVolume");
 const resultVolume = document.getElementById("resultVolume");
 
+let clickSoundUrlObject = null;
+let spinSoundUrlObject = null;
+let resultSoundUrlObject = null;
 
+document.getElementById("clickSoundFile").addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    if (clickSoundUrlObject) URL.revokeObjectURL(clickSoundUrlObject); // free old URL
+    clickSoundUrlObject = URL.createObjectURL(file);
+    clickSoundInput.value = clickSoundUrlObject; // update the text input with the object URL
+  }
+});
+
+document.getElementById("spinSoundFile").addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    if (spinSoundUrlObject) URL.revokeObjectURL(spinSoundUrlObject);
+    spinSoundUrlObject = URL.createObjectURL(file);
+    spinSoundInput.value = spinSoundUrlObject;
+  }
+});
+
+document.getElementById("resultSoundFile").addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    if (resultSoundUrlObject) URL.revokeObjectURL(resultSoundUrlObject);
+    resultSoundUrlObject = URL.createObjectURL(file);
+    resultSoundInput.value = resultSoundUrlObject;
+  }
+});
+  
 let items = [];
 let selectedItems = [];
 let categories = new Set();
@@ -483,7 +513,7 @@ function playSound(url, volume = 0.5) {
 
 function spinWheel() {
   if (spinning || selectedItems.length === 0) return;
-  playSound(clickSoundInput.value, parseFloat(clickVolume.value));
+  playSound(clickSoundInput.value, parseFloat(document.getElementById("clickVolume").value));
   spinning = true;
   let duration = 4000;
   let start = null;
@@ -501,12 +531,12 @@ function spinWheel() {
     } else {
       spinning = false;
       cancelAnimationFrame(spinTimeout);
-      const degrees = (angle * 180) / Math.PI % 360;
+      const degrees = ((angle * 180) / Math.PI + 270) % 360; // Add 270° to align with top pointer
       const index = Math.floor((selectedItems.length - (degrees / 360) * selectedItems.length)) % selectedItems.length;
       const selected = selectedItems[index];
-      playSound(spinSoundInput.value, parseFloat(spinVolume.value));
+      playSound(spinSoundInput.value, parseFloat(document.getElementById("spinVolume").value));
       setTimeout(() => {
-        playSound(resultSoundInput.value, parseFloat(resultVolume.value));
+        playSound(resultSoundInput.value, parseFloat(document.getElementById("resultVolume").value));
         showConfetti();
         displayResult.textContent = selected.text;
       }, 300);
