@@ -1,4 +1,3 @@
-console.log("Script is running");
 document.addEventListener("DOMContentLoaded", function () {
   const timerDisplay = document.getElementById("timerDisplay");
   const phaseLabel = document.getElementById("phaseLabel");
@@ -9,67 +8,24 @@ document.addEventListener("DOMContentLoaded", function () {
   const shortBreakInput = document.getElementById("shortBreakDuration");
   const longBreakInput = document.getElementById("longBreakDuration");
   const backgroundUpload = document.getElementById("backgroundUpload");
-  const backgroundUrl = document.getElementById("backgroundUrl");
-  const backgroundFileInput = document.getElementById("backgroundFile");
+  const backgroundURL = document.getElementById("backgroundURL");
+  const fileUpload = document.getElementById("fileUpload");
   const saveSettings = document.getElementById("saveSettings");
   const settingsContent = document.querySelector(".settings-content");
   const toggleSettings = document.querySelector(".toggle-settings");
   const navButtons = document.querySelectorAll(".nav-button");
   const blocks = document.querySelectorAll(".block");
   const timerButtons = document.querySelectorAll(".timer-type");
-  const timerVolume = document.getElementById("timerVolume");
-  const timerSoundFile = document.getElementById("timerSoundFile");
-  const timerSoundUrlInput = document.getElementById("timerSoundUrlInput");
-  let timerSoundObjectUrl = null;
+  const timerSoundUrlInput = document.getElementById("timerSoundUrl");
+const timerSoundFile = document.getElementById("timerSoundFile");
 
-  // Load saved timer sound URL from localStorage when page loads
-  const savedTimerSound = localStorage.getItem("timerSoundURL");
-  if (savedTimerSound) {
-    timerSoundObjectUrl = savedTimerSound;
-  }
+  // Load saved timer sound URL from localStorage
+let timerSoundUrl = localStorage.getItem("timerEndSound") || "";
 
-// Listen for new sound file uploads on file input
- if (timerSoundFile) {
-    timerSoundFile.addEventListener("change", (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        if (timerSoundObjectUrl && timerSoundObjectUrl.startsWith("blob:")) {
-          URL.revokeObjectURL(timerSoundObjectUrl);
-        }
-        timerSoundObjectUrl = URL.createObjectURL(file);
-        localStorage.setItem("timerSoundURL", timerSoundObjectUrl);
-      }
-    });
-  } else {
-    console.warn("⚠️ timerSoundFile input not found in DOM");
-  }
+if (timerSoundUrl) {
+  timerSoundUrlInput.value = timerSoundUrl;
+}
 
- if (timerSoundUrlInput) {
-    if (savedTimerSound && !savedTimerSound.startsWith("blob:")) {
-      timerSoundUrlInput.value = savedTimerSound;
-    }
-
-  // When user changes URL input, update timerSoundObjectUrl and save
-   timerSoundUrlInput.addEventListener("change", () => {
-      const url = timerSoundUrlInput.value.trim();
-      if (url) {
-       if (timerSoundObjectUrl && timerSoundObjectUrl.startsWith("blob:")) { // Revoke old blob URL if needed
-          URL.revokeObjectURL(timerSoundObjectUrl);
-        }
-        timerSoundObjectUrl = url;
-        localStorage.setItem("timerSoundURL", timerSoundObjectUrl);
-
-        if (timerSoundFile) {
-          timerSoundFile.value = "";
-        }
-      }
-    });
-  } else {
-    console.warn("⚠️ timerSoundUrlInput not found in DOM");
-  }
-
-  // You can safely call functions like updateDisplay() here if needed.
-    
 
   let timer;
   let time = 1500;
@@ -103,13 +59,13 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function playSound() {
-  const volume = parseFloat(document.getElementById("timerVolume").value || 0.5);
-  if (timerSoundObjectUrl) {
-    const audio = new Audio(timerSoundObjectUrl);
-    audio.volume = volume;
-    audio.play().catch((err) => console.error("Timer sound error:", err));
-  }
+  if (!timerSoundUrl) return;
+  const audio = new Audio(timerSoundUrl);
+  audio.play().catch(() => {});
 }
+
+
+  }
 
   startBtn.addEventListener("click", () => {
     if (!isRunning) {
@@ -153,69 +109,56 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   saveSettings.addEventListener("click", () => {
+    // Handle pasted/typed sound URL
+timerSoundUrlInput.addEventListener("change", () => {
+  timerSoundUrl = timerSoundUrlInput.value.trim();
+  if (timerSoundUrl) {
+    localStorage.setItem("timerEndSound", timerSoundUrl);
+  }
+});
+
+// Handle uploaded sound file
+timerSoundFile.addEventListener("change", () => {
+  const file = timerSoundFile.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    timerSoundUrl = e.target.result; // base64-encoded sound
+    localStorage.setItem("timerEndSound", timerSoundUrl);
+    timerSoundUrlInput.value = ""; // clear pasted URL input if you want
+  };
+  reader.readAsDataURL(file);
+});
     
- // Background uploader logic
-const backgroundUrlInput = document.getElementById("backgroundUrl");
-const backgroundFileInput = document.getElementById("backgroundFile");
-const mainContainer = document.body; // Or use a specific container instead of body
-
-function applyBackground(src, isVideo = false) {
-  // Remove any existing video
-  const existing = document.getElementById("backgroundVideo");
-  if (existing) existing.remove();
-
-  if (isVideo) {
-    const video = document.createElement("video");
-    video.id = "backgroundVideo";
-    video.src = src;
-    video.autoplay = true;
-    video.loop = true;
-    video.muted = true;
-    video.playsInline = true;
-    video.style.position = "fixed";
-    video.style.top = 0;
-    video.style.left = 0;
-    video.style.width = "100%";
-    video.style.height = "100%";
-    video.style.objectFit = "cover";
-    video.style.zIndex = "-1";
-    document.body.appendChild(video);
-    mainContainer.style.background = "none";
-  } else {
-    mainContainer.style.background = `url(${src}) no-repeat center center/cover`;
-  }
-
-  // Store in localStorage
-  localStorage.setItem("backgroundSrc", src);
-  localStorage.setItem("isVideoBackground", isVideo);
-}
-
-// Load saved background on refresh
-const savedBackground = localStorage.getItem("backgroundSrc");
-const isVideoBackground = localStorage.getItem("isVideoBackground") === "true";
-if (savedBackground) {
-  applyBackground(savedBackground, isVideoBackground);
-}
-
-// Handle file upload
-backgroundFileInput.addEventListener("change", () => {
-  const file = backgroundFileInput.files[0];
-  if (file) {
-    const url = URL.createObjectURL(file);
-    const isVideo = file.type.startsWith("video/");
-    applyBackground(url, isVideo);
-  }
+    document.getElementById("clearTimerSound").addEventListener("click", () => {
+  localStorage.removeItem("timerEndSound");
+  timerSoundUrl = "";
+  timerSoundUrlInput.value = "";
+  timerSoundFile.value = "";
 });
+    
 
-// Handle pasted/typed URL
-backgroundUrlInput.addEventListener("change", () => {
-  const url = backgroundUrlInput.value.trim();
-  if (url) {
-    const isVideo = /\.(mp4|webm|mov|gif)$/i.test(url);
-    applyBackground(url, isVideo);
-  }
-});
+ // Background image via URL
+    const url = backgroundURL.value;
+    if (url && url.startsWith("http")) {
+      document.body.style.backgroundImage = `url('${url}')`;
+    }
 
+
+    // Background image via file upload
+    const file = backgroundUpload.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = function () {
+        document.body.style.backgroundImage = `url('${reader.result}')`;
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  toggleSettings.addEventListener("click", () => {
+    settingsContent.classList.toggle("hidden");
+  });
 
    // Allow multiple blocks to open (fix) & make all blocks draggable
 blocks.forEach((block) => {
@@ -643,7 +586,7 @@ function spinWheel() {
   spinAudio.volume = parseFloat(spinVolume.value);
 
   const doSpin = (duration) => {
-    const spinAngle = (Math.random() * 360 + 720) * 4; // 4x faster spin
+    const spinAngle = (Math.random() * 360 + 720) * 2; // 2x faster spin
     let start = null;
 
     spinAudio.play();
@@ -830,5 +773,5 @@ toggleSpinnerSettings.addEventListener("click", () => {
 loadFromLocalStorage();
 updateManualSelect();
 drawWheel();
-});
 
+});
