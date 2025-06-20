@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
           timerSoundFile.value = "";
         }
       }
-    
+    });
   } else {
     console.warn("⚠️ timerSoundUrlInput not found in DOM");
   }
