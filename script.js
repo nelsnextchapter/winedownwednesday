@@ -65,8 +65,6 @@ if (timerSoundUrl) {
 }
 
 
-  }
-
   startBtn.addEventListener("click", () => {
     if (!isRunning) {
       timer = setInterval(() => {
