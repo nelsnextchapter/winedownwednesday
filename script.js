@@ -118,7 +118,6 @@ if (timerSoundUrl) {
     console.log("Timer sound set via URL:", pastedSound);
   }
   
-});
 
 // Handle uploaded sound file
 timerSoundFile.addEventListener("change", () => {
