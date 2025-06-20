@@ -63,6 +63,7 @@ if (timerSoundUrl) {
     console.log("No timer sound set.");
     return;
   }
+  console.log("🔊 Playing sound from:", timerSoundUrl);
   const audio = new Audio(timerSoundUrl);
   audio.play().catch((e) => console.error("Audio play failed:", e));
 }
