@@ -592,8 +592,9 @@ setTimeout(() => {
       }
     }
 
-    animate(performance.now());
-}
+   animate(performance.now());
+  }); // closes addEventListener
+} // <-- closes spinWheel
 
 function showConfetti() {
   confetti({
