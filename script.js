@@ -427,7 +427,10 @@ const displayResult = document.getElementById("spinnerResult");
 const resultSoundInput = document.getElementById("resultSoundUrl");
 const clickSoundInput = document.getElementById("clickSoundUrl");
 const spinSoundInput = document.getElementById("spinSoundUrl");
-const volumeControl = document.getElementById("volumeControl");
+const clickVolume = document.getElementById("clickVolume");
+const spinVolume = document.getElementById("spinVolume");
+const resultVolume = document.getElementById("resultVolume");
+
 
 let items = [];
 let selectedItems = [];
@@ -471,16 +474,16 @@ function drawWheel() {
   ctx.fill();
 }
 
-function playSound(url) {
+function playSound(url, volume = 0.5) {
   if (!url) return;
   const audio = new Audio(url);
-  audio.volume = parseFloat(volumeControl.value);
-  audio.play();
+  audio.volume = volume;
+  audio.play().catch(err => console.error("Failed to play sound:", err));
 }
 
 function spinWheel() {
   if (spinning || selectedItems.length === 0) return;
-  playSound(clickSoundInput.value);
+  playSound(clickSoundInput.value, parseFloat(clickVolume.value));
   spinning = true;
   let duration = 4000;
   let start = null;
@@ -501,9 +504,9 @@ function spinWheel() {
       const degrees = (angle * 180) / Math.PI % 360;
       const index = Math.floor((selectedItems.length - (degrees / 360) * selectedItems.length)) % selectedItems.length;
       const selected = selectedItems[index];
-      playSound(spinSoundInput.value);
+      playSound(spinSoundInput.value, parseFloat(spinVolume.value));
       setTimeout(() => {
-        playSound(resultSoundInput.value);
+        playSound(resultSoundInput.value, parseFloat(resultVolume.value));
         showConfetti();
         displayResult.textContent = selected.text;
       }, 300);
@@ -604,6 +607,27 @@ clearSpinnerItems.addEventListener("click", () => {
   updateManualSelect();
   drawWheel();
 });
+
+  const randomizeCheckbox = document.getElementById("randomizeSpinner");
+
+randomizeCheckbox.addEventListener("change", () => {
+  if (!randomizeCheckbox.checked) return;
+
+  const selectedCats = [...spinnerCategoryCheckboxes.querySelectorAll("input:checked")].map(cb => cb.value);
+  const filtered = items.filter(i => selectedCats.includes(i.category));
+  shuffleArray(filtered); // optional
+  selectedItems = filtered.slice(0, 10); // limit to 10 max
+  drawWheel();
+});
+
+// Optional helper:
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+
 
 spinBtn.addEventListener("click", spinWheel);
 toggleSpinnerSettings.addEventListener("click", () => {
