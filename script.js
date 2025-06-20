@@ -110,6 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
     audio.play().catch((err) => console.error("Timer sound error:", err));
   }
 }
+});
 
   startBtn.addEventListener("click", () => {
     if (!isRunning) {
