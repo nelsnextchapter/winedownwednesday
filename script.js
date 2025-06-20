@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // You can safely call functions like updateDisplay() here if needed.
-});
+    });
 
   let timer;
   let time = 1500;
