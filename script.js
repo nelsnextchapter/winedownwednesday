@@ -832,4 +832,4 @@ updateManualSelect();
 drawWheel();
 
 });
-});
+
