@@ -540,7 +540,7 @@ function spinWheel() {
         cancelAnimationFrame(spinTimeout);
 
         const degrees = ((angle * 180) / Math.PI) % 360;
-        const adjustedDegrees = (degrees + 270) % 360; // align with top (12 o’clock)
+        const adjustedDegrees = (degrees + 90) % 360; // align with top (12 o’clock)
         const index = Math.floor((selectedItems.length - (adjustedDegrees / 360) * selectedItems.length)) % selectedItems.length;
         const selected = selectedItems[index];
 
@@ -634,6 +634,24 @@ loadSpinnerItems.addEventListener("click", () => {
   saveToLocalStorage();
   updateCategoryUI();
   updateManualSelect();
+});
+
+  const removeSpinnerItemsBtn = document.getElementById("removeSpinnerItems");
+
+removeSpinnerItemsBtn.addEventListener("click", () => {
+  // Get checked item texts from manual select checkboxes
+  const checkedTexts = [...manualSelectContainer.querySelectorAll("input:checked")].map(cb => cb.value);
+
+  // Filter out items that are checked to be removed
+  items = items.filter(item => !checkedTexts.includes(item.text));
+
+  // Save updated list
+  saveToLocalStorage();
+
+  // Update UI and redraw
+  updateCategoryUI();
+  updateManualSelect();
+  drawWheel();
 });
 
 spinnerFile.addEventListener("change", () => {
