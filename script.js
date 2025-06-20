@@ -540,7 +540,7 @@ function spinWheel() {
         cancelAnimationFrame(spinTimeout);
 
         const degrees = ((angle * 180) / Math.PI) % 360;
-        const adjustedDegrees = (degrees + 180) % 360; // flip by 180 to align with top
+        const adjustedDegrees = (degrees + 270) % 360; // align with top (12 o’clock)
         const index = Math.floor((selectedItems.length - (adjustedDegrees / 360) * selectedItems.length)) % selectedItems.length;
         const selected = selectedItems[index];
 
