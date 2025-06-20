@@ -567,41 +567,6 @@ function spinWheel() {
 }
 
 
-  // If metadata fails to load (e.g. URL is invalid), fallback
-  spinAudio.addEventListener("error", () => {
-    console.warn("Could not load spin sound. Falling back to default duration.");
-    const fallbackDuration = 4000;
-    let start = null;
-    const spinAngle = Math.random() * 360 + 720;
-
-    function animate(timestamp) {
-      if (!start) start = timestamp;
-      const progress = timestamp - start;
-      const easeOut = 1 - Math.pow(1 - progress / fallbackDuration, 3);
-      angle = (easeOut * spinAngle * Math.PI) / 180;
-      drawWheel();
-
-      if (progress < fallbackDuration) {
-        spinTimeout = requestAnimationFrame(animate);
-      } else {
-        spinning = false;
-        cancelAnimationFrame(spinTimeout);
-        const degrees = ((angle * 180) / Math.PI + 180) % 360;
-        const index = Math.floor((selectedItems.length - (degrees / 360) * selectedItems.length)) % selectedItems.length;
-        const selected = selectedItems[index];
-
-setTimeout(() => {
-  playSound(resultSoundInput.value, parseFloat(document.getElementById("resultVolume").value));
-  showConfetti();
-  displayResult.textContent = selected.text;
-}, 300);
-      }
-    }
-
-   animate(performance.now());
-  }); // closes addEventListener
-} // <-- closes spinWheel
-
 function showConfetti() {
   confetti({
     particleCount: 100,
