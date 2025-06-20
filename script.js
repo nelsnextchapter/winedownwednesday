@@ -11,13 +11,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const backgroundUpload = document.getElementById("backgroundUpload");
   const backgroundURL = document.getElementById("backgroundURL");
   const fileUpload = document.getElementById("fileUpload");
-  const soundSelector = document.getElementById("soundSelector");
   const saveSettings = document.getElementById("saveSettings");
   const settingsContent = document.querySelector(".settings-content");
   const toggleSettings = document.querySelector(".toggle-settings");
   const navButtons = document.querySelectorAll(".nav-button");
   const blocks = document.querySelectorAll(".block");
   const timerButtons = document.querySelectorAll(".timer-type");
+  const timerVolume = document.getElementById("timerVolume");
   const timerSoundFile = document.getElementById("timerSoundFile");
   const timerSoundUrlInput = document.getElementById("timerSoundUrlInput");
   let timerSoundObjectUrl = null;
@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
           timerSoundFile.value = "";
         }
       }
-    });
+    
   } else {
     console.warn("⚠️ timerSoundUrlInput not found in DOM");
   }
@@ -112,7 +112,6 @@ document.addEventListener("DOMContentLoaded", function () {
 }
 
   startBtn.addEventListener("click", () => {
-    console.log("Start clicked");
     if (!isRunning) {
       timer = setInterval(() => {
         time--;
