@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
         timerSoundObjectUrl = URL.createObjectURL(file);
         localStorage.setItem("timerSoundURL", timerSoundObjectUrl);
       }
-    });
+    
   } else {
     console.warn("⚠️ timerSoundFile input not found in DOM");
   }
