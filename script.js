@@ -435,32 +435,58 @@ let clickSoundUrlObject = null;
 let spinSoundUrlObject = null;
 let resultSoundUrlObject = null;
 
+// On page load - load saved data URLs into inputs if present
+window.addEventListener("load", () => {
+  const savedClickSound = localStorage.getItem("clickSoundData");
+  if (savedClickSound) clickSoundInput.value = savedClickSound;
+
+  const savedSpinSound = localStorage.getItem("spinSoundData");
+  if (savedSpinSound) spinSoundInput.value = savedSpinSound;
+
+  const savedResultSound = localStorage.getItem("resultSoundData");
+  if (savedResultSound) resultSoundInput.value = savedResultSound;
+});
+
+// New event listeners to read files as Base64 and save to localStorage
 document.getElementById("clickSoundFile").addEventListener("change", (e) => {
   const file = e.target.files[0];
   if (file) {
-    if (clickSoundUrlObject) URL.revokeObjectURL(clickSoundUrlObject); // free old URL
-    clickSoundUrlObject = URL.createObjectURL(file);
-    clickSoundInput.value = clickSoundUrlObject; // update the text input with the object URL
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      const dataUrl = event.target.result;
+      localStorage.setItem("clickSoundData", dataUrl);
+      clickSoundInput.value = dataUrl;
+    };
+    reader.readAsDataURL(file);
   }
 });
 
 document.getElementById("spinSoundFile").addEventListener("change", (e) => {
   const file = e.target.files[0];
   if (file) {
-    if (spinSoundUrlObject) URL.revokeObjectURL(spinSoundUrlObject);
-    spinSoundUrlObject = URL.createObjectURL(file);
-    spinSoundInput.value = spinSoundUrlObject;
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      const dataUrl = event.target.result;
+      localStorage.setItem("spinSoundData", dataUrl);
+      spinSoundInput.value = dataUrl;
+    };
+    reader.readAsDataURL(file);
   }
 });
 
 document.getElementById("resultSoundFile").addEventListener("change", (e) => {
   const file = e.target.files[0];
   if (file) {
-    if (resultSoundUrlObject) URL.revokeObjectURL(resultSoundUrlObject);
-    resultSoundUrlObject = URL.createObjectURL(file);
-    resultSoundInput.value = resultSoundUrlObject;
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      const dataUrl = event.target.result;
+      localStorage.setItem("resultSoundData", dataUrl);
+      resultSoundInput.value = dataUrl;
+    };
+    reader.readAsDataURL(file);
   }
 });
+
   
 let items = [];
 let selectedItems = [];
@@ -521,7 +547,7 @@ function spinWheel() {
   spinAudio.volume = parseFloat(spinVolume.value);
 
   const doSpin = (duration) => {
-    const spinAngle = Math.random() * 360 + 720;
+    const spinAngle = (Math.random() * 360 + 720) * 2; // 2x faster spin
     let start = null;
 
     spinAudio.play();
