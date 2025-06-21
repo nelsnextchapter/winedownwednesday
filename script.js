@@ -72,6 +72,22 @@ if (timerSoundUrl) {
     updateDisplay();
   }
 
+  const backgroundType = localStorage.getItem("backgroundType");
+const backgroundData = localStorage.getItem("backgroundData");
+
+if (backgroundData) {
+  if (backgroundType === "image") {
+    document.body.style.backgroundImage = `url('${backgroundData}')`;
+  } else if (backgroundType === "video") {
+    const video = document.getElementById("backgroundVideo");
+    if (video) {
+      video.src = backgroundData;
+      video.style.display = "block";
+      document.body.style.backgroundImage = ""; // Clear any image background
+    }
+  }
+}
+
   // When user types/pastes a URL and changes input
   timerSoundUrlInput.addEventListener("change", () => {
     const pastedUrl = timerSoundUrlInput.value.trim();
@@ -206,23 +222,40 @@ if (timerSoundUrl) {
     console.log("Timer sound set via URL:", pastedSound);
   }
 
-  // Save background image via URL
+  // Save background via URL (only for images)
   const url = backgroundURL.value.trim();
   if (url && url.startsWith("http")) {
     document.body.style.backgroundImage = `url('${url}')`;
-    localStorage.setItem("backgroundImageURL", url);
-    localStorage.removeItem("backgroundImageFile"); // remove file if switching to URL
+    localStorage.setItem("backgroundType", "image");
+    localStorage.setItem("backgroundData", url);
+    localStorage.removeItem("backgroundImageFile");
   }
 
-  // Save background image via file upload
+  // Save background via file upload (image or video)
   const file = backgroundUpload.files[0];
   if (file) {
     const reader = new FileReader();
     reader.onloadend = function () {
-      const dataUrl = reader.result;
-      document.body.style.backgroundImage = `url('${dataUrl}')`;
-      localStorage.setItem("backgroundImageFile", dataUrl);
-      localStorage.removeItem("backgroundImageURL"); // remove URL if switching to file
+      const result = reader.result;
+      const isVideo = file.type.startsWith("video/");
+      const isImage = file.type.startsWith("image/");
+
+      if (isImage) {
+        document.body.style.backgroundImage = `url('${result}')`;
+        const video = document.getElementById("backgroundVideo");
+        if (video) video.style.display = "none"; // Hide video if showing image
+        localStorage.setItem("backgroundType", "image");
+        localStorage.setItem("backgroundData", result);
+      } else if (isVideo) {
+        const video = document.getElementById("backgroundVideo");
+        if (video) {
+          video.src = result;
+          video.style.display = "block";
+        }
+        document.body.style.backgroundImage = ""; // Clear image background
+        localStorage.setItem("backgroundType", "video");
+        localStorage.setItem("backgroundData", result);
+      }
     };
     reader.readAsDataURL(file);
     }
