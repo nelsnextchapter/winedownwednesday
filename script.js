@@ -9,6 +9,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const longBreakInput = document.getElementById("longBreakDuration");
   const backgroundUpload = document.getElementById("backgroundUpload");
   const backgroundURL = document.getElementById("backgroundURL");
+  const savedFile = localStorage.getItem("backgroundImageFile");
+  const savedUrl = localStorage.getItem("backgroundImageURL");
   const fileUpload = document.getElementById("fileUpload");
   const saveSettings = document.getElementById("saveSettings");
   const settingsContent = document.querySelector(".settings-content");
@@ -19,6 +21,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const timerSoundUrlInput = document.getElementById("timerSoundUrl");
   const timerSoundFile = document.getElementById("timerSoundFile");
   const clearTimerSoundBtn = document.getElementById("clearTimerSound");
+  
+  // 🌅 Load saved background image
+  if (savedFile) {
+  document.body.style.backgroundImage = `url('${savedFile}')`;
+} else if (savedUrl) {
+  document.body.style.backgroundImage = `url('${savedUrl}')`;
+  backgroundURL.value = savedUrl;
+}
 
   // Load saved timer sound URL from localStorage
   let timerSoundUrl = localStorage.getItem("timerEndSound") || "";
@@ -188,30 +198,33 @@ if (timerSoundUrl) {
 
 
   saveSettings.addEventListener("click", () => {
-    // Handle and Saves pasted/typed sound URL
+  // Save pasted/typed sound URL
   const pastedSound = timerSoundUrlInput.value.trim();
   if (pastedSound && pastedSound.startsWith("http")) {
     timerSoundUrl = pastedSound;
     localStorage.setItem("timerEndSound", pastedSound);
     console.log("Timer sound set via URL:", pastedSound);
   }
-    
 
- // Background image via URL
-    const url = backgroundURL.value;
-    if (url && url.startsWith("http")) {
-      document.body.style.backgroundImage = `url('${url}')`;
-    }
+  // Save background image via URL
+  const url = backgroundURL.value.trim();
+  if (url && url.startsWith("http")) {
+    document.body.style.backgroundImage = `url('${url}')`;
+    localStorage.setItem("backgroundImageURL", url);
+    localStorage.removeItem("backgroundImageFile"); // remove file if switching to URL
+  }
 
-
-    // Background image via file upload
-    const file = backgroundUpload.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = function () {
-        document.body.style.backgroundImage = `url('${reader.result}')`;
-      };
-      reader.readAsDataURL(file);
+  // Save background image via file upload
+  const file = backgroundUpload.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onloadend = function () {
+      const dataUrl = reader.result;
+      document.body.style.backgroundImage = `url('${dataUrl}')`;
+      localStorage.setItem("backgroundImageFile", dataUrl);
+      localStorage.removeItem("backgroundImageURL"); // remove URL if switching to file
+    };
+    reader.readAsDataURL(file);
     }
   });
 
