@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Load saved timer sound URL from localStorage
 let timerSoundUrl = localStorage.getItem("timerEndSound") || "";
+console.log("⏳ Loaded timer sound on startup:", timerSoundUrl);
 
 if (timerSoundUrl) {
   timerSoundUrlInput.value = timerSoundUrl;
@@ -77,10 +78,11 @@ if (timerSoundUrl) {
     const reader = new FileReader();
     reader.onload = function (event) {
       const dataUrl = event.target.result;
-      timerSoundUrl = dataUrl;
       localStorage.setItem("timerEndSound", dataUrl);
-      timerSoundUrlInput.value = dataUrl; // Show base64 URL in input (optional)
-      console.log("Timer sound set via file upload.");
+      timerSoundUrlInput.value = dataUrl;
+      timerSoundUrl = dataUrl; // 🟢 make sure this assignment happens AFTER localStorage is updated
+      console.log("Timer sound set via file upload:", timerSoundUrl);
+
     };
     reader.readAsDataURL(file);
   });
@@ -100,9 +102,13 @@ if (timerSoundUrl) {
       console.log("No timer sound set.");
       return;
     }
+    console.log("🔊 Trying to play sound:", timerSoundUrl);
     const audio = new Audio(timerSoundUrl);
-    audio.play().catch(e => console.error("Audio play failed:", e));
-  }
+    audio.play().then(() => {
+      console.log("✅ Sound playback started");
+    }).catch(e => {
+      console.error("❌ Audio play failed:", e);
+    });
 
 
 
