@@ -117,6 +117,23 @@ if (timerSoundUrl) {
 
   startBtn.addEventListener("click", () => {
     if (!isRunning) {
+       // 🆕 UNLOCK AUDIO
+    if (timerSoundUrl) {
+      if (!audioPlayer) {
+        audioPlayer = new Audio(timerSoundUrl);
+        audioPlayer.volume = 0;
+        audioPlayer.play().then(() => {
+          audioPlayer.pause();
+          audioPlayer.currentTime = 0;
+          audioPlayer.volume = 1;
+          console.log("🔓 Audio unlocked");
+        }).catch(err => {
+          console.warn("Audio unlock failed:", err);
+        });
+      }
+    }
+
+    // ⏳ START TIMER
       timer = setInterval(() => {
         time--;
         updateDisplay();
@@ -124,27 +141,38 @@ if (timerSoundUrl) {
           clearInterval(timer);
           isRunning = false;
           console.log("Timer ended, attempting to play sound.");
-          playSound();
+           // ✅ REUSE UNLOCKED AUDIO OBJECT
+        if (audioPlayer) {
+          audioPlayer.currentTime = 0;
+          audioPlayer.play().then(() => {
+            console.log("✅ Timer sound played");
+          }).catch(e => {
+            console.warn("❌ Timer sound failed to play:", e);
+          });
+        } else {
+          console.warn("⚠️ No audioPlayer loaded");
+        }
 
-          if (currentPhase === "work") {
-            setTimerPhase("short");
-            startBtn.click(); // Auto start short break
-          } else if (currentPhase === "short") {
-            if (!skipNextAutoStart) {
-              skipNextAutoStart = true;
-              // do not auto-start work phase
-            } else {
-              skipNextAutoStart = false;
-              setTimerPhase("work");
-            }
-          } else if (currentPhase === "long") {
+        // ⏭ PHASE SWITCHING
+        if (currentPhase === "work") {
+          setTimerPhase("short");
+          startBtn.click(); // Auto start short break
+        } else if (currentPhase === "short") {
+          if (!skipNextAutoStart) {
+            skipNextAutoStart = true;
+          } else {
+            skipNextAutoStart = false;
             setTimerPhase("work");
           }
+        } else if (currentPhase === "long") {
+          setTimerPhase("work");
         }
-      }, 1000);
-      isRunning = true;
-    }
-  });
+      }
+    }, 1000);
+
+    isRunning = true;
+  }
+});
 
   pauseBtn.addEventListener("click", () => {
     clearInterval(timer);
