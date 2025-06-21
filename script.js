@@ -278,20 +278,39 @@ navButtons.forEach((btn) => {
   });
 
   // Spotify playlist loader
-  const spotifyInput = document.getElementById("spotifyInput");
-  const loadSpotify = document.getElementById("loadSpotify");
-  const spotifyContainer = document.getElementById("spotifyContainer");
+const spotifyInput = document.getElementById("spotifyInput");
+const loadSpotify = document.getElementById("loadSpotify");
+const spotifyContainer = document.getElementById("spotifyContainer");
+const toggleSpotifySettings = document.querySelector(".toggle-spotify-settings");
+const spotifySettingsContent = document.querySelector(".spotify-settings-content");
 
-  loadSpotify.addEventListener("click", () => {
-    const url = spotifyInput.value.trim();
-    if (url && url.includes("spotify.com")) {
-      const embedUrl = url.replace("open.spotify.com", "open.spotify.com/embed");
-      spotifyContainer.innerHTML = `
-        <iframe src="${embedUrl}"
-          width="100%" height="80" frameborder="0"
-          allowtransparency="true" allow="encrypted-media"></iframe>`;
-    }
-  });
+// Toggle Spotify settings visibility
+toggleSpotifySettings.addEventListener("click", () => {
+  spotifySettingsContent.classList.toggle("hidden");
+});
+
+// Load Spotify player on click and save to localStorage
+loadSpotify.addEventListener("click", () => {
+  const url = spotifyInput.value.trim();
+  if (url && url.includes("spotify.com")) {
+    const embedUrl = url.replace("open.spotify.com", "open.spotify.com/embed");
+    spotifyContainer.innerHTML = `
+      <iframe src="${embedUrl}"
+        width="100%" height="80" frameborder="0"
+        allowtransparency="true" allow="encrypted-media"></iframe>`;
+    localStorage.setItem("spotifyEmbedUrl", embedUrl);
+  }
+});
+
+// Load saved Spotify player on page load
+const savedSpotify = localStorage.getItem("spotifyEmbedUrl");
+if (savedSpotify) {
+  spotifyContainer.innerHTML = `
+    <iframe src="${savedSpotify}"
+      width="100%" height="80" frameborder="0"
+      allowtransparency="true" allow="encrypted-media"></iframe>`;
+}
+  
 
 
     // ✨ Affirmations logic
