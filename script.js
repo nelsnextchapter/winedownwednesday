@@ -108,7 +108,8 @@ if (timerSoundUrl) {
       console.log("✅ Sound playback started");
     }).catch(e => {
       console.error("❌ Audio play failed:", e);
-    })
+    });
+  }
 
 
 
