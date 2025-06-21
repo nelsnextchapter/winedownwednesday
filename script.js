@@ -67,6 +67,27 @@ if (timerSoundUrl) {
   const audio = new Audio(timerSoundUrl);
   audio.play().catch((e) => console.error("Audio play failed:", e));
 }
+    // Handle uploaded sound file
+timerSoundFile.addEventListener("change", () => {
+  const file = timerSoundFile.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+reader.onload = function (e) {
+  const dataUrl = e.target.result;
+  timerSoundUrl = dataUrl;
+  localStorage.setItem("timerEndSound", dataUrl);
+  timerSoundUrlInput.value = ""; // Optional: clear pasted URL input
+  console.log("Timer sound set via file upload.");
+};
+reader.readAsDataURL(file);
+});
+    
+    document.getElementById("clearTimerSound").addEventListener("click", () => {
+  localStorage.removeItem("timerEndSound");
+  timerSoundUrl = "";
+  timerSoundUrlInput.value = "";
+  timerSoundFile.value = "";
+});
 
 
   startBtn.addEventListener("click", () => {
@@ -111,27 +132,6 @@ if (timerSoundUrl) {
     setTimerPhase(currentPhase); // no sound on reset
   });
 
-  // Handle uploaded sound file
-timerSoundFile.addEventListener("change", () => {
-  const file = timerSoundFile.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-reader.onload = function (e) {
-  const dataUrl = e.target.result;
-  timerSoundUrl = dataUrl;
-  localStorage.setItem("timerEndSound", dataUrl);
-  timerSoundUrlInput.value = ""; // Optional: clear pasted URL input
-  console.log("Timer sound set via file upload.");
-};
-reader.readAsDataURL(file);
-});
-    
-    document.getElementById("clearTimerSound").addEventListener("click", () => {
-  localStorage.removeItem("timerEndSound");
-  timerSoundUrl = "";
-  timerSoundUrlInput.value = "";
-  timerSoundFile.value = "";
-});
 
   saveSettings.addEventListener("click", () => {
     // Handle and Saves pasted/typed sound URL
