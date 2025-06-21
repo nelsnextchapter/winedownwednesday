@@ -23,7 +23,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // Load saved timer sound URL from localStorage
   let timerSoundUrl = localStorage.getItem("timerEndSound") || "";
   console.log("⏳ Loaded timer sound on startup:", timerSoundUrl);
-  
+
+  let audioPlayer = null;
 
 if (timerSoundUrl) {
   timerSoundUrlInput.value = timerSoundUrl;
