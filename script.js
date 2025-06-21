@@ -21,8 +21,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const clearTimerSoundBtn = document.getElementById("clearTimerSound");
 
   // Load saved timer sound URL from localStorage
-let timerSoundUrl = localStorage.getItem("timerEndSound") || "";
-console.log("⏳ Loaded timer sound on startup:", timerSoundUrl);
+  let timerSoundUrl = localStorage.getItem("timerEndSound") || "";
+  console.log("⏳ Loaded timer sound on startup:", timerSoundUrl);
+  let audioPlayer = null;
 
 if (timerSoundUrl) {
   timerSoundUrlInput.value = timerSoundUrl;
@@ -111,6 +112,7 @@ if (timerSoundUrl) {
     });
   }
 
+    setTimerPhase("work");
 
 
   startBtn.addEventListener("click", () => {
@@ -249,7 +251,6 @@ navButtons.forEach((btn) => {
     }
   });
 
-  setTimerPhase("work");
 
     // ✨ Affirmations logic
   const affirmationDisplay = document.getElementById("affirmationDisplay");
