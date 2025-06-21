@@ -61,14 +61,21 @@
       </div>
     </div>
 
+    
     <!-- Music Block -->
-    <div id="musicBlock" class="block hidden">
-     <div class="block-header">〰️</div>
-      <label for="spotifyInput">Paste Spotify Playlist Link:</label>
-      <input type="text" id="spotifyInput" placeholder="https://open.spotify.com/..." />
-      <button id="loadSpotify">Load</button>
-      <div id="spotifyContainer"></div>
-    </div>
+<div id="musicBlock" class="block hidden">
+  <div class="block-header">〰️</div>
+
+  <button class="toggle-spotify-settings">🎵 Spotify Settings</button>
+  <div class="spotify-settings-content hidden">
+    <label for="spotifyInput">Paste Spotify Playlist Link:</label>
+    <input type="text" id="spotifyInput" placeholder="https://open.spotify.com/..." />
+    <button id="loadSpotify">Load</button>
+  </div>
+
+  <div id="spotifyContainer"></div>
+</div>
+
 
    <!-- Affirmations Block -->
 <div id="affirmationsBlock" class="block hidden">
