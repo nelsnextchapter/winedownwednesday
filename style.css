@@ -355,6 +355,129 @@ main {
   font-family: 'DM Sans', sans-serif;
 }
 
+/* ✅ TO-DO BLOCK STYLING FIXES */
+#todoBlock {
+  width: 475px;
+  min-height: 200px;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 1em;
+  border-radius: 16px;
+  font-family: 'Poppins', sans-serif;
+  overflow: auto;
+  resize: both;
+  display: flex;
+  flex-direction: column;
+}
+
+#todoBlock .block-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+#toggleTodoSettings {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #6b5b4a;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.todo-heading {
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.todo-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  line-height: 1.2;
+}
+
+.todo-subtitle {
+  font-family: 'Great Vibes', cursive;
+  font-size: 26px;
+  margin-top: -10px;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+  gap: 12px;
+  border-bottom: 1px solid #e2e2e2;
+}
+
+.todo-item.completed {
+  opacity: 0.5;
+  text-decoration: line-through;
+}
+
+.todo-task-text {
+  flex: 1;
+  font-family: 'Poppins', sans-serif;
+  word-break: break-word;
+}
+
+.todo-task-category {
+  font-size: 0.85em;
+  color: #666;
+  white-space: nowrap;
+  text-align: right;
+  font-family: 'Lato', sans-serif;
+  font-style: italic;
+}
+
+.todo-task-category.bold {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-style: normal;
+}
+
+/* ✅ Settings Panel Fix */
+#todoSettings {
+  padding: 10px;
+  font-family: 'Poppins', sans-serif;
+}
+
+#todoSettings textarea {
+  width: 100%;
+  height: 100px;
+  border-radius: 8px;
+  padding: 10px;
+  font-family: 'DM Sans', sans-serif;
+  margin-bottom: 10px;
+  border: 1px solid #C9D6B5;
+}
+
+#todoSettings input[type="file"] {
+  margin-bottom: 10px;
+}
+
+#todoSettings button {
+  background-color: #CDA67F;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-right: 5px;
+  margin-bottom: 10px;
+}
+
+#todoCategoryFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+
 .spinner {
   display: flex;
   flex-direction: column;
@@ -433,87 +556,7 @@ main {
     opacity: 0;
   }
 
-  #todoBlock {
-  width: 300px;
-  min-height: 200px;
-  background: rgba(255, 255, 255, 0.8);
-  padding: 1em;
-  border-radius: 16px;
-  font-family: 'Poppins', sans-serif;
-  overflow: auto;
-  resize: both;
-}
-
-/* NEW: Style the block header and position toggle button */
-#todoBlock .block-header {
-  position: relative;
-  padding-right: 36px; /* make room for the settings toggle */
-  display: flex;
-  justify-content: center; /* center the heading */
-  align-items: center;
-}
-
-#toggleTodoSettings {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 20px;
-  color: #6b5b4a; /* match your color theme */
-}
-
-.todo-heading {
-  text-align: center;
-  margin-bottom: 1em;
-  flex-grow: 1; /* so heading uses available space */
-}
-
-.todo-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 28px;
-}
-
-.todo-subtitle {
-  font-family: 'Great Vibes', cursive;
-  font-size: 20px;
-  margin-top: -5px;
-}
-
-.todo-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5em;
-  gap: 10px;
-}
-
-.todo-item.completed {
-  opacity: 0.5;
-  text-decoration: line-through;
-}
-
-.todo-task-text {
-  font-family: 'Poppins', sans-serif;
-  flex: 1;
-  white-space: normal;
-  word-break: break-word;
-}
-
-.todo-task-category {
-  white-space: nowrap;
-  font-style: italic;
-  font-size: 0.9em;
-  color: #555;
-  font-family: 'Lato', sans-serif;
-}
-
-.todo-task-category.bold {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: bold;
-  text-transform: uppercase;
-}
+ 
 
 
 }
