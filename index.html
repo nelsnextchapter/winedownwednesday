@@ -14,6 +14,7 @@
     <button class="nav-button" data-target="affirmationsBlock">Affirmations</button>
     <button class="nav-button" data-target="quotesBlock">Quotes</button>
     <button class="nav-button" data-target="spinnerBlock">Spinner</button>
+    <button class="nav-button" data-target="todoBlock">To-Do</button>
   </header>
 
   <video id="backgroundVideo" autoplay muted loop playsinline style="display: none;"></video>
@@ -178,29 +179,31 @@
   </div>
 </div>
 
+    
     <!-- ✅ TO-DO CHECKLIST BLOCK -->
 <div class="block hidden" id="todoBlock">
-  <div class="block-header">To-Do</div>
-  <div class="todo-heading">
-    <div class="todo-title">Today’s</div>
-    <div class="todo-subtitle">Checklist</div>
+  <div class="block-header">
+    <div class="todo-heading">
+      <div class="todo-title">Today’s</div>
+      <div class="todo-subtitle">Checklist</div>
+    </div>
+    <button id="toggleTodoSettings" class="toggle-settings" title="Toggle Settings">⚙️</button>
   </div>
+
   <div id="todoListContainer"></div>
+
+  <!-- ✅ TO-DO SETTINGS -->
+  <div class="settings-panel hidden" id="todoSettings">
+    <textarea id="todoInput" placeholder="Paste tasks here (e.g., Task ~ Category)"></textarea>
+    <input type="file" id="todoFile" accept=".txt,.csv" />
+    <button id="loadTodoTasks">Load/Apply</button>
+    <button id="clearTodoList">Clear List</button>
+    <button id="removeSelectedTodos">Remove Selected</button>
+    <div id="todoCategoryFilters"></div>
+  </div>
 </div>
 
-<!-- ✅ TO-DO SETTINGS -->
-<div class="settings-panel hidden" id="todoSettings">
-  <textarea id="todoInput" placeholder="Paste tasks here (e.g., Task ~ Category)"></textarea>
-  <input type="file" id="todoFile" accept=".txt,.csv" />
-  <button id="loadTodoTasks">Load/Apply</button>
-  <button id="clearTodoList">Clear List</button>
-  <button id="removeSelectedTodos">Remove Selected</button>
-  <div id="todoCategoryFilters"></div>
-</div>
-<button class="toggle-settings nav-button" data-target="todoSettings">To-Do Settings</button>
 
-<!-- ✅ TO-DO TAB NAV BUTTON -->
-<button class="nav-button" data-target="todoBlock">To-Do</button>
 
 
 
