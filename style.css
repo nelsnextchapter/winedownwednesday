@@ -92,6 +92,8 @@ main {
 }
 
 #timerDisplay {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
   font-size: 6rem;
   font-weight: bold;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
