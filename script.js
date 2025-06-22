@@ -1028,6 +1028,11 @@ todoFile.addEventListener("change", () => {
   reader.readAsText(file);
 });
 
+  document.getElementById("toggleTodoSettings").addEventListener("click", () => {
+  document.getElementById("todoSettings").classList.toggle("hidden");
+});
+
+
 clearTodoList.addEventListener("click", () => {
   localStorage.removeItem("todoTasks");
   todoTasks = [];
