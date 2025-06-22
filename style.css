@@ -486,6 +486,7 @@ main {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.5em;
+  gap: 10px;
 }
 
 .todo-item.completed {
@@ -494,16 +495,18 @@ main {
 }
 
 .todo-task-text {
-  flex: 1;
   font-family: 'Poppins', sans-serif;
+  flex: 1;
+  white-space: normal;
+  word-break: break-word;
 }
 
 .todo-task-category {
-  margin-left: 10px;
+  white-space: nowrap;
   font-style: italic;
   font-size: 0.9em;
   color: #555;
-  white-space: nowrap;
+  font-family: 'Lato', sans-serif;
 }
 
 .todo-task-category.bold {
