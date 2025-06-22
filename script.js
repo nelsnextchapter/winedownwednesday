@@ -897,4 +897,151 @@ loadFromLocalStorage();
 updateManualSelect();
 drawWheel();
 
+  // ✅ TO-DO CHECKLIST LOGIC
+const todoBlock = document.getElementById("todoBlock");
+const todoInput = document.getElementById("todoInput");
+const todoFile = document.getElementById("todoFile");
+const loadTodoTasks = document.getElementById("loadTodoTasks");
+const clearTodoList = document.getElementById("clearTodoList");
+const removeSelectedTodos = document.getElementById("removeSelectedTodos");
+const todoListContainer = document.getElementById("todoListContainer");
+const todoCategoryFilters = document.getElementById("todoCategoryFilters");
+
+let todoTasks = [];
+let filteredTodos = [];
+
+function parseTodoLines(lines) {
+  return lines
+    .map(l => l.trim())
+    .filter(l => l.includes("~"))
+    .map(l => {
+      const [text, category] = l.split("~").map(s => s.trim());
+      return { text, category, completed: false };
+    });
+}
+
+function saveTodos() {
+  localStorage.setItem("todoTasks", JSON.stringify(todoTasks));
+}
+
+function loadTodos() {
+  const saved = localStorage.getItem("todoTasks");
+  if (saved) {
+    todoTasks = JSON.parse(saved);
+    updateTodoFilters();
+    renderTodoList();
+  }
+}
+
+function updateTodoFilters() {
+  const categories = [...new Set(todoTasks.map(t => t.category))];
+  todoCategoryFilters.innerHTML = "";
+  categories.forEach(cat => {
+    const label = document.createElement("label");
+    label.innerHTML = `<input type="checkbox" value="${cat}" checked> ${cat}`;
+    todoCategoryFilters.appendChild(label);
+  });
+
+  todoCategoryFilters.querySelectorAll("input").forEach(cb => {
+    cb.addEventListener("change", renderTodoList);
+  });
+}
+
+function renderTodoList() {
+  const selectedCats = [...todoCategoryFilters.querySelectorAll("input:checked")].map(cb => cb.value);
+  filteredTodos = todoTasks.filter(t => selectedCats.includes(t.category));
+  todoListContainer.innerHTML = "";
+
+  filteredTodos.forEach((task, index) => {
+    const div = document.createElement("div");
+    div.className = "todo-item" + (task.completed ? " completed" : "");
+    div.setAttribute("draggable", true);
+    div.dataset.index = index;
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = task.completed;
+    checkbox.addEventListener("change", () => {
+      task.completed = checkbox.checked;
+      saveTodos();
+      renderTodoList();
+    });
+
+    const text = document.createElement("div");
+    text.className = "todo-task-text";
+    text.textContent = task.text;
+
+    const category = document.createElement("div");
+    category.className = "todo-task-category" + (task.category.length < 12 ? " bold" : "");
+    category.textContent = task.category;
+
+    div.appendChild(checkbox);
+    div.appendChild(text);
+    div.appendChild(category);
+    todoListContainer.appendChild(div);
+  });
+
+  enableDragAndDrop();
+}
+
+function enableDragAndDrop() {
+  let dragged;
+
+  todoListContainer.querySelectorAll(".todo-item").forEach(item => {
+    item.addEventListener("dragstart", () => dragged = item);
+    item.addEventListener("dragover", e => e.preventDefault());
+    item.addEventListener("drop", e => {
+      e.preventDefault();
+      if (!dragged) return;
+      const from = parseInt(dragged.dataset.index);
+      const to = parseInt(item.dataset.index);
+      const [moved] = todoTasks.splice(from, 1);
+      todoTasks.splice(to, 0, moved);
+      saveTodos();
+      renderTodoList();
+    });
+  });
+}
+
+// Handle pasted text or file upload
+loadTodoTasks.addEventListener("click", () => {
+  const lines = todoInput.value.split("\n");
+  const parsed = parseTodoLines(lines);
+  todoTasks.push(...parsed);
+  saveTodos();
+  updateTodoFilters();
+  renderTodoList();
+});
+
+todoFile.addEventListener("change", () => {
+  const file = todoFile.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const lines = e.target.result.split("\n");
+    const parsed = parseTodoLines(lines);
+    todoTasks.push(...parsed);
+    saveTodos();
+    updateTodoFilters();
+    renderTodoList();
+  };
+  reader.readAsText(file);
+});
+
+clearTodoList.addEventListener("click", () => {
+  localStorage.removeItem("todoTasks");
+  todoTasks = [];
+  renderTodoList();
+  updateTodoFilters();
+});
+
+removeSelectedTodos.addEventListener("click", () => {
+  todoTasks = todoTasks.filter(task => !task.completed);
+  saveTodos();
+  renderTodoList();
+  updateTodoFilters();
+});
+
+loadTodos();
+
 });
