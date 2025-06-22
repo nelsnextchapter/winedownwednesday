@@ -444,9 +444,30 @@ main {
   resize: both;
 }
 
+/* NEW: Style the block header and position toggle button */
+#todoBlock .block-header {
+  position: relative;
+  padding-right: 36px; /* make room for the settings toggle */
+  display: flex;
+  justify-content: center; /* center the heading */
+  align-items: center;
+}
+
+#toggleTodoSettings {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #6b5b4a; /* match your color theme */
+}
+
 .todo-heading {
   text-align: center;
   margin-bottom: 1em;
+  flex-grow: 1; /* so heading uses available space */
 }
 
 .todo-title {
@@ -490,5 +511,6 @@ main {
   font-weight: bold;
   text-transform: uppercase;
 }
+
 
 }
