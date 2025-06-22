@@ -392,14 +392,16 @@ main {
 
 .todo-title {
   font-family: 'Playfair Display', serif;
-  font-size: 36px;
+  font-size: 42px;
+  font-weight: 600;
   line-height: 1.2;
 }
 
 .todo-subtitle {
   font-family: 'Great Vibes', cursive;
-  font-size: 26px;
+  font-size: 32px;
   margin-top: -10px;
+  color: #7C0A02;
 }
 
 .todo-item {
