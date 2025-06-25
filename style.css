@@ -13,13 +13,13 @@ body {
 header {
   display: flex;
   justify-content: center;
-  background-color: rgba(255, 247, 178, 0.85);
+  background-color: rgba(68, 116, 188, 0.85);
   padding: 10px;
   font-family: 'Poppins', sans-serif;
 }
 
 .top-nav .nav-button {
-  background-color: #FFF7B2;
+  background-color: #4474bc;
   border: none;
   padding: 10px 20px;
   margin: 0 10px;
@@ -31,7 +31,7 @@ header {
 }
 
 .top-nav .nav-button:hover {
-  background-color: #C9D6B5;
+  background-color: #Ffffff;
 }
 
 main {
@@ -45,7 +45,7 @@ main {
   top: 100px;
   left: 100px;
   background-color: rgba(253, 252, 248, 0.92);
-  border: 1px solid #CDA67F;
+  border: 1px solid #1e254c;
   border-radius: 20px;
   padding: 20px;
   width: 400px;
@@ -105,7 +105,7 @@ main {
 .timer-modes button,
 #loadSpotify,
 #saveSettings {
-  background-color: #CDA67F;
+  background-color: #b0e9f6;
   color: white;
   border: none;
   border-radius: 8px;
@@ -297,7 +297,7 @@ main {
 }
 
 .affirmation-settings button {
-  background-color: #CDA67F;
+  background-color: #b0e9f6;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -333,7 +333,7 @@ main {
 
 .quote-controls button,
 .quote-settings button {
-  background-color: #CDA67F;
+  background-color: #b0e9f6;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -463,7 +463,7 @@ main {
 }
 
 #todoSettings button {
-  background-color: #CDA67F;
+  background-color: #b0e9f6;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -499,7 +499,7 @@ main {
 }
 
 #spinButton {
-  background-color: #CDA67F;
+  background-color: #b0e9f6;
   color: white;
   border: none;
   padding: 10px 20px;
