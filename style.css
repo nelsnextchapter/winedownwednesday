@@ -13,13 +13,13 @@ body {
 header {
   display: flex;
   justify-content: center;
-  background-color: rgba(68, 116, 188, 0.85);
+  background-color: rgba(214, 192, 164, 0.85);
   padding: 10px;
   font-family: 'Poppins', sans-serif;
 }
 
 .top-nav .nav-button {
-  background-color: #4474bc;
+  background-color: #D6C0A4;
   border: none;
   padding: 10px 20px;
   margin: 0 10px;
@@ -31,7 +31,7 @@ header {
 }
 
 .top-nav .nav-button:hover {
-  background-color: #Ffffff;
+  background-color: #F9C56F;
 }
 
 main {
@@ -45,7 +45,7 @@ main {
   top: 100px;
   left: 100px;
   background-color: rgba(253, 252, 248, 0.92);
-  border: 1px solid #1e254c;
+  border: 1px solid #6F5C48;
   border-radius: 20px;
   padding: 20px;
   width: 400px;
@@ -105,7 +105,7 @@ main {
 .timer-modes button,
 #loadSpotify,
 #saveSettings {
-  background-color: #b0e9f6;
+  background-color: #F7E5A0;
   color: white;
   border: none;
   border-radius: 8px;
@@ -150,7 +150,7 @@ main {
 
 .set-timer button,
 #saveSettings {
-  background-color: #FDEDDC;
+  background-color: #F7E5A0;
   color: #333;
 }
 
@@ -234,7 +234,7 @@ main {
 }
 
 .affirmation-controls button {
-  background-color: #CDA67F;
+  background-color: #F7E5A0;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -499,7 +499,7 @@ main {
 }
 
 #spinButton {
-  background-color: #b0e9f6;
+  background-color: #F7E5A0;
   color: white;
   border: none;
   padding: 10px 20px;
