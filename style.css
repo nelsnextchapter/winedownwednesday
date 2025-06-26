@@ -234,7 +234,7 @@ main {
 }
 
 .affirmation-controls button {
-  background-color: #EDE4D7;
+  background-color: #B3A755;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -333,7 +333,7 @@ main {
 
 .quote-controls button,
 .quote-settings button {
-  background-color: #EDE4D7;
+  background-color: #B3A755;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -499,7 +499,7 @@ main {
 }
 
 #spinButton {
-  background-color: #F7E5A0;
+  background-color: #B3A755;
   color: white;
   border: none;
   padding: 10px 20px;
