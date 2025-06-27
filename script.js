@@ -670,7 +670,7 @@ function drawWheel() {
     ctx.beginPath();
     ctx.moveTo(radius, radius);
     ctx.arc(radius, radius, radius, startAngle, endAngle);
-    ctx.fillStyle = item.color || `hsl(${(i * 360) / numItems}, 70%, 70%)`;
+    ctx.fillStyle = item.color || getColorForIndex(i, numItems);
     ctx.fill();
     ctx.save();
     ctx.translate(radius, radius);
