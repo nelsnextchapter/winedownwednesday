@@ -100,12 +100,6 @@ main {
   margin-bottom: 10px;
 }
 
-#timerSettings.settings-panel {
-  max-height: 60vh;  /* or 70vh if you want a bit more */
-  overflow-y: auto;
-  padding-right: 10px; /* optional: avoids text cutoff */
-}
-
 .controls button,
 .set-timer button,
 .timer-modes button,
@@ -498,7 +492,7 @@ main {
 }
 
 .settings-panel::-webkit-scrollbar-thumb {
-  background-color: #CDA67F; /* your brand color */
+  background-color: #6F5C48; /* your brand color */
   border-radius: 10px;
 }
 
