@@ -100,6 +100,12 @@ main {
   margin-bottom: 10px;
 }
 
+#timerSettings.settings-panel {
+  max-height: 60vh;  /* or 70vh if you want a bit more */
+  overflow-y: auto;
+  padding-right: 10px; /* optional: avoids text cutoff */
+}
+
 .controls button,
 .set-timer button,
 .timer-modes button,
