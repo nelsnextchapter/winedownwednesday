@@ -664,6 +664,19 @@ function drawWheel() {
   const radius = canvas.width / 2;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+  function getColorForIndex(index, total) {
+  const baseHue = 36;           // HSL for #D6C0A4
+  const baseSaturation = 41;    // %
+  const baseLightness = 72;     // %
+
+  // Adjust lightness slightly for variation
+  const lightnessVariation = 10;
+  const step = lightnessVariation / total;
+  const lightness = baseLightness - (lightnessVariation / 2) + (index * step);
+
+  return `hsl(${baseHue}, ${baseSaturation}%, ${lightness}%)`;
+}
+
   selectedItems.forEach((item, i) => {
     const startAngle = i * angleStep + angle;
     const endAngle = startAngle + angleStep;
