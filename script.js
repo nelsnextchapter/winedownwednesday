@@ -262,7 +262,7 @@ if (backgroundData) {
   });
 
   toggleSettings.addEventListener("click", () => {
-    settingsContent.classList.toggle("hidden");
+    timerSettingsPanel.classList.toggle("hidden");
   });
 
    // Allow multiple blocks to open (fix) & make all blocks draggable
