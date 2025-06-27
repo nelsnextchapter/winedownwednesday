@@ -482,7 +482,7 @@ main {
 }
 
 .settings-panel {
-  max-height: 70vh; /* or 60-80vh based on your screen size */
+  max-height: 60vh; /* or 60-80vh based on your screen size */
   overflow-y: auto;
   padding-right: 10px; /* prevent scrollbar from overlaying text */
 }
@@ -492,7 +492,7 @@ main {
 }
 
 .settings-panel::-webkit-scrollbar-thumb {
-  background-color: #6F5C48; /* your brand color */
+  background-color: #EDE4D7; /* your brand color */
   border-radius: 10px;
 }
 
