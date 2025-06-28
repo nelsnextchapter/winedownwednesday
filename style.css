@@ -49,8 +49,6 @@ main {
   border-radius: 20px;
   padding: 20px;
   width: 400px;
-  max-height: 80vh;           /* NEW: limits height */
-  overflow-y: auto;           /* NEW: enables scroll */
   z-index: 10;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
@@ -100,6 +98,11 @@ main {
   font-weight: bold;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   margin-bottom: 10px;
+}
+
+#timerSettings.settings-panel {
+  max-height: 60vh;
+  overflow-y: auto;
 }
 
 .controls button,
