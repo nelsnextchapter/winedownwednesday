@@ -45,7 +45,7 @@ main {
   top: 100px;
   left: 100px;
   background-color: rgba(253, 252, 248, 0.92);
-  border: 1px solid #6F5C48;
+  border: 1px solid #FFA552;
   border-radius: 20px;
   padding: 20px;
   width: 400px;
@@ -112,7 +112,7 @@ main {
 .timer-modes button,
 #loadSpotify,
 #saveSettings {
-  background-color: #B3A755;
+  background-color: #A5BFD4;
   color: white;
   border: none;
   border-radius: 8px;
@@ -241,7 +241,7 @@ main {
 }
 
 .affirmation-controls button {
-  background-color: #B3A755;
+  background-color: #A5BFD4;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -340,7 +340,7 @@ main {
 
 .quote-controls button,
 .quote-settings button {
-  background-color: #B3A755;
+  background-color: #A5BFD4;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -499,7 +499,7 @@ main {
 }
 
 .settings-panel::-webkit-scrollbar-thumb {
-  background-color: #EDE4D7; /* your brand color */
+  background-color: #F9F5EF; /* your brand color */
   border-radius: 10px;
 }
 
@@ -524,7 +524,7 @@ main {
 }
 
 #spinButton {
-  background-color: #B3A755;
+  background-color: #A5BFD4;
   color: white;
   border: none;
   padding: 10px 20px;
