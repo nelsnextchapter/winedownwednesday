@@ -290,15 +290,17 @@ blocks.forEach((block) => {
   }
 });
 
-navButtons.forEach(button => {
-  button.addEventListener("click", () => {
-    const targetId = button.dataset.target;
-    const targetBlock = document.getElementById(targetId);
-    if (targetBlock) {
-      targetBlock.classList.toggle("hidden");
-    }
+document.querySelectorAll(".nav-button").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const targetId = btn.dataset.target;
+    const target = document.getElementById(targetId);
+    if (!target) return;
+
+    // Toggle the clicked panel only
+    target.classList.toggle("hidden");
   });
 });
+
 
 
 
