@@ -126,14 +126,13 @@ if (!backgroundInput) {
 }
 
 backgroundInput.addEventListener("change", () => {
-  const file = backgroundInput.files[0];
-  if (!file) {
-    console.warn("No file selected");
-    return;
-  }
+  console.log("⚙️ Upload handler triggered");
 
-  if (!file.type.startsWith("image/")) {
-    console.warn("File is not an image");
+  const file = backgroundInput.files[0];
+  console.log("Selected file:", file);
+
+  if (!file || !file.type.startsWith("image/")) {
+    console.warn("⚠️ No valid image file selected");
     return;
   }
 
@@ -141,20 +140,19 @@ backgroundInput.addEventListener("change", () => {
 
   reader.onload = (e) => {
     const dataUrl = e.target.result;
-    console.log("FileReader loaded dataUrl:", dataUrl.slice(0, 100)); // show first 100 chars
+    console.log("📦 Data URL starts with:", dataUrl.slice(0, 100));
 
-    // Set the background image immediately
     document.body.style.backgroundImage = `url('${dataUrl}')`;
 
-    // Save to localStorage
     localStorage.setItem("backgroundType", "image");
     localStorage.setItem("backgroundData", dataUrl);
 
-    console.log("Background image saved to localStorage");
+    console.log("✅ Stored backgroundData and type in localStorage");
   };
 
   reader.readAsDataURL(file);
 });
+  
 
   // When user types/pastes a URL and changes input
   timerSoundUrlInput.addEventListener("change", () => {
