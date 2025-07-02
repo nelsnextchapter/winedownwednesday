@@ -21,28 +21,29 @@ document.addEventListener("DOMContentLoaded", function () {
   const timerSoundUrlInput = document.getElementById("timerSoundUrl");
   const timerSoundFile = document.getElementById("timerSoundFile");
   const clearTimerSoundBtn = document.getElementById("clearTimerSound");
-  const canvas = document.getElementById("backgroundCanvas");
-  const video = document.getElementById("backgroundVideo"); // You already have this line — keep it
+  const bgCanvas = document.getElementById("backgroundCanvas");
+  
 
-  const ctx = canvas.getContext("2d");
+  const bgCtx = bgCanvas.getContext("2d");
 
   function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  resizeCanvas();
-  window.addEventListener("resize", resizeCanvas);
+  bgCanvas.width = window.innerWidth;
+  bgCanvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
 
-  function drawToCanvas() {
-    if (!video.paused && !video.ended) {
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    }
-    requestAnimationFrame(drawToCanvas);
+function drawToCanvas() {
+  if (!bgVideo.paused && !bgVideo.ended) {
+    bgCtx.drawImage(bgVideo, 0, 0, bgCanvas.width, bgCanvas.height);
   }
+  requestAnimationFrame(drawToCanvas);
+}
 
-  video.addEventListener("play", () => {
-    requestAnimationFrame(drawToCanvas);
-  });
+bgVideo.addEventListener("play", () => {
+  requestAnimationFrame(drawToCanvas);
+});
+
 
   // 🌅 Load saved background image
   if (savedFile) {
@@ -259,7 +260,7 @@ if (backgroundData && backgroundType === "image") {
 
       if (isImage) {
         document.body.style.backgroundImage = `url('${result}')`;
-        const video = document.getElementById("backgroundVideo");
+        const bgVideo = document.getElementById("backgroundVideo");
         if (video) {
     video.style.opacity = "0";
     video.style.visibility = "hidden"; // ✅ hides video if using an image but keeps rendering
@@ -267,7 +268,7 @@ if (backgroundData && backgroundType === "image") {
         localStorage.setItem("backgroundType", "image");
         localStorage.setItem("backgroundData", result);
      } else if (isVideo) {
-  const video = document.getElementById("backgroundVideo");
+  const bgVideo = document.getElementById("backgroundVideo");
   if (video) {
     const videoURL = URL.createObjectURL(file);
     video.src = videoURL;
