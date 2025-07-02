@@ -126,7 +126,7 @@ if (backgroundData) {
       }
     });
   }
-});
+
 
   // When user types/pastes a URL and changes input
   timerSoundUrlInput.addEventListener("change", () => {
