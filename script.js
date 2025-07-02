@@ -75,17 +75,13 @@ if (timerSoundUrl) {
   const backgroundType = localStorage.getItem("backgroundType");
 const backgroundData = localStorage.getItem("backgroundData");
 
-if (backgroundData) {
-  if (backgroundType === "image") {
-    document.body.style.backgroundImage = `url('${backgroundData}')`;
-  } else if (backgroundType === "video") {
-    const video = document.getElementById("backgroundVideo");
-    if (video) {
-      video.src = backgroundData;
-      video.style.display = "block";
-      document.body.style.backgroundImage = ""; // Clear any image background
-    }
-  }
+if (backgroundData && backgroundType === "image") {
+  document.body.style.backgroundImage = `url('${backgroundData}')`;
+} else if (backgroundType === "video") {
+  // You could show a placeholder message or re-prompt for upload if you want
+  console.log("Video background was used last time, but videos are not stored.");
+}
+}
 }
 
   // When user types/pastes a URL and changes input
@@ -246,16 +242,25 @@ if (backgroundData) {
         if (video) video.style.display = "none"; // Hide video if showing image
         localStorage.setItem("backgroundType", "image");
         localStorage.setItem("backgroundData", result);
-      } else if (isVideo) {
-        const video = document.getElementById("backgroundVideo");
-        if (video) {
-          video.src = result;
-          video.style.display = "block";
-        }
-        document.body.style.backgroundImage = ""; // Clear image background
-        localStorage.setItem("backgroundType", "video");
-        localStorage.setItem("backgroundData", result);
-      }
+     } else if (isVideo) {
+  const video = document.getElementById("backgroundVideo");
+  if (video) {
+    const videoURL = URL.createObjectURL(file);
+    video.src = videoURL;
+    video.style.display = "block";
+    video.load();
+    video.play().catch(err => {
+      console.warn("Autoplay might be blocked:", err);
+    });
+  }
+
+  document.body.style.backgroundImage = ""; // Clear image background
+
+  // Don't store the video in localStorage — it's too big
+  localStorage.setItem("backgroundType", "video");
+  localStorage.removeItem("backgroundData"); // Clear previous stored video data if any
+}
+
     };
     reader.readAsDataURL(file);
     }
