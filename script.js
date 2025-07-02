@@ -138,9 +138,7 @@ if (backgroundData) {
         };
 
         reader.readAsDataURL(file);
-      } else {
-        console.warn("❌ Not a valid image file.");
-      }
+   
     });
   }
 
