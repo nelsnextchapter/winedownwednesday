@@ -72,7 +72,9 @@ if (timerSoundUrl) {
     updateDisplay();
   }
 
-
+  toggleSettings.addEventListener("click", () => {
+    timerSettingsPanel.classList.toggle("hidden");
+  });
 
   const backgroundType = localStorage.getItem("backgroundType");
 const backgroundData = localStorage.getItem("backgroundData");
