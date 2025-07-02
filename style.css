@@ -76,7 +76,6 @@ main {
   object-fit: cover;
   z-index: -1;
   pointer-events: none;
-  display: none;
   /* ✅ Fix starts here */
   opacity: 0;
   visibility: hidden;
