@@ -30,17 +30,6 @@ document.addEventListener("DOMContentLoaded", function () {
   backgroundURL.value = savedUrl;
 }
 
-  document.querySelectorAll(".nav-button").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const targetId = btn.dataset.target;
-    const target = document.getElementById(targetId);
-    if (!target) return;
-
-    // Toggle the clicked panel only
-    target.classList.toggle("hidden");
-  });
-});
-  
   // Load saved timer sound URL from localStorage
   let timerSoundUrl = localStorage.getItem("timerEndSound") || "";
   console.log("⏳ Loaded timer sound on startup:", timerSoundUrl);
@@ -273,7 +262,7 @@ if (backgroundData) {
   });
 
   toggleSettings.addEventListener("click", () => {
-    timerSettingsPanel.classList.toggle("hidden");
+    settingsContent.classList.toggle("hidden");
   });
 
    // Allow multiple blocks to open (fix) & make all blocks draggable
@@ -301,6 +290,12 @@ blocks.forEach((block) => {
   }
 });
 
+navButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const target = document.getElementById(btn.dataset.target);
+    target.classList.toggle("hidden");
+  });
+});
 
 
 
@@ -670,9 +665,9 @@ function drawWheel() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   function getColorForIndex(index, total) {
-  const baseHue = 34;           // HSL for ##FFA552
-  const baseSaturation = 100;    // %
-  const baseLightness = 67;     // %
+  const baseHue = 36;           // HSL for #D6C0A4
+  const baseSaturation = 41;    // %
+  const baseLightness = 72;     // %
 
   // Adjust lightness slightly for variation
   const lightnessVariation = 10;
