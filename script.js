@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const timerSoundUrlInput = document.getElementById("timerSoundUrl");
   const timerSoundFile = document.getElementById("timerSoundFile");
   const clearTimerSoundBtn = document.getElementById("clearTimerSound");
+  const timerSettingsPanel = document.getElementById("timerSettingsPanel");
 
   
   
@@ -118,10 +119,12 @@ if (timerSoundUrl) {
 
 // ---- 🧠 IndexedDB helper functions ----
 function saveVideoToIndexedDB(file) {
-  const request = indexedDB.open("BackgroundDB", 1);
+  const request = indexedDB.open("BackgroundDB", 2); // bumped version here
   request.onupgradeneeded = function (event) {
     const db = event.target.result;
-    db.createObjectStore("backgroundVideo");
+    if (!db.objectStoreNames.contains("backgroundVideo")) {
+      db.createObjectStore("backgroundVideo");
+    }
   };
   request.onsuccess = function (event) {
     const db = event.target.result;
@@ -136,7 +139,7 @@ function saveVideoToIndexedDB(file) {
 }
 
 function loadVideoFromIndexedDB() {
-  const request = indexedDB.open("BackgroundDB", 1);
+  const request = indexedDB.open("BackgroundDB", 2); // same version here
   request.onsuccess = function (event) {
     const db = event.target.result;
     const tx = db.transaction("backgroundVideo", "readonly");
@@ -161,6 +164,7 @@ function loadVideoFromIndexedDB() {
     console.error("❌ Failed to load video from IndexedDB:", event.target.error);
   };
 }
+
     
 
   
