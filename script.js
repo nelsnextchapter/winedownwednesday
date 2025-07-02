@@ -9,6 +9,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const longBreakInput = document.getElementById("longBreakDuration");
   const backgroundUpload = document.getElementById("backgroundUpload");
   const backgroundURL = document.getElementById("backgroundURL");
+  const savedFile = localStorage.getItem("backgroundImageFile");
+  const savedUrl = localStorage.getItem("backgroundImageURL");
   const fileUpload = document.getElementById("fileUpload");
   const saveSettings = document.getElementById("saveSettings");
   const settingsContent = document.querySelector(".settings-content");
@@ -19,10 +21,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const timerSoundUrlInput = document.getElementById("timerSoundUrl");
   const timerSoundFile = document.getElementById("timerSoundFile");
   const clearTimerSoundBtn = document.getElementById("clearTimerSound");
-  const timerSettingsPanel = document.getElementById("timerSettingsPanel");
-
   
-  
+  // 🌅 Load saved background image
+  if (savedFile) {
+  document.body.style.backgroundImage = `url('${savedFile}')`;
+} else if (savedUrl) {
+  document.body.style.backgroundImage = `url('${savedUrl}')`;
+  backgroundURL.value = savedUrl;
+}
 
   // Load saved timer sound URL from localStorage
   let timerSoundUrl = localStorage.getItem("timerEndSound") || "";
@@ -66,108 +72,21 @@ if (timerSoundUrl) {
     updateDisplay();
   }
 
-  
+  const backgroundType = localStorage.getItem("backgroundType");
+const backgroundData = localStorage.getItem("backgroundData");
 
-  backgroundUpload.addEventListener("change", () => {
-    const file = backgroundUpload.files[0];
-    if (!file) return;
-
-    if (file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const dataUrl = e.target.result;
-        document.body.style.backgroundImage = `url('${dataUrl}')`;
-
-        // ✅ Hide video element if it exists
+if (backgroundData) {
+  if (backgroundType === "image") {
+    document.body.style.backgroundImage = `url('${backgroundData}')`;
+  } else if (backgroundType === "video") {
     const video = document.getElementById("backgroundVideo");
     if (video) {
-      video.style.display = "none";
-    }
-        
-        localStorage.setItem("backgroundType", "image");
-        localStorage.setItem("backgroundData", dataUrl);
-        console.log("✅ Image background saved");
-      };
-      reader.readAsDataURL(file);
-    } else if (file.type.startsWith("video/")) {
-      saveVideoToIndexedDB(file);
-      const blobUrl = URL.createObjectURL(file);
-      const video = document.getElementById("backgroundVideo");
-      if (video) {
-        video.src = blobUrl;
-        video.style.display = "block";
-        document.body.style.backgroundImage = "";
-      }
-      localStorage.setItem("backgroundType", "video");
-      console.log("🎥 Video background saved to IndexedDB");
-    } else {
-      console.warn("❌ Not a valid image or video file.");
-    }
-  });
-
-  // Load background on startup
-  const backgroundType = localStorage.getItem("backgroundType");
-  if (backgroundType === "video") {
-    loadVideoFromIndexedDB();
-  } else if (backgroundType === "image") {
-    const backgroundData = localStorage.getItem("backgroundData");
-    if (backgroundData) {
-      document.body.style.backgroundImage = `url('${backgroundData}')`;
+      video.src = backgroundData;
+      video.style.display = "block";
+      document.body.style.backgroundImage = ""; // Clear any image background
     }
   }
-});
-
-// ---- 🧠 IndexedDB helper functions ----
-function saveVideoToIndexedDB(file) {
-  const request = indexedDB.open("BackgroundDB", 2); // bumped version here
-  request.onupgradeneeded = function (event) {
-    const db = event.target.result;
-    if (!db.objectStoreNames.contains("backgroundVideo")) {
-      db.createObjectStore("backgroundVideo");
-    }
-  };
-  request.onsuccess = function (event) {
-    const db = event.target.result;
-    const tx = db.transaction("backgroundVideo", "readwrite");
-    const store = tx.objectStore("backgroundVideo");
-    store.put(file, "videoBlob");
-    tx.oncomplete = () => db.close();
-  };
-  request.onerror = function (event) {
-    console.error("❌ IndexedDB error:", event.target.error);
-  };
 }
-
-function loadVideoFromIndexedDB() {
-  const request = indexedDB.open("BackgroundDB", 2); // same version here
-  request.onsuccess = function (event) {
-    const db = event.target.result;
-    const tx = db.transaction("backgroundVideo", "readonly");
-    const store = tx.objectStore("backgroundVideo");
-    const getRequest = store.get("videoBlob");
-    getRequest.onsuccess = function () {
-      const videoFile = getRequest.result;
-      if (videoFile) {
-        const blobUrl = URL.createObjectURL(videoFile);
-        const video = document.getElementById("backgroundVideo");
-        if (video) {
-          video.src = blobUrl;
-          video.style.display = "block";
-          document.body.style.backgroundImage = "";
-          console.log("✅ Loaded video from IndexedDB");
-        }
-      }
-    };
-    tx.oncomplete = () => db.close();
-  };
-  request.onerror = function (event) {
-    console.error("❌ Failed to load video from IndexedDB:", event.target.error);
-  };
-}
-
-    
-
-  
 
   // When user types/pastes a URL and changes input
   timerSoundUrlInput.addEventListener("change", () => {
@@ -312,9 +231,35 @@ function loadVideoFromIndexedDB() {
     localStorage.removeItem("backgroundImageFile");
   }
 
-  
+  // Save background via file upload (image or video)
+  const file = backgroundUpload.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onloadend = function () {
+      const result = reader.result;
+      const isVideo = file.type.startsWith("video/");
+      const isImage = file.type.startsWith("image/");
 
-
+      if (isImage) {
+        document.body.style.backgroundImage = `url('${result}')`;
+        const video = document.getElementById("backgroundVideo");
+        if (video) video.style.display = "none"; // Hide video if showing image
+        localStorage.setItem("backgroundType", "image");
+        localStorage.setItem("backgroundData", result);
+      } else if (isVideo) {
+        const video = document.getElementById("backgroundVideo");
+        if (video) {
+          video.src = result;
+          video.style.display = "block";
+        }
+        document.body.style.backgroundImage = ""; // Clear image background
+        localStorage.setItem("backgroundType", "video");
+        localStorage.setItem("backgroundData", result);
+      }
+    };
+    reader.readAsDataURL(file);
+    }
+  });
 
   toggleSettings.addEventListener("click", () => {
     timerSettingsPanel.classList.toggle("hidden");
