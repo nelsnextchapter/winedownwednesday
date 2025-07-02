@@ -292,20 +292,18 @@ blocks.forEach((block) => {
 
 navButtons.forEach((btn) => {
   btn.addEventListener("click", () => {
-    const targetId = btn.dataset.target;
-
-    navButtons.forEach(b => {
-      const el = document.getElementById(b.dataset.target);
-      if (el) el.classList.add("hidden");
+    // Hide all blocks
+    document.querySelectorAll('.block').forEach(block => {
+      block.classList.add('hidden');
     });
 
-    const target = document.getElementById(targetId);
-    if (target) target.classList.remove("hidden");
-    else console.warn(`No element found with id ${targetId}`);
+    // Show only the clicked tab's target block
+    const target = document.getElementById(btn.dataset.target);
+    if (target) {
+      target.classList.remove('hidden');
+    }
   });
 });
-
-
 
 
   // Timer mode switch buttons
