@@ -104,44 +104,57 @@ if (backgroundData) {
   // --- 🆕 NEW UPLOAD HANDLER CODE ---
   const backgroundInput = document.getElementById("backgroundUpload");
 
-  if (!backgroundInput) {
-    console.warn("backgroundUpload input not found");
+  if (backgroundData) {
+  if (backgroundType === "image") {
+    document.body.style.backgroundImage = `url('${backgroundData}')`;
+  } else if (backgroundType === "video") {
+    const video = document.getElementById("backgroundVideo");
+    if (video) {
+      video.src = backgroundData;
+      video.style.display = "block";
+      document.body.style.backgroundImage = "";
+    }
+  }
+}
+
+// --- 🆕 NEW UPLOAD HANDLER CODE ---
+const backgroundInput = document.getElementById("backgroundUpload");
+
+if (!backgroundInput) {
+  console.warn("backgroundUpload input not found");
+  return;
+}
+
+backgroundInput.addEventListener("change", () => {
+  const file = backgroundInput.files[0];
+  if (!file) {
+    console.warn("No file selected");
     return;
   }
 
-  backgroundInput.addEventListener("change", () => {
-    const file = backgroundInput.files[0];
-    if (!file) {
-      console.warn("No file selected");
-      return;
-    }
-
-    if (!file.type.startsWith("image/")) {
-      console.warn("File is not an image");
-      return;
-    }
-
-    const reader = new FileReader();
-
-    reader.onload = (e) => {
-      const dataUrl = e.target.result;
-      console.log("FileReader loaded dataUrl:", dataUrl.slice(0, 100)); // show first 100 chars
-
-      // Set the background image immediately
-      document.body.style.backgroundImage = `url('${dataUrl}')`;
-
-      // Save to localStorage
-      localStorage.setItem("backgroundType", "image");
-      localStorage.setItem("backgroundData", dataUrl);
-
-      console.log("Background image saved to localStorage");
-        };
-
-        reader.readAsDataURL(file);
-   
-   
+  if (!file.type.startsWith("image/")) {
+    console.warn("File is not an image");
+    return;
   }
 
+  const reader = new FileReader();
+
+  reader.onload = (e) => {
+    const dataUrl = e.target.result;
+    console.log("FileReader loaded dataUrl:", dataUrl.slice(0, 100)); // show first 100 chars
+
+    // Set the background image immediately
+    document.body.style.backgroundImage = `url('${dataUrl}')`;
+
+    // Save to localStorage
+    localStorage.setItem("backgroundType", "image");
+    localStorage.setItem("backgroundData", dataUrl);
+
+    console.log("Background image saved to localStorage");
+  };
+
+  reader.readAsDataURL(file);
+});
 
   // When user types/pastes a URL and changes input
   timerSoundUrlInput.addEventListener("change", () => {
