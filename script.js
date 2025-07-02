@@ -104,20 +104,37 @@ if (backgroundData) {
   // --- 🆕 NEW UPLOAD HANDLER CODE ---
   const backgroundInput = document.getElementById("backgroundUpload");
 
-  if (backgroundInput) {
-    backgroundInput.addEventListener("change", function () {
-      const file = this.files[0];
-      if (file && file.type.startsWith("image/")) {
-        const reader = new FileReader();
+  if (!backgroundInput) {
+    console.warn("backgroundUpload input not found");
+    return;
+  }
 
-        reader.onload = function (e) {
-          const dataUrl = e.target.result;
-          document.body.style.backgroundImage = `url('${dataUrl}')`;
+  backgroundInput.addEventListener("change", () => {
+    const file = backgroundInput.files[0];
+    if (!file) {
+      console.warn("No file selected");
+      return;
+    }
 
-          // Save to localStorage
-          localStorage.setItem("backgroundType", "image");
-          localStorage.setItem("backgroundData", dataUrl);
-          console.log("📁 Background image uploaded and saved to localStorage.");
+    if (!file.type.startsWith("image/")) {
+      console.warn("File is not an image");
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      const dataUrl = e.target.result;
+      console.log("FileReader loaded dataUrl:", dataUrl.slice(0, 100)); // show first 100 chars
+
+      // Set the background image immediately
+      document.body.style.backgroundImage = `url('${dataUrl}')`;
+
+      // Save to localStorage
+      localStorage.setItem("backgroundType", "image");
+      localStorage.setItem("backgroundData", dataUrl);
+
+      console.log("Background image saved to localStorage");
         };
 
         reader.readAsDataURL(file);
