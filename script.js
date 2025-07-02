@@ -290,20 +290,16 @@ blocks.forEach((block) => {
   }
 });
 
-navButtons.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    // Hide all blocks
-    document.querySelectorAll('.block').forEach(block => {
-      block.classList.add('hidden');
-    });
-
-    // Show only the clicked tab's target block
-    const target = document.getElementById(btn.dataset.target);
-    if (target) {
-      target.classList.remove('hidden');
+navButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    const targetId = button.dataset.target;
+    const targetBlock = document.getElementById(targetId);
+    if (targetBlock) {
+      targetBlock.classList.toggle("hidden");
     }
   });
 });
+
 
 
   // Timer mode switch buttons
