@@ -238,7 +238,10 @@ if (backgroundData && backgroundType === "image") {
       if (isImage) {
         document.body.style.backgroundImage = `url('${result}')`;
         const video = document.getElementById("backgroundVideo");
-        if (video) video.style.display = "none"; // Hide video if showing image
+        if (video) {
+    video.style.opacity = "0";
+    video.style.visibility = "hidden"; // ✅ hides video if using an image but keeps rendering
+  }
         localStorage.setItem("backgroundType", "image");
         localStorage.setItem("backgroundData", result);
      } else if (isVideo) {
@@ -246,7 +249,8 @@ if (backgroundData && backgroundType === "image") {
   if (video) {
     const videoURL = URL.createObjectURL(file);
     video.src = videoURL;
-    video.style.display = "block";
+    video.style.opacity = "1";
+    video.style.visibility = "visible"; // ✅ show while staying composited
     video.load();
     video.play().catch(err => {
       console.warn("Autoplay might be blocked:", err);
