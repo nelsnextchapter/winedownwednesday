@@ -21,7 +21,29 @@ document.addEventListener("DOMContentLoaded", function () {
   const timerSoundUrlInput = document.getElementById("timerSoundUrl");
   const timerSoundFile = document.getElementById("timerSoundFile");
   const clearTimerSoundBtn = document.getElementById("clearTimerSound");
-  
+  const canvas = document.getElementById("backgroundCanvas");
+  const video = document.getElementById("backgroundVideo"); // You already have this line — keep it
+
+  const ctx = canvas.getContext("2d");
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
+
+  function drawToCanvas() {
+    if (!video.paused && !video.ended) {
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    }
+    requestAnimationFrame(drawToCanvas);
+  }
+
+  video.addEventListener("play", () => {
+    requestAnimationFrame(drawToCanvas);
+  });
+
   // 🌅 Load saved background image
   if (savedFile) {
   document.body.style.backgroundImage = `url('${savedFile}')`;
