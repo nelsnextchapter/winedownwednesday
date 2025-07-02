@@ -102,10 +102,12 @@ main {
   margin-bottom: 10px;
 }
 
-#timerSettings.settings-panel {
-  max-height: 60vh;
+.settings-content {
+  max-height: 60vh;  /* or try 300px for fixed height */
   overflow-y: auto;
+  padding-right: 8px;
 }
+
 
 .controls button,
 .set-timer button,
