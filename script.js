@@ -21,31 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const timerSoundUrlInput = document.getElementById("timerSoundUrl");
   const timerSoundFile = document.getElementById("timerSoundFile");
   const clearTimerSoundBtn = document.getElementById("clearTimerSound");
-  const bgCanvas = document.getElementById("backgroundCanvas");
-  const bgVideo = document.getElementById("backgroundVideo");
   
-
-  const bgCtx = bgCanvas.getContext("2d");
-
-  function resizeCanvas() {
-  bgCanvas.width = window.innerWidth;
-  bgCanvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener("resize", resizeCanvas);
-
-function drawToCanvas() {
-  if (!bgVideo.paused && !bgVideo.ended) {
-    bgCtx.drawImage(bgVideo, 0, 0, bgCanvas.width, bgCanvas.height);
-  }
-  requestAnimationFrame(drawToCanvas);
-}
-
-bgVideo.addEventListener("play", () => {
-  requestAnimationFrame(drawToCanvas);
-});
-
-
   // 🌅 Load saved background image
   if (savedFile) {
   document.body.style.backgroundImage = `url('${savedFile}')`;
@@ -260,25 +236,30 @@ if (backgroundData && backgroundType === "image") {
       const isImage = file.type.startsWith("image/");
 
       if (isImage) {
-  document.body.style.backgroundImage = `url('${result}')`;
-  if (bgVideo) {
-    bgVideo.style.opacity = "0";
-    bgVideo.style.visibility = "hidden"; // hides video if using an image but keeps rendering
+        document.body.style.backgroundImage = `url('${result}')`;
+        const video = document.getElementById("backgroundVideo");
+        if (video) {
+    video.style.opacity = "0";
+    video.style.visibility = "hidden"; // ✅ hides video if using an image but keeps rendering
   }
-  localStorage.setItem("backgroundType", "image");
-  localStorage.setItem("backgroundData", result);
-} else if (isVideo) {
-  if (bgVideo) {
+        localStorage.setItem("backgroundType", "image");
+        localStorage.setItem("backgroundData", result);
+     } else if (isVideo) {
+  const video = document.getElementById("backgroundVideo");
+  if (video) {
     const videoURL = URL.createObjectURL(file);
-    bgVideo.src = videoURL;
-    bgVideo.style.opacity = "1";
-    bgVideo.style.visibility = "visible"; // show while staying composited
-    bgVideo.load();
-    bgVideo.play().catch(err => {
+    video.src = videoURL;
+    video.style.opacity = "1";
+    video.style.visibility = "visible"; // ✅ show while staying composited
+    video.load();
+    video.play().catch(err => {
       console.warn("Autoplay might be blocked:", err);
     });
   }
+
   document.body.style.backgroundImage = ""; // Clear image background
+
+  // Don't store the video in localStorage — it's too big
   localStorage.setItem("backgroundType", "video");
   localStorage.removeItem("backgroundData"); // Clear previous stored video data if any
 }
