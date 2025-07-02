@@ -13,13 +13,13 @@ body {
 header {
   display: flex;
   justify-content: center;
-  background-color: rgba(199,211,181, 0.85);
+  background-color: rgba(214, 192, 164, 0.85);
   padding: 10px;
   font-family: 'Poppins', sans-serif;
 }
 
 .top-nav .nav-button {
-  background-color: #c7d3b5;
+  background-color: #D6C0A4;
   border: none;
   padding: 10px 20px;
   margin: 0 10px;
@@ -31,7 +31,7 @@ header {
 }
 
 .top-nav .nav-button:hover {
-  background-color: #ffa552;
+  background-color: #F9C56F;
 }
 
 main {
@@ -45,7 +45,7 @@ main {
   top: 100px;
   left: 100px;
   background-color: rgba(253, 252, 248, 0.92);
-  border: 1px solid #FFA552;
+  border: 1px solid #6F5C48;
   border-radius: 20px;
   padding: 20px;
   width: 400px;
@@ -82,8 +82,6 @@ main {
 .timer {
   display: flex;
   flex-direction: column;
-  max-height: 80vh;
-  overflow-y: auto;
   align-items: center;
 }
 
@@ -102,17 +100,12 @@ main {
   margin-bottom: 10px;
 }
 
-#timerSettings.settings-panel {
-  max-height: 60vh;
-  overflow-y: auto;
-}
-
 .controls button,
 .set-timer button,
 .timer-modes button,
 #loadSpotify,
 #saveSettings {
-  background-color: #A5BFD4;
+  background-color: #B3A755;
   color: white;
   border: none;
   border-radius: 8px;
@@ -241,7 +234,7 @@ main {
 }
 
 .affirmation-controls button {
-  background-color: #A5BFD4;
+  background-color: #B3A755;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -340,7 +333,7 @@ main {
 
 .quote-controls button,
 .quote-settings button {
-  background-color: #A5BFD4;
+  background-color: #B3A755;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -488,24 +481,6 @@ main {
   font-size: 0.9rem;
 }
 
-.settings-panel {
-  max-height: 60vh; /* or 60-80vh based on your screen size */
-  overflow-y: auto;
-  padding-right: 10px; /* prevent scrollbar from overlaying text */
-}
-
-.settings-panel::-webkit-scrollbar {
-  width: 6px;
-}
-
-.settings-panel::-webkit-scrollbar-thumb {
-  background-color: #F9F5EF; /* your brand color */
-  border-radius: 10px;
-}
-
-.settings-panel::-webkit-scrollbar-track {
-  background-color: #f0f0f0;
-}
 
 .spinner {
   display: flex;
@@ -524,7 +499,7 @@ main {
 }
 
 #spinButton {
-  background-color: #A5BFD4;
+  background-color: #B3A755;
   color: white;
   border: none;
   padding: 10px 20px;
