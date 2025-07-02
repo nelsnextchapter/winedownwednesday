@@ -84,6 +84,18 @@ main {
   transition: opacity 0.3s ease;
 }
 
+#backgroundCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+  pointer-events: none;
+}
+
+
 .timer {
   display: flex;
   flex-direction: column;
