@@ -30,6 +30,17 @@ document.addEventListener("DOMContentLoaded", function () {
   backgroundURL.value = savedUrl;
 }
 
+  document.querySelectorAll(".nav-button").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const targetId = btn.dataset.target;
+    const target = document.getElementById(targetId);
+    if (!target) return;
+
+    // Toggle the clicked panel only
+    target.classList.toggle("hidden");
+  });
+});
+  
   // Load saved timer sound URL from localStorage
   let timerSoundUrl = localStorage.getItem("timerEndSound") || "";
   console.log("⏳ Loaded timer sound on startup:", timerSoundUrl);
@@ -288,17 +299,6 @@ blocks.forEach((block) => {
       document.addEventListener("mouseup", stopDrag);
     });
   }
-});
-
-document.querySelectorAll(".nav-button").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const targetId = btn.dataset.target;
-    const target = document.getElementById(targetId);
-    if (!target) return;
-
-    // Toggle the clicked panel only
-    target.classList.toggle("hidden");
-  });
 });
 
 
