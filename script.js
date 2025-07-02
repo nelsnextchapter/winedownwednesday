@@ -81,7 +81,8 @@ if (backgroundData && backgroundType === "image") {
   // You could show a placeholder message or re-prompt for upload if you want
   console.log("Video background was used last time, but videos are not stored.");
 }
-
+}
+                          
   // When user types/pastes a URL and changes input
   timerSoundUrlInput.addEventListener("change", () => {
     const pastedUrl = timerSoundUrlInput.value.trim();
