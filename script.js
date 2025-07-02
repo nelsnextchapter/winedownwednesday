@@ -88,7 +88,7 @@ if (backgroundData) {
   }
 }
 
-  const backgroundType = localStorage.getItem("backgroundType");
+  
   const backgroundData = localStorage.getItem("backgroundData");
 
   if (backgroundData) {
