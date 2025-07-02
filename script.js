@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const timerSoundUrlInput = document.getElementById("timerSoundUrl");
   const timerSoundFile = document.getElementById("timerSoundFile");
   const clearTimerSoundBtn = document.getElementById("clearTimerSound");
-  const timerSettingsPanel = document.querySelector(".timer-settings-panel");
+
   
   // 🌅 Load saved background image
   if (savedFile) {
