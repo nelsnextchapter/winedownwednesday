@@ -38,8 +38,7 @@
           <button id="selectShort">Break/Chat</button>
           <button id="selectLong">Short Sprint</button>
         </div>
-        <div class="settings-panel hidden"id="timerSettingsPanel">
-          <div class="settings-content">
+        <div class="settings-content hidden">
           <label>Regular Sprint (min): <input type="number" id="workDuration" value="60" /></label>
           <label>Break/Chat (min): <input type="number" id="shortBreakDuration" value="20" /></label>
           <label>Short Sprint (min): <input type="number" id="longBreakDuration" value="30" /></label>
@@ -72,7 +71,7 @@
 
   <button class="toggle-spotify-settings gear-icon" title="Spotify Settings">⚙️</button>
   </div>
-  <div class="spotify-settings-content settings-panel hidden">
+  <div class="spotify-settings-content hidden">
     <label for="spotifyInput">Paste Spotify Playlist Link:</label>
     <input type="text" id="spotifyInput" placeholder="https://open.spotify.com/..." />
     <button id="loadSpotify">Load</button>
@@ -96,7 +95,7 @@
     <button id="nextAffirmation">Next</button>
   </div>
 
-  <div class="affirmation-settings settings-panel hidden" id="affirmationSettings">
+  <div class="affirmation-settings hidden" id="affirmationSettings">
     <label><input type="checkbox" id="shuffleAffirmations" /> Shuffle</label>
     <label><input type="checkbox" id="loopAffirmations" checked /> Loop</label>
 
@@ -123,7 +122,7 @@
     <button id="nextQuote">Next</button>
   </div>
 
-  <div class="quote-settings settings-panel hidden" id="quoteSettings">
+  <div class="quote-settings hidden" id="quoteSettings">
     <label><input type="checkbox" id="shuffleQuotes" /> Shuffle</label>
     <label><input type="checkbox" id="loopQuotes" checked /> Loop</label>
 
@@ -145,7 +144,7 @@
 
   <!-- Spinner Settings Panel -->
 
-  <div class="settings-content settings-panel hidden" id="spinnerSettings">
+  <div class="settings-content hidden" id="spinnerSettings">
     <textarea id="spinnerInput" placeholder="Paste items, one per line — add ~Category if needed"></textarea>
     <input type="file" id="spinnerFile" />
     
