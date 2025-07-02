@@ -118,7 +118,6 @@ if (backgroundData) {
 }
 
 // --- 🆕 NEW UPLOAD HANDLER CODE ---
-const backgroundInput = document.getElementById("backgroundUpload");
 
 if (!backgroundInput) {
   console.warn("backgroundUpload input not found");
@@ -328,6 +327,8 @@ backgroundInput.addEventListener("change", () => {
     reader.readAsDataURL(file);
     }
   });
+
+  const timerSettingsPanel = document.querySelector(".timer-settings-panel");
 
   toggleSettings.addEventListener("click", () => {
     timerSettingsPanel.classList.toggle("hidden");
