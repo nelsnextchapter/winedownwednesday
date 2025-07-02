@@ -293,14 +293,15 @@ blocks.forEach((block) => {
 navButtons.forEach((btn) => {
   btn.addEventListener("click", () => {
     const targetId = btn.dataset.target;
-    // Hide all tab contents
+
     navButtons.forEach(b => {
       const el = document.getElementById(b.dataset.target);
       if (el) el.classList.add("hidden");
     });
-    // Show the clicked tab content
+
     const target = document.getElementById(targetId);
     if (target) target.classList.remove("hidden");
+    else console.warn(`No element found with id ${targetId}`);
   });
 });
 
