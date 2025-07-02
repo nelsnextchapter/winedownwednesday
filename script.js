@@ -88,9 +88,6 @@ if (backgroundData) {
   }
 }
 
-  
-  const backgroundData = localStorage.getItem("backgroundData");
-
   if (backgroundData) {
     if (backgroundType === "image") {
       document.body.style.backgroundImage = `url('${backgroundData}')`;
