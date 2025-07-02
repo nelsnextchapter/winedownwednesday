@@ -88,6 +88,49 @@ if (backgroundData) {
   }
 }
 
+  const backgroundType = localStorage.getItem("backgroundType");
+  const backgroundData = localStorage.getItem("backgroundData");
+
+  if (backgroundData) {
+    if (backgroundType === "image") {
+      document.body.style.backgroundImage = `url('${backgroundData}')`;
+    } else if (backgroundType === "video") {
+      const video = document.getElementById("backgroundVideo");
+      if (video) {
+        video.src = backgroundData;
+        video.style.display = "block";
+        document.body.style.backgroundImage = "";
+      }
+    }
+  }
+
+  // --- 🆕 NEW UPLOAD HANDLER CODE ---
+  const backgroundInput = document.getElementById("backgroundUpload");
+
+  if (backgroundInput) {
+    backgroundInput.addEventListener("change", function () {
+      const file = this.files[0];
+      if (file && file.type.startsWith("image/")) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          const dataUrl = e.target.result;
+          document.body.style.backgroundImage = `url('${dataUrl}')`;
+
+          // Save to localStorage
+          localStorage.setItem("backgroundType", "image");
+          localStorage.setItem("backgroundData", dataUrl);
+          console.log("📁 Background image uploaded and saved to localStorage.");
+        };
+
+        reader.readAsDataURL(file);
+      } else {
+        console.warn("❌ Not a valid image file.");
+      }
+    });
+  }
+});
+
   // When user types/pastes a URL and changes input
   timerSoundUrlInput.addEventListener("change", () => {
     const pastedUrl = timerSoundUrlInput.value.trim();
