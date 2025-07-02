@@ -139,7 +139,7 @@ if (backgroundData) {
 
         reader.readAsDataURL(file);
    
-    });
+   
   }
 
 
