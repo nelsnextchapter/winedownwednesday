@@ -38,29 +38,32 @@
           <button id="selectShort">Break/Chat</button>
           <button id="selectLong">Short Sprint</button>
         </div>
-        <!-- ✅ NEW: scrollable wrapper -->
-  <div class="settings-panel hidden">
-    <div class="settings-content">
-      <label>Regular Sprint (min): <input type="number" id="workDuration" value="60" /></label>
-      <label>Break/Chat (min): <input type="number" id="shortBreakDuration" value="20" /></label>
-      <label>Short Sprint (min): <input type="number" id="longBreakDuration" value="30" /></label>
-      <label>Background Image:
-        <input type="file" id="backgroundUpload" accept="image/*,video/*,.gif" />
-        or URL: <input type="text" id="backgroundURL" placeholder="Paste image/video/GIF URL here" />
-      </label>
-      <label>Upload Timer End Sound:
-        <input type="file" id="timerSoundFile" accept="audio/*" />
-      </label>
-      <label>Timer Sound URL:
-        <input type="text" id="timerSoundUrl" placeholder="Paste sound URL here" />
-      </label>
-      <label for="timerVolume">Timer End Volume:</label>
-      <input type="range" id="timerVolume" min="0" max="1" step="0.01" value="0.5" />
-      <button id="clearTimerSound">Clear Timer Sound</button>
-      <button id="saveSettings">Apply Settings</button>
+        <div class="settings-panel hidden"id="timerSettingsPanel">
+          <div class="settings-content">
+          <label>Regular Sprint (min): <input type="number" id="workDuration" value="60" /></label>
+          <label>Break/Chat (min): <input type="number" id="shortBreakDuration" value="20" /></label>
+          <label>Short Sprint (min): <input type="number" id="longBreakDuration" value="30" /></label>
+          <label>Background Image:
+            <input type="file" id="backgroundUpload" accept="image/*,video/*,.gif" />
+            or URL: <input type="text" id="backgroundURL" placeholder="Paste image/video/GIF URL here" />
+          </label>
+          
+          <label>Upload Timer End Sound:
+          <input type="file" id="timerSoundFile" accept="audio/*" />
+          </label>
+          
+          <label>Timer Sound URL:
+          <input type="text" id="timerSoundUrl" placeholder="Paste sound URL here" />
+          </label>
+
+          <label for="timerVolume">Timer End Volume:</label>
+          <input type="range" id="timerVolume" min="0" max="1" step="0.01" value="0.5" />
+
+          <button id="clearTimerSound">Clear Timer Sound</button>
+          <button id="saveSettings">Apply Settings</button>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
     
     <!-- Music Block -->
@@ -69,7 +72,7 @@
 
   <button class="toggle-spotify-settings gear-icon" title="Spotify Settings">⚙️</button>
   </div>
-  <div class="spotify-settings-content hidden">
+  <div class="spotify-settings-content settings-panel hidden">
     <label for="spotifyInput">Paste Spotify Playlist Link:</label>
     <input type="text" id="spotifyInput" placeholder="https://open.spotify.com/..." />
     <button id="loadSpotify">Load</button>
@@ -93,7 +96,7 @@
     <button id="nextAffirmation">Next</button>
   </div>
 
-  <div class="affirmation-settings hidden" id="affirmationSettings">
+  <div class="affirmation-settings settings-panel hidden" id="affirmationSettings">
     <label><input type="checkbox" id="shuffleAffirmations" /> Shuffle</label>
     <label><input type="checkbox" id="loopAffirmations" checked /> Loop</label>
 
@@ -120,7 +123,7 @@
     <button id="nextQuote">Next</button>
   </div>
 
-  <div class="quote-settings hidden" id="quoteSettings">
+  <div class="quote-settings settings-panel hidden" id="quoteSettings">
     <label><input type="checkbox" id="shuffleQuotes" /> Shuffle</label>
     <label><input type="checkbox" id="loopQuotes" checked /> Loop</label>
 
@@ -142,7 +145,7 @@
 
   <!-- Spinner Settings Panel -->
 
-  <div class="settings-content hidden" id="spinnerSettings">
+  <div class="settings-content settings-panel hidden" id="spinnerSettings">
     <textarea id="spinnerInput" placeholder="Paste items, one per line — add ~Category if needed"></textarea>
     <input type="file" id="spinnerFile" />
     
