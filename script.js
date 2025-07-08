@@ -305,6 +305,14 @@ navButtons.forEach((btn) => {
   });
 });
 
+let highestZ = 100; // starting z-index value
+
+document.querySelectorAll('.block').forEach(block => {
+  block.addEventListener('mousedown', () => {
+    highestZ++;
+    block.style.zIndex = highestZ;
+  });
+});
 
 
   // Timer mode switch buttons
