@@ -565,7 +565,7 @@ main {
   font-weight: 600;
   text-align: center;
   font-family: 'Playfair Display', serif;
-  color: #FFA552; /* Optional: use border accent color */
+  color: ##d24726; /* Optional: use border accent color */
 }
 
 #spinButton {
