@@ -522,6 +522,35 @@ main {
   background-color: #FFA552;
 }
 
+/* Hide scrollbar by default */
+.block {
+  scrollbar-width: none;          /* Firefox */
+  -ms-overflow-style: none;       /* IE/Edge */
+}
+
+.block::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* Show scrollbar on hover */
+.block:hover {
+  scrollbar-width: thin;          /* Firefox */
+}
+
+.block:hover::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.block:hover::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+
+.block:hover::-webkit-scrollbar-track {
+  background: transparent;
+}
 
 .spinner {
   display: flex;
@@ -552,6 +581,12 @@ main {
 
 #spinButton:hover {
   opacity: 0.9;
+}
+
+#spinnerSettings {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding-bottom: 20px;
 }
 
 #spinnerInput {
