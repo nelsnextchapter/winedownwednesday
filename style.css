@@ -591,6 +591,13 @@ main {
   z-index: 1000;
 }
 
+body > canvas {
+  z-index: 9999 !important;
+  pointer-events: none;
+  position: fixed !important;
+  top: 0;
+  left: 0;
+}
 
 
 @keyframes confettiFall {
