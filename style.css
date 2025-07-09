@@ -240,7 +240,7 @@ main {
 
 #affirmationDisplay {
   font-family: 'Playfair Display', serif;
-  font-size: 1.4rem;
+  font-size: clamp(0.9rem, 1vw + 0.5rem, 1.2rem);
   text-align: center;
   margin-bottom: 15px;
   padding: 10px;
@@ -333,7 +333,7 @@ main {
 
 #quoteText {
   font-family: 'Playfair Display', serif;
-  font-size: 1.4rem;
+  font-size: clamp(0.9rem, 1vw + 0.5rem, 1.2rem);
   white-space: pre-wrap;
   margin-bottom: 10px;
   color: #333;
