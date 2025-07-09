@@ -798,6 +798,12 @@ function showConfetti() {
   });
 }
 
+   // Tag the canvas so we can style it
+  const confettiCanvas = document.querySelector("canvas");
+  if (confettiCanvas && !confettiCanvas.classList.contains("confetti-canvas")) {
+    confettiCanvas.classList.add("confetti-canvas");
+  }
+}
 
 function loadFromLocalStorage() {
   const saved = localStorage.getItem("spinnerItems");
