@@ -796,7 +796,21 @@ function showConfetti() {
     spread: 70,
     origin: { x, y }
   });
+
+  // Force confetti canvas to appear on top
+  setTimeout(() => {
+    const canvases = [...document.querySelectorAll("body > canvas")];
+    canvases.forEach(c => {
+      c.style.zIndex = 9999;
+      c.style.pointerEvents = "none";
+      c.style.position = "fixed";
+      c.style.top = 0;
+      c.style.left = 0;
+      document.body.appendChild(c); // move it to end of body
+    });
+  }, 50);
 }
+
 
 
 function loadFromLocalStorage() {
