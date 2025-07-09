@@ -536,7 +536,7 @@ main {
   font-weight: 600;
   text-align: center;
   font-family: 'Playfair Display', serif;
-  color: #7C0A02; /* Optional: use your deep red accent */
+  color: #FFA552; /* Optional: use border accent color */
 }
 
 #spinButton {
