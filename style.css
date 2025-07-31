@@ -13,7 +13,7 @@ body {
 header {
   display: flex;
   justify-content: center;
-  background-color: rgba(199,211,181, 0.85);
+  background-color: rgba(214, 192, 164, 1);
   padding: 10px;
   font-family: 'Poppins', sans-serif;
 }
