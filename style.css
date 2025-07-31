@@ -13,7 +13,7 @@ body {
 header {
   display: flex;
   justify-content: center;
-  background-color: rgba(214, 192, 164, 1);
+  background-color: rgba(200, 217, 222, 0.85);
   padding: 10px;
   font-family: 'Poppins', sans-serif;
 }
@@ -126,7 +126,7 @@ main {
 .timer-modes button,
 #loadSpotify,
 #saveSettings {
-  background-color: #A5BFD4;
+  background-color: #b3a755;
   color: white;
   border: none;
   border-radius: 8px;
@@ -255,7 +255,7 @@ main {
 }
 
 .affirmation-controls button {
-  background-color: #A5BFD4;
+  background-color: #b3a755;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -354,7 +354,7 @@ main {
 
 .quote-controls button,
 .quote-settings button {
-  background-color: #A5BFD4;
+  background-color: #b3a755;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -569,7 +569,7 @@ main {
 }
 
 #spinButton {
-  background-color: #A5BFD4;
+  background-color: #b3a755;
   color: white;
   border: none;
   padding: 10px 20px;
