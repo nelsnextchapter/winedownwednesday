@@ -126,7 +126,7 @@ main {
 .timer-modes button,
 #loadSpotify,
 #saveSettings {
-  background-color: #b3a755;
+  background-color: #ede4d7;
   color: white;
   border: none;
   border-radius: 8px;
@@ -255,7 +255,7 @@ main {
 }
 
 .affirmation-controls button {
-  background-color: #b3a755;
+  background-color: #ede4d7;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -354,7 +354,7 @@ main {
 
 .quote-controls button,
 .quote-settings button {
-  background-color: #b3a755;
+  background-color: #ede4d7;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -485,7 +485,7 @@ main {
 }
 
 #todoSettings button {
-  background-color: #F7E5A0;
+  background-color: #ede4d7;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -569,7 +569,7 @@ main {
 }
 
 #spinButton {
-  background-color: #b3a755;
+  background-color: #ede4d7;
   color: white;
   border: none;
   padding: 10px 20px;
