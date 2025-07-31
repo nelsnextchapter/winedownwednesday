@@ -19,7 +19,7 @@ header {
 }
 
 .top-nav .nav-button {
-  background-color: #D6C0A4;
+  background-color: #c8d9de;
   border: none;
   padding: 10px 20px;
   margin: 0 10px;
@@ -31,7 +31,7 @@ header {
 }
 
 .top-nav .nav-button:hover {
-  background-color: #6F5C48;
+  background-color: #b3a755;
 }
 
 main {
