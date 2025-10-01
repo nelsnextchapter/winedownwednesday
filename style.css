@@ -171,7 +171,7 @@ main {
 
 .set-timer button,
 #saveSettings {
-  background-color: #F7E5A0;
+  background-color: #e07b39;
   color: #333;
 }
 
@@ -318,7 +318,7 @@ main {
 }
 
 .affirmation-settings button {
-  background-color: #F7E5A0;
+  background-color: #e07b39;
   color: white;
   border: none;
   padding: 8px 12px;
