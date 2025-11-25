@@ -13,13 +13,13 @@ body {
 header {
   display: flex;
   justify-content: center;
-  background-color: rgba(201, 164, 107, 0.85);
+  background-color: rgba(2, 0, 88, 0.85);
   padding: 10px;
   font-family: 'Poppins', sans-serif;
 }
 
 .top-nav .nav-button {
-  background-color: #020058;
+  background-color: #c9a46b;
   border: none;
   padding: 10px 20px;
   margin: 0 10px;
@@ -31,7 +31,7 @@ header {
 }
 
 .top-nav .nav-button:hover {
-  background-color: #b74f3a;
+  background-color: #020058;
 }
 
 main {
@@ -48,7 +48,7 @@ main {
   max-width: 500px;          /* Prevents stretching too far */
   min-width: 300px;          /* Keeps it usable on smaller screens */
   max-height: 80vh;          /* Ensures content doesn’t overflow screen height */
-  background-color: rgba(2, 0, 88, 0.92);
+  background-color: rgba(253, 252, 248, 0.92);
   border: 1px solid #6F5C48;
   border-radius: 20px;
   padding: 20px;
