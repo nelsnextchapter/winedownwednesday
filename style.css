@@ -19,7 +19,7 @@ header {
 }
 
 .top-nav .nav-button {
-  background-color: #c9a46b;
+  background-color: #020058;
   border: none;
   padding: 10px 20px;
   margin: 0 10px;
@@ -48,7 +48,7 @@ main {
   max-width: 500px;          /* Prevents stretching too far */
   min-width: 300px;          /* Keeps it usable on smaller screens */
   max-height: 80vh;          /* Ensures content doesn’t overflow screen height */
-  background-color: rgba(253, 252, 248, 0.92);
+  background-color: rgba(2, 0, 88, 0.92);
   border: 1px solid #6F5C48;
   border-radius: 20px;
   padding: 20px;
