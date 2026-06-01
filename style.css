@@ -13,13 +13,13 @@ body {
 header {
   display: flex;
   justify-content: center;
-  background-color: rgba(192, 108, 78, 0.85);
+  background-color: rgba(202, 105, 48, 0.85);
   padding: 10px;
   font-family: 'Poppins', sans-serif;
 }
 
 .top-nav .nav-button {
-  background-color: #e89a8c;
+  background-color: #ffa552;
   border: none;
   padding: 10px 20px;
   margin: 0 10px;
@@ -31,7 +31,7 @@ header {
 }
 
 .top-nav .nav-button:hover {
-  background-color: #f7e7d7;
+  background-color: #e9c086;
 }
 
 main {
@@ -126,7 +126,7 @@ main {
 .timer-modes button,
 #loadSpotify,
 #saveSettings {
-  background-color: #f4c95d;
+  background-color: #f7ab53;
   color: white;
   border: none;
   border-radius: 8px;
@@ -157,7 +157,7 @@ main {
 }
 
 .spotify-settings-content button {
-  background-color: #f4c95d;
+  background-color: #f7ab53;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -171,7 +171,7 @@ main {
 
 .set-timer button,
 #saveSettings {
-  background-color: #f4c95d;
+  background-color: #f7ab53;
   color: #333;
 }
 
@@ -255,7 +255,7 @@ main {
 }
 
 .affirmation-controls button {
-  background-color: #f4c95d;
+  background-color: #f7ab53;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -318,7 +318,7 @@ main {
 }
 
 .affirmation-settings button {
-  background-color: #f4c95d;
+  background-color: #f7ab53;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -354,7 +354,7 @@ main {
 
 .quote-controls button,
 .quote-settings button {
-  background-color: #f4c95d;
+  background-color: #f7ab53;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -403,7 +403,7 @@ main {
   background: none;
   border: none;
   font-size: 20px;
-  color: #f4c95d;
+  color: #f7ab53;
   cursor: pointer;
   margin-left: auto;
 }
@@ -485,7 +485,7 @@ main {
 }
 
 #todoSettings button {
-  background-color: #f4c95d;
+  background-color: #f7ab53;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -569,7 +569,7 @@ main {
 }
 
 #spinButton {
-  background-color: #f4c95d;
+  background-color: #f7ab53;
   color: white;
   border: none;
   padding: 10px 20px;
