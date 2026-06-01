@@ -681,9 +681,9 @@ function drawWheel() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   function getColorForIndex(index, total) {
-  const baseHue = 43;           // HSL for #f4c95d
-  const baseSaturation = 87;    // %
-  const baseLightness = 66;     // %
+  const baseHue = 22.2;           // HSL for #CA6930
+  const baseSaturation = 61.6;    // %
+  const baseLightness = 49.0;     // %
 
   // Adjust lightness slightly for variation
   const lightnessVariation = 10;
