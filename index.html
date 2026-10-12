@@ -2,213 +2,355 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wine Down Wednesday</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans&family=DM+Serif+Display:ital@0;1&family=Cormorant+Garamond:wght@600&family=Italiana&family=Playfair+Display&family=Poppins:wght@300;400;600&family=Great+Vibes&family=Montserrat:wght@700&family=Lato:ital,wght@1,300&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;700&family=DM+Serif+Display:ital@0;1&family=Great+Vibes&family=Italiana&family=Lato:ital,wght@0,400;1,300&family=Montserrat:wght@500;700&family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="top-nav">
-    <button class="nav-button" data-target="timerBlock">Timer</button>
-    <button class="nav-button" data-target="musicBlock">Music</button>
-    <button class="nav-button" data-target="affirmationsBlock">Affirmations</button>
-    <button class="nav-button" data-target="quotesBlock">Quotes</button>
-    <button class="nav-button" data-target="spinnerBlock">Spinner</button>
-    <button class="nav-button" data-target="todoBlock">To-Do</button>
+  <!-- Background layers (image and video are separate so a hidden video never keeps decoding) -->
+  <div id="bgImage" aria-hidden="true"></div>
+  <video id="bgVideo" muted loop playsinline preload="auto" disablepictureinpicture disableremoteplayback aria-hidden="true"></video>
+
+  <!-- Top bar -->
+  <header id="topbar">
+    <nav class="panel-toggles" aria-label="Show or hide panels">
+      <button class="nav-button" data-toggle="timer">Timer</button>
+      <button class="nav-button" data-toggle="music">Music</button>
+      <button class="nav-button" data-toggle="affirmations">Affirmations</button>
+      <button class="nav-button" data-toggle="quotes">Quotes</button>
+      <button class="nav-button" data-toggle="spinner">Spinner</button>
+      <button class="nav-button" data-toggle="todo">To-Do</button>
+    </nav>
+    <div class="topbar-actions">
+      <button class="nav-button ghost" id="openSettings">Settings</button>
+      <button class="nav-button ghost" id="streamModeBtn" title="Hide all controls (shortcut: H)">Stream mode</button>
+    </div>
   </header>
 
-  <video id="backgroundVideo" autoplay muted loop playsinline></video>
+  <!-- Panels: each one is moved, resized and scaled by script.js -->
+  <main id="workspace">
 
-  <main>
-    <!-- Timer Block -->
-    <div id="timerBlock" class="block hidden">
-      <div class="block-header">
-        <button class="gear-icon toggle-settings">⚙️</button>
-      </div>
-      <div class="timer">
-        <h2 id="phaseLabel">Regular Sprint</h2>
-        <div id="timerDisplay">60:00</div>
-        <div class="controls">
-          <button id="start">Start</button>
-          <button id="pause">Pause</button>
-          <button id="reset">Reset</button>
+    <section class="panel" data-panel="timer" data-title="Timer">
+      <div class="panel-body timer-body">
+        <h2 class="phase-label" id="phaseLabel">Reading/Productivity</h2>
+        <div class="timer-display" id="timerDisplay">60:00</div>
+        <div class="btn-row controls">
+          <button class="btn" id="timerStartPause">Start</button>
+          <button class="btn" id="timerReset">Reset</button>
         </div>
-        <div class="timer-modes">
-          <button id="selectWork">Regular Sprint</button>
-          <button id="selectShort">Break/Chat</button>
-          <button id="selectLong">Short Sprint</button>
-        </div>
-        <div class="settings-content hidden">
-          <label>Regular Sprint (min): <input type="number" id="workDuration" value="60" /></label>
-          <label>Break/Chat (min): <input type="number" id="shortBreakDuration" value="20" /></label>
-          <label>Short Sprint (min): <input type="number" id="longBreakDuration" value="30" /></label>
-          <label>Background Image:
-            <input type="file" id="backgroundUpload" accept="image/*,video/*,.gif" />
-            or URL: <input type="text" id="backgroundURL" placeholder="Paste image/video/GIF URL here" />
-          </label>
-          
-          <label>Upload Timer End Sound:
-          <input type="file" id="timerSoundFile" accept="audio/*" />
-          </label>
-          
-          <label>Timer Sound URL:
-          <input type="text" id="timerSoundUrl" placeholder="Paste sound URL here" />
-          </label>
-
-          <label for="timerVolume">Timer End Volume:</label>
-          <input type="range" id="timerVolume" min="0" max="1" step="0.01" value="0.5" />
-
-          <button id="clearTimerSound">Clear Timer Sound</button>
-          <button id="saveSettings">Apply Settings</button>
+        <div class="btn-row timer-modes" id="timerModes">
+          <button class="btn mode-btn" data-phase="work">Regular Sprint</button>
+          <button class="btn mode-btn" data-phase="short">Break/Chat</button>
+          <button class="btn mode-btn" data-phase="long">Short Sprint</button>
         </div>
       </div>
+    </section>
+
+    <section class="panel" data-panel="music" data-title="Music">
+      <div class="panel-body music-body" id="spotifyContainer"></div>
+    </section>
+
+    <section class="panel" data-panel="affirmations" data-title="Affirmations">
+      <div class="panel-body text-body">
+        <div class="fit-box" id="affirmationBox">
+          <div class="fit-inner affirmation-text" id="affirmationText"></div>
+        </div>
+        <div class="btn-row"><button class="btn" id="nextAffirmation">Next</button></div>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="quotes" data-title="Quotes">
+      <div class="panel-body text-body">
+        <div class="fit-box" id="quoteBox">
+          <div class="fit-inner">
+            <div class="quote-text" id="quoteText"></div>
+            <div class="quote-speaker" id="quoteSpeaker"></div>
+          </div>
+        </div>
+        <div class="btn-row"><button class="btn" id="nextQuote">Next</button></div>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="spinner" data-title="Spinner">
+      <div class="panel-body spinner-body">
+        <div class="wheel-wrap" id="wheelWrap"><canvas id="wheelCanvas"></canvas></div>
+        <div class="spinner-result" id="spinnerResult"></div>
+        <div class="btn-row"><button class="btn" id="spinButton">Spin</button></div>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="todo" data-title="To-Do">
+      <div class="panel-body todo-body">
+        <div class="todo-heading">
+          <div class="todo-title" id="todoTitle">Today’s</div>
+          <div class="todo-subtitle" id="todoSubtitle">Checklist</div>
+        </div>
+        <ul class="todo-list" id="todoList"></ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- Settings drawer: everything you configure lives here, off the stream layout -->
+  <aside id="drawer" class="drawer" aria-label="Settings" aria-hidden="true">
+    <div class="drawer-head">
+      <h2>Settings</h2>
+      <button class="icon-btn" id="closeSettings" aria-label="Close settings">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="drawer-tabs" role="tablist">
+      <button role="tab" data-tab="timer">Timer</button>
+      <button role="tab" data-tab="background">Background</button>
+      <button role="tab" data-tab="music">Music</button>
+      <button role="tab" data-tab="affirmations">Affirmations</button>
+      <button role="tab" data-tab="quotes">Quotes</button>
+      <button role="tab" data-tab="spinner">Spinner</button>
+      <button role="tab" data-tab="todo">To-Do</button>
+      <button role="tab" data-tab="theme">Colors &amp; Fonts</button>
+      <button role="tab" data-tab="layout">Layout &amp; Backup</button>
     </div>
 
-    
-    <!-- Music Block -->
-<div id="musicBlock" class="block hidden">
-  <div class="block-header">
+    <div class="drawer-body">
 
-  <button class="toggle-spotify-settings gear-icon" title="Spotify Settings">⚙️</button>
-  </div>
-  <div class="spotify-settings-content hidden">
-    <label for="spotifyInput">Paste Spotify Playlist Link:</label>
-    <input type="text" id="spotifyInput" placeholder="https://open.spotify.com/..." />
-    <button id="loadSpotify">Load</button>
-  </div>
+      <!-- TIMER -->
+      <section class="tab-pane" data-pane="timer">
+        <div class="group">
+          <h3>Modes</h3>
+          <p class="hint">“Button” is the label you click. “On screen” is the title viewers see while that mode runs.</p>
+          <div class="mode-grid">
+            <span class="mg-head">Button</span><span class="mg-head">On screen</span><span class="mg-head">Min</span>
+            <input type="text" data-phase-field="work.button" aria-label="Mode 1 button label" />
+            <input type="text" data-phase-field="work.title" aria-label="Mode 1 on-screen title" />
+            <input type="number" min="0.1" step="any" data-phase-field="work.minutes" aria-label="Mode 1 minutes" />
+            <input type="text" data-phase-field="short.button" aria-label="Mode 2 button label" />
+            <input type="text" data-phase-field="short.title" aria-label="Mode 2 on-screen title" />
+            <input type="number" min="0.1" step="any" data-phase-field="short.minutes" aria-label="Mode 2 minutes" />
+            <input type="text" data-phase-field="long.button" aria-label="Mode 3 button label" />
+            <input type="text" data-phase-field="long.title" aria-label="Mode 3 on-screen title" />
+            <input type="number" min="0.1" step="any" data-phase-field="long.minutes" aria-label="Mode 3 minutes" />
+          </div>
+          <label class="check"><input type="checkbox" id="autoStartBreak" /> <span id="autoStartBreakLabel">Start the break automatically when a sprint ends</span></label>
+          <p class="hint">When any other mode ends, the timer loads the first mode and waits for you to press Start.</p>
+        </div>
+        <div class="group">
+          <h3>End sound</h3>
+          <div class="sound-row" data-sound="timer"></div>
+        </div>
+      </section>
 
-  <div id="spotifyContainer"></div>
-</div>
+      <!-- BACKGROUND -->
+      <section class="tab-pane" data-pane="background">
+        <div class="group">
+          <h3>Background</h3>
+          <p class="status" id="bgStatus">Plain color</p>
+          <div class="s-row">
+            <button class="s-btn" id="bgUseMedia">Use saved image/video</button>
+            <button class="s-btn" id="bgUseColor">Plain color</button>
+            <button class="s-btn" id="bgUseTransparent">Transparent (for OBS)</button>
+          </div>
+          <label class="check"><input type="checkbox" id="bgPauseVideo" /> Pause background video</label>
+        </div>
+        <div class="group">
+          <h3>Upload a file</h3>
+          <label class="file-label">Image, GIF or video — saved in this browser, even videos
+            <input type="file" id="bgFile" accept="image/*,video/*,.gif" />
+          </label>
+        </div>
+        <div class="group">
+          <h3>Or paste a link</h3>
+          <div class="inline">
+            <input type="url" id="bgUrl" placeholder="https://… (.jpg .png .gif .mp4 .webm)" />
+            <button class="s-btn" id="bgUrlApply">Use</button>
+          </div>
+        </div>
+        <div class="group tips">
+          <h3>Keeping a video background smooth</h3>
+          <ul>
+            <li>Use an <strong>MP4 (H.264), 1080p or 720p, 30 fps</strong>. 4K files and GIFs are much heavier to play.</li>
+            <li>Lightest of all in OBS: pick <strong>Transparent</strong> here, then put the video in a <strong>Media Source</strong> layered under this page’s Browser Source.</li>
+            <li>The video pauses automatically whenever this tab is hidden.</li>
+          </ul>
+        </div>
+      </section>
 
+      <!-- MUSIC -->
+      <section class="tab-pane" data-pane="music">
+        <div class="group">
+          <h3>Spotify</h3>
+          <label for="spotifyInput">Playlist, album, track or podcast link</label>
+          <div class="inline">
+            <input type="url" id="spotifyInput" placeholder="https://open.spotify.com/playlist/…" />
+            <button class="s-btn" id="loadSpotify">Load</button>
+          </div>
+          <button class="s-btn subtle" id="removeSpotify">Remove player</button>
+          <p class="hint">The player stretches to fill its box. Make the box taller to see the track list.</p>
+        </div>
+      </section>
 
-   <!-- Affirmations Block -->
-<div id="affirmationsBlock" class="block hidden">
-  <div class="block-header">
-    <button class="gear-icon" id="toggleAffirmationSettings">⚙️</button>
-  </div>
+      <!-- AFFIRMATIONS -->
+      <section class="tab-pane" data-pane="affirmations">
+        <div class="group">
+          <h3>Playback</h3>
+          <label class="check"><input type="checkbox" id="shuffleAffirmations" /> Shuffle</label>
+          <label class="check"><input type="checkbox" id="loopAffirmations" /> Loop back to the start</label>
+          <p class="status" id="affirmationCount"></p>
+        </div>
+        <div class="group">
+          <h3>Load affirmations</h3>
+          <textarea id="affirmationInput" rows="6" placeholder="One affirmation per line"></textarea>
+          <label class="file-label">…or a .txt file <input type="file" id="affirmationFile" accept=".txt,text/plain" /></label>
+          <div class="s-row">
+            <button class="s-btn" id="loadAffirmations">Load (replaces list)</button>
+            <button class="s-btn subtle" id="clearAffirmations">Clear saved</button>
+          </div>
+        </div>
+      </section>
 
-  <div class="affirmation-display" id="affirmationDisplay">
-    Click 'Next' to begin
-  </div>
+      <!-- QUOTES -->
+      <section class="tab-pane" data-pane="quotes">
+        <div class="group">
+          <h3>Playback</h3>
+          <label class="check"><input type="checkbox" id="shuffleQuotes" /> Shuffle</label>
+          <label class="check"><input type="checkbox" id="loopQuotes" /> Loop back to the start</label>
+          <p class="status" id="quoteCount"></p>
+        </div>
+        <div class="group">
+          <h3>Categories to show</h3>
+          <div class="chips" id="quoteCategories"></div>
+        </div>
+        <div class="group">
+          <h3>Load quotes</h3>
+          <p class="hint">Format: the quote (one or more lines), then a line <code>Speaker ~ Category ~</code>, then the next quote.</p>
+          <textarea id="quoteInput" rows="7" placeholder="I'm going to kill you.&#10;I know.&#10;Damon ~ Banter ~"></textarea>
+          <label class="file-label">…or a .txt file <input type="file" id="quoteFile" accept=".txt,text/plain" /></label>
+          <div class="s-row">
+            <button class="s-btn" id="loadQuotes">Load (replaces list)</button>
+            <button class="s-btn subtle" id="clearQuotes">Clear saved</button>
+          </div>
+        </div>
+      </section>
 
-  <div class="affirmation-controls">
-    <button id="nextAffirmation">Next</button>
-  </div>
+      <!-- SPINNER -->
+      <section class="tab-pane" data-pane="spinner">
+        <div class="group">
+          <h3>Add items</h3>
+          <p class="hint">One per line. Add <code>~ Category</code> to group them (optional).</p>
+          <textarea id="spinnerInput" rows="6" placeholder="Read a chapter ~ Challenges&#10;Bonus points ~ Rewards"></textarea>
+          <label class="file-label">…or a .txt file <input type="file" id="spinnerFile" accept=".txt,.csv,text/plain" /></label>
+          <button class="s-btn" id="loadSpinnerItems">Add to list</button>
+        </div>
+        <div class="group">
+          <h3>Categories</h3>
+          <div class="chips" id="spinnerCategories"></div>
+        </div>
+        <div class="group">
+          <h3>On the wheel</h3>
+          <div class="s-row">
+            <button class="s-btn subtle" id="wheelAll">All</button>
+            <button class="s-btn subtle" id="wheelNone">None</button>
+            <span class="inline compact">
+              <button class="s-btn subtle" id="wheelRandom">Random</button>
+              <input type="number" id="wheelRandomCount" min="2" value="10" aria-label="How many random items" />
+            </span>
+          </div>
+          <div class="item-list" id="spinnerItemList"></div>
+          <div class="s-row">
+            <button class="s-btn subtle" id="removeSpinnerItems">Delete checked items</button>
+            <button class="s-btn subtle danger" id="clearSpinnerItems">Delete all items</button>
+          </div>
+        </div>
+        <div class="group">
+          <h3>Sounds</h3>
+          <p class="hint">The wheel spins for as long as the spin sound lasts (4 seconds without one).</p>
+          <div class="sound-row" data-sound="click"></div>
+          <div class="sound-row" data-sound="spin"></div>
+          <div class="sound-row" data-sound="result"></div>
+        </div>
+      </section>
 
-  <div class="affirmation-settings hidden" id="affirmationSettings">
-    <label><input type="checkbox" id="shuffleAffirmations" /> Shuffle</label>
-    <label><input type="checkbox" id="loopAffirmations" checked /> Loop</label>
+      <!-- TO-DO -->
+      <section class="tab-pane" data-pane="todo">
+        <div class="group">
+          <h3>Heading</h3>
+          <div class="two-col">
+            <label>Title <input type="text" id="todoTitleInput" /></label>
+            <label>Script line <input type="text" id="todoSubtitleInput" /></label>
+          </div>
+        </div>
+        <div class="group">
+          <h3>Add tasks</h3>
+          <p class="hint">One per line. Add <code>~ Category</code> if you like.</p>
+          <textarea id="todoInput" rows="6" placeholder="Finish chapter 12 ~ Reading&#10;Hydrate ~ Self-care"></textarea>
+          <label class="file-label">…or a .txt / .csv file <input type="file" id="todoFile" accept=".txt,.csv,text/plain" /></label>
+          <button class="s-btn" id="loadTodoTasks">Add to list</button>
+        </div>
+        <div class="group">
+          <h3>Categories to show</h3>
+          <div class="chips" id="todoCategories"></div>
+        </div>
+        <div class="group">
+          <div class="s-row">
+            <button class="s-btn subtle" id="removeSelectedTodos">Remove checked-off tasks</button>
+            <button class="s-btn subtle danger" id="clearTodoList">Clear list</button>
+          </div>
+          <p class="hint">Drag tasks in the panel to reorder them.</p>
+        </div>
+      </section>
 
-    <textarea id="affirmationInput" placeholder="Paste affirmations (one per line)"></textarea>
-    <input type="file" id="affirmationFile" accept=".txt" />
-    <button id="loadAffirmations">Load</button>
-    <button id="clearAffirmations">Clear Saved</button>
-  </div>
-</div>
+      <!-- THEME -->
+      <section class="tab-pane" data-pane="theme">
+        <div class="group">
+          <h3>Saved themes</h3>
+          <div class="inline">
+            <select id="themePresetSelect" aria-label="Saved themes"></select>
+            <button class="s-btn" id="themeApplyPreset">Apply</button>
+          </div>
+          <div class="inline">
+            <input type="text" id="themePresetName" placeholder="Name this look, e.g. October" />
+            <button class="s-btn" id="themeSavePreset">Save</button>
+          </div>
+          <div class="s-row">
+            <button class="s-btn subtle" id="themeDeletePreset">Delete selected</button>
+            <button class="s-btn subtle" id="themeExport">Export theme</button>
+            <label class="s-btn subtle file-btn">Import theme<input type="file" id="themeImport" accept=".json,application/json" /></label>
+            <button class="s-btn subtle" id="themeReset">Reset to original</button>
+          </div>
+        </div>
+        <div id="themeFields"></div>
+      </section>
 
-
-   <!-- Quotes Block -->
-<div id="quotesBlock" class="block hidden">
-  <div class="block-header">
-    <button class="gear-icon" id="toggleQuoteSettings">⚙️</button>
-  </div>
-
-  <div class="quote-display">
-    <div id="quoteText">Click 'Next' to begin</div>
-    <div id="quoteSpeaker"></div>
-  </div>
-
-  <div class="quote-controls">
-    <button id="nextQuote">Next</button>
-  </div>
-
-  <div class="quote-settings hidden" id="quoteSettings">
-    <label><input type="checkbox" id="shuffleQuotes" /> Shuffle</label>
-    <label><input type="checkbox" id="loopQuotes" checked /> Loop</label>
-
-    <label>Select categories:</label>
-    <div id="categoryCheckboxes"></div>
-
-    <textarea id="quoteInput" placeholder="Paste Format: Quote Ln 1 [enter] Quote Ln 2 [enter] speaker ~ category ~ [enter] Next"></textarea>
-    <input type="file" id="quoteFile" accept=".txt" />
-    <button id="loadQuotes">Load</button>
-    <button id="clearQuotes">Clear Saved</button>
-  </div>
-</div>
-
-
-   <div class="block hidden" id="spinnerBlock">
-  <div class="block-header">
-    <button class="gear-icon" id="toggleSpinnerSettings">⚙️</button>
-  </div>
-
-  <!-- Spinner Settings Panel -->
-
-  <div class="settings-content hidden" id="spinnerSettings">
-    <textarea id="spinnerInput" placeholder="Paste items, one per line — add ~Category if needed"></textarea>
-    <input type="file" id="spinnerFile" />
-    
-    <div id="spinnerCategoryCheckboxes"></div>
-    <label><input type="checkbox" id="randomizeSpinner"> Randomize from selected categories</label>
-
-    <!-- Where you manually pick which spinner items to show -->
-    <p><strong>Choose items to spin:</strong></p>
-<div id="manualSelectContainer"></div>
-
-    <label>Click Sound URL/File: <input type="text" id="clickSoundUrl" /></label>
-    <input type="file" id="clickSoundFile">
-    <label>Volume: <input type="range" id="clickVolume" min="0" max="1" step="0.01" value="0.5"></label>
-
-    <label>Spin Sound URL/File: <input type="text" id="spinSoundUrl" /></label>
-    <input type="file" id="spinSoundFile">
-    <label>Volume: <input type="range" id="spinVolume" min="0" max="1" step="0.01" value="0.5"></label>
-
-    <label>Result Sound URL/File: <input type="text" id="resultSoundUrl" /></label>
-    <input type="file" id="resultSoundFile">
-    <label>Volume: <input type="range" id="resultVolume" min="0" max="1" step="0.01" value="0.5"></label>
-
-    <button id="loadSpinnerItems">Load Items</button>
-    <button id="removeSpinnerItems">Delete Selected</button>
-    <button id="clearSpinnerItems">Delete All Items</button>
-  </div>
-     
-     <div id="spinnerContainer" class="spinner">
-    <canvas id="spinnerCanvas" width="300" height="300"></canvas>
-    <button id="spinButton">Spin</button>
-    <div id="spinnerResult" class="result-display"></div>
-  </div>
-</div>
-
-    
-    <!-- ✅ TO-DO CHECKLIST BLOCK -->
-<div class="block hidden" id="todoBlock">
-  <div class="block-header">
-    <button id="toggleTodoSettings" class="toggle-settings" title="Toggle Settings">⚙️</button>
-  </div>
-  
-    <div class="todo-heading">
-      <div class="todo-title">Today’s</div>
-      <div class="todo-subtitle">Checklist</div>
+      <!-- LAYOUT & BACKUP -->
+      <section class="tab-pane" data-pane="layout">
+        <div class="group">
+          <h3>Layout</h3>
+          <p class="hint">Drag a panel by its top strip; resize from the bottom-right corner. Positions and sizes are saved as a share of the screen, so the whole layout scales with your window.</p>
+          <button class="s-btn" id="resetLayout">Reset panel positions</button>
+        </div>
+        <div class="group">
+          <h3>Stream mode</h3>
+          <p class="hint">Hides the top bar, panel strips and resize corners. Press <kbd>H</kbd> or <kbd>Esc</kbd> to leave, or use the button that appears in the top-right corner when you move the mouse. Add <code>?stream</code> to the page address (e.g. in an OBS Browser Source) to always open in stream mode.</p>
+          <label class="check"><input type="checkbox" id="streamHideButtons" /> Also hide panel buttons (Start, Next, Spin…)</label>
+        </div>
+        <div class="group">
+          <h3>Backup</h3>
+          <p class="hint">Settings live in each browser separately — OBS and Chrome don’t share them. Export here, import there. Background videos aren’t included (re-upload them once).</p>
+          <div class="s-row">
+            <button class="s-btn" id="exportBackup">Export everything</button>
+            <label class="s-btn file-btn">Import backup<input type="file" id="importBackup" accept=".json,application/json" /></label>
+          </div>
+        </div>
+      </section>
     </div>
+  </aside>
 
-  <div id="todoListContainer"></div>
+  <button id="exitStream" class="exit-stream" title="Leave stream mode (H)">Show controls</button>
+  <canvas id="confettiCanvas" aria-hidden="true"></canvas>
+  <div id="toasts" aria-live="polite"></div>
 
-  <!-- ✅ TO-DO SETTINGS -->
-  <div class="settings-panel hidden" id="todoSettings">
-    <textarea id="todoInput" placeholder="Paste tasks here (e.g., Task ~ Category)"></textarea>
-    <input type="file" id="todoFile" accept=".txt,.csv" />
-    <button id="loadTodoTasks">Load/Apply</button>
-    <button id="clearTodoList">Clear List</button>
-    <button id="removeSelectedTodos">Remove Selected</button>
-    <div id="todoCategoryFilters"></div>
-  </div>
-</div>
-
-
-
-
-
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>  
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
   <script src="script.js" defer></script>
 </body>
 </html>
